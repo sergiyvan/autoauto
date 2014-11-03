@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="9">
+<sensorTypes class_id="0" tracking_level="0" version="0">
+	<count>1</count>
+	<item_version>0</item_version>
+	<item>VelodyneParameter</item>
+</sensorTypes>
+<sensorType class_id="1" tracking_level="0" version="1">
+	<px class_id="2" class_name="VelodyneParameterList" tracking_level="1" version="0" object_id="_0">
+		<sensors class_id="3" tracking_level="0" version="0">
+			<count>1</count>
+			<item_version>0</item_version>
+			<item class_id="4" tracking_level="1" version="0" object_id="_1">
+				<abstractSensor class_id="5" tracking_level="0" version="4">
+					<position class_id="6" tracking_level="0" version="0">
+						<data>
+							<item>1.23</item>
+							<item>0.040000000000000001</item>
+							<item>2.02</item>
+						</data>
+					</position>
+					<rotation class_id="7" tracking_level="0" version="0">
+						<data>
+							<item>-0.010471640571620125</item>
+							<item>-0.0052356767402005474</item>
+							<item>-5.4829882883097014e-05</item>
+							<item>0.99993146236454367</item>
+						</data>
+					</rotation>
+					<delay>0</delay>
+				</abstractSensor>
+				<mScanner>0</mScanner>
+				<mCalibrationDatabase>velodyne/velodyne2009.dbxml</mCalibrationDatabase>
+				<mNumLasersPerBlock>32</mNumLasersPerBlock>
+				<mNumBlocks>2</mNumBlocks>
+				<mAnglesPerRevolution>36000</mAnglesPerRevolution>
+				<mAngleResolution>9</mAngleResolution>
+				<mOffsets>
+					<count>64</count>
+					<item_version>0</item_version>
+					<item>-55</item>
+					<item>-35</item>
+					<item>37</item>
+					<item>53</item>
+					<item>-2</item>
+					<item>16</item>
+					<item>-12</item>
+					<item>3</item>
+					<item>42</item>
+					<item>61</item>
+					<item>31</item>
+					<item>53</item>
+					<item>-51</item>
+					<item>-31</item>
+					<item>-63</item>
+					<item>-41</item>
+					<item>-4</item>
+					<item>14</item>
+					<item>-16</item>
+					<item>5</item>
+					<item>42</item>
+					<item>62</item>
+					<item>31</item>
+					<item>54</item>
+					<item>-51</item>
+					<item>-30</item>
+					<item>-60</item>
+					<item>-41</item>
+					<item>-3</item>
+					<item>14</item>
+					<item>-12</item>
+					<item>5</item>
+					<item>-9</item>
+					<item>-52</item>
+					<item>50</item>
+					<item>86</item>
+					<item>-13</item>
+					<item>25</item>
+					<item>-24</item>
+					<item>8</item>
+					<item>64</item>
+					<item>102</item>
+					<item>49</item>
+					<item>86</item>
+					<item>-82</item>
+					<item>-49</item>
+					<item>-102</item>
+					<item>-65</item>
+					<item>-7</item>
+					<item>24</item>
+					<item>-20</item>
+					<item>10</item>
+					<item>67</item>
+					<item>97</item>
+					<item>52</item>
+					<item>85</item>
+					<item>-80</item>
+					<item>-49</item>
+					<item>-100</item>
+					<item>-63</item>
+					<item>-8</item>
+					<item>21</item>
+					<item>-23</item>
+					<item>7</item>
+				</mOffsets>
+				<mVertReorder>
+					<count>32</count>
+					<item_version>0</item_version>
+					<item>4</item>
+					<item>5</item>
+					<item>26</item>
+					<item>27</item>
+					<item>6</item>
+					<item>7</item>
+					<item>0</item>
+					<item>1</item>
+					<item>8</item>
+					<item>9</item>
+					<item>2</item>
+					<item>3</item>
+					<item>16</item>
+					<item>17</item>
+					<item>10</item>
+					<item>11</item>
+					<item>18</item>
+					<item>19</item>
+					<item>12</item>
+					<item>13</item>
+					<item>20</item>
+					<item>21</item>
+					<item>14</item>
+					<item>15</item>
+					<item>28</item>
+					<item>29</item>
+					<item>22</item>
+					<item>23</item>
+					<item>30</item>
+					<item>31</item>
+					<item>24</item>
+					<item>25</item>
+				</mVertReorder>
+			</item>
+		</sensors>
+	</px>
+</sensorType>
+</boost_serialization>
+

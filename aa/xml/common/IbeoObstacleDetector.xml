@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+		
+	<Include file="EgoState.xml"/>
+
+	<Activity type="SequentialActivity">
+			<TaskContext type="InterpolationModelSetter" name="InterpolationModelSetter">
+			</TaskContext>
+	</Activity>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="LuxObstacleDetector" name="IbeoObstacleDetector">
+			<struct name="" type="type_less">
+			</struct>
+	    </TaskContext>
+	</Activity>
+
+</TaskGraph>

@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+		
+	<Activity type="SequentialActivity">
+ 		<TaskContext    type="FpgaDataVisualizer"	    name="Visualizer">
+                    <struct name="" type="type_less">
+                            <simple type="int" name="MaxDisparity"><value>65</value></simple>
+                    </struct>
+		</TaskContext>
+	</Activity>
+		
+	<Activity type="SequentialActivity">
+
+		<TaskContext type="DisplayImage" name="ImageViewDisparity">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+                                  <simple type="double" name="0"><value>-1580</value></simple>
+                                  <simple type="double" name="1"><value>25</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+
+
+		<TaskContext type="DisplayImage" name="ImageViewOF1">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>1</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>-192</value></simple>
+				  <simple type="double" name="1"><value>-100</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageViewSD1">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>200</value></simple>
+				  <simple type="double" name="1"><value>-100</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+
+		<TaskContext type="DisplayImage" name="ImageViewCam0L0">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>-780</value></simple>
+				  <simple type="double" name="1"><value>25</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageViewCam0L1">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>-192</value></simple>
+				  <simple type="double" name="1"><value>150</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageViewCam0L2">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>100</value></simple>
+				  <simple type="double" name="1"><value>150</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageViewCam0L3">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>250</value></simple>
+				  <simple type="double" name="1"><value>150</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageViewCam0L4">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>330</value></simple>
+				  <simple type="double" name="1"><value>150</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+	
+	
+	
+	
+
+		<TaskContext type="DisplayImage" name="ImageViewCam1L0">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+                                  <simple type="double" name="0"><value>-780</value></simple>
+                                  <simple type="double" name="1"><value>575</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageViewCam1L1">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>-192</value></simple>
+				  <simple type="double" name="1"><value>450</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageViewCam1L2">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>100</value></simple>
+				  <simple type="double" name="1"><value>450</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageViewCam1L3">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>250</value></simple>
+				  <simple type="double" name="1"><value>450</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageViewCam1L4">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Demosaice"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>330</value></simple>
+				  <simple type="double" name="1"><value>450</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+	</Activity>
+	
+	<!-- log ports -->
+        <Connection
+		sourceTask="Log"
+		sourcePort="ImageOF1"
+		targetTask="Visualizer"
+		targetPort="ImageOF1"/>
+
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageSD1"
+		targetTask="Visualizer"
+		targetPort="ImageSD1"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageDisparity"
+		targetTask="Visualizer"
+		targetPort="ImageDisparity"/>
+
+
+	<Connection
+		sourceTask="Visualizer"
+		sourcePort="ImageOF1Visu"
+		targetTask="ImageViewOF1"
+		targetPort="TypedImageIn"/>
+
+
+	<Connection
+		sourceTask="Visualizer"
+		sourcePort="ImageSD1Visu"
+		targetTask="ImageViewSD1"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Visualizer"
+		sourcePort="ImageDisparityVisu"
+		targetTask="ImageViewDisparity"
+		targetPort="TypedImageIn"/>
+
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam0L0"
+		targetTask="ImageViewCam0L0"
+		targetPort="TypedImageIn"/>
+
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam0L1"
+		targetTask="ImageViewCam0L1"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam0L2"
+		targetTask="ImageViewCam0L2"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam0L3"
+		targetTask="ImageViewCam0L3"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam0L4"
+		targetTask="ImageViewCam0L4"
+		targetPort="TypedImageIn"/>
+
+
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam1L0"
+		targetTask="ImageViewCam1L0"
+		targetPort="TypedImageIn"/>
+
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam1L1"
+		targetTask="ImageViewCam1L1"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam1L2"
+		targetTask="ImageViewCam1L2"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam1L3"
+		targetTask="ImageViewCam1L3"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam1L4"
+		targetTask="ImageViewCam1L4"
+		targetPort="TypedImageIn"/>
+	
+	<!-- live ports -->
+        <Connection
+                   sourceTask="IRCam0L0"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam0L0"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IRCam0L1"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam0L1"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IRCam0L2"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam0L2"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IRCam0L3"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam0L3"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IRCam0L4"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam0L4"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IRCam1L0"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam1L0"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IRCam1L1"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam1L1"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IRCam1L2"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam1L2"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IRCam1L3"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam1L3"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IRCam1L4"
+                   sourcePort="Image"
+                   targetTask="ImageViewCam1L4"
+                   targetPort="TypedImageIn"/>
+
+        <Connection
+                   sourceTask="IROF1"
+                   sourcePort="Image"
+                   targetTask="Visualizer"
+                   targetPort="ImageOF1"/>
+
+        <Connection
+                   sourceTask="IRDisparity"
+                   sourcePort="Image"
+                   targetTask="Visualizer"
+                   targetPort="ImageDisparity"/>
+
+</TaskGraph>

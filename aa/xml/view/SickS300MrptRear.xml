@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+    <Activity type="SequentialActivity">
+                <TaskContext type="DisplayMrptPlanarLaserScan" name="DisplaySickS300MrptRear"/>
+    </Activity>
+    <Connection
+               sourceTask="SickS300MrptRear"
+               sourcePort="ObservationOut"
+               targetTask="DisplaySickS300MrptRear"
+               targetPort="ObservationIn"/>
+</TaskGraph>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+		<TaskContext type="CarStateGenerator" name="CarStateGenerator"/>
+	</Activity>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="WatchdogStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="WatchdogStatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="WatchdogBatteryStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="WatchdogBatteryStatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="BrakeStatus1Out"
+		targetTask="CarStateGenerator"
+		targetPort="BrakeStatus1In"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="BrakeStatus2Out"
+		targetTask="CarStateGenerator"
+		targetPort="BrakeStatus2In"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="ThrottleStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="ThrottleStatusIn"/>
+
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="GearStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="GearStatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="SignalWipersStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="SignalWipersStatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="Light1StatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="Light1StatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="SteerAssist3StatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="SteerAssist3StatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="WheelSpeedsOut"
+		targetTask="CarStateGenerator"
+		targetPort="WheelSpeedsIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="PathPulseOut"
+		targetTask="CarStateGenerator"
+		targetPort="PathPulseIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="Motor1StatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="Motor1StatusIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="AbsEspOut"
+		targetTask="CarStateGenerator"
+		targetPort="AbsEspIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="YawAndBrakePressureOut"
+		targetTask="CarStateGenerator"
+		targetPort="YawAndBrakePressureIn"/>
+
+</TaskGraph>

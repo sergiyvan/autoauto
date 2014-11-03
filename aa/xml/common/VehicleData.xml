@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include if="node_name=='vw'"    file="../vehicledata/mig.xml"/>
+	<Include if="node_name=='dodge'" file="../vehicledata/spob.xml"/>
+	<Include if="node_name=='xeno'"  file="../vehicledata/xeno.xml"/>
+	<Include if="node_name=='imiev'" file="../vehicledata/imiev.xml"/>
+	<Include if="node_name=='truck'" file="../vehicledata/truck.xml"/>
+	<Include if="node_name=='ras'"   file="../vehicledata/ras.xml"/>     
+</TaskGraph>
+

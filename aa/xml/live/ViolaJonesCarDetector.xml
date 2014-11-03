@@ -1,0 +1,11 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<TaskGraph>
+
+	<Include file="../live/VehicleData.xml" />
+	<Include file="../live/ImageData.xml"/>
+	<Include file="../live/EgoState.xml"/>
+	<Include file="../live/ConfigurationStorage.xml" />
+	<Include file="../common/ViolaJonesCarDetector.xml" />
+	
+</TaskGraph>
+	

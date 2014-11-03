@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<!-- Ibeo Alasca mounted at the front center of Spob-->
+
+	<Activity type="SelectDrivenActivity">
+		<TaskContext type="IbeoAlasca" name="IbeoAlasca">
+			<struct name="" type="type_less">
+				<simple type="string" name="HostAddress"><value>192.168.1.3</value></simple>
+				<simple type="int" name="Port"><value>12000</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.02</value></simple>
+		</struct>
+		<TaskContext type="ServiceOperator" name="IbeoAlascaServiceOperator">
+		<!-- TODO  Add those properties
+			<struct name="" type="type_less">
+				<simple type="string" name="HostAddress"><value>192.168.1.3</value></simple>
+				<simple type="int" name="Port"><value>12000</value></simple>
+			</struct>
+			-->
+		</TaskContext>
+	</Activity>
+
+
+	<ConnectPeer task="IbeoAlasca" peer="IbeoAlascaServiceOperator"/>
+
+</TaskGraph>

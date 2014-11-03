@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+<Activity type="SequentialActivity">
+        <TaskContext type="SickToMrpt" name="SickS300MrptRear">
+                <struct name="" type="type_less">
+                        <simple type="double" name="scannerRoll">
+                                <value>0.0</value>
+                        </simple>
+                        <simple type="double" name="scannerPitch">
+                                <value>0.0</value>
+                        </simple>
+                        <simple type="double" name="scannerYaw">
+                                <value>180.0</value>
+                        </simple>
+                        <simple type="double" name="scannerX">
+                                <value>-0.18</value><!-- ahead -->
+                        </simple>
+                        <simple type="double" name="scannerY">
+                                <value>0.0</value><!--left -->
+                        </simple>
+                        <simple type="double" name="scannerZ">
+                                <value>-0.145</value><!-- ?? down ?? -->
+                        </simple>
+
+                        <simple type="double" name="InvalidFromDistance">
+                                <value>29</value>
+                        </simple>
+                        <simple type="double" name="InvalidUntilDistance">
+                                <value>0.2</value>
+                        </simple>
+
+                        <simple type="int" name="InvalidAFromIdx">
+                                <value>0</value><!--default=400 if we dont want to see the right wheel-->
+                        </simple>
+                        <simple type="int" name="InvalidAUntilIdx">
+                                <value>96</value><!--default=100 if we dont want to see the wheels-->
+                        </simple>
+                        <simple type="int" name="InvalidBFromIdx">
+                                <value>442</value><!--default=400 if we dont want to see the right wheel-->
+                        </simple>
+                        <simple type="int" name="InvalidBUntilIdx">
+                                <value>540</value><!--default=100 if we dont want to see the wheels-->
+                        </simple>
+
+                        <simple type="bool" name="FilterBySteepness">
+                                <value>true</value>
+                        </simple>
+                        <simple type="double" name="MinimalRequiredAngle">
+                                <value>15.0</value>
+                        </simple>
+
+                        <simple type="double" name="StdError">
+                                <value>0.1</value>
+                        </simple>
+                        <simple type="double" name="BeamAperture">
+                                <value>0.005</value>
+                        </simple>
+
+                        <simple type="string" name="Label">
+                                <value>SickS300Rear</value>
+                        </simple>
+
+                </struct>
+        </TaskContext>
+</Activity>
+</TaskGraph>

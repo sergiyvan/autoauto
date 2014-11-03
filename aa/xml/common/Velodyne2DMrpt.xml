@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+common for Velodyne2DMrpt
+
+Expects VelodyneImageProcessing (from live or logged VelodyneImage)
+-->
+<TaskGraph>
+
+
+    <Include if="node_name=='vw'" file="Velodyne2DMrptPassat.xml"/>
+    <Include if="node_name=='imiev'" file="Velodyne2DMrptIMiev.xml"/>
+    <!-- <Include if="node_name=='dodge'" file="OdometryDodge.xml"/> -->
+
+</TaskGraph>

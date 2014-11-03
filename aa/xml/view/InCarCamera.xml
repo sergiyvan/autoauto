@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext	type="DisplayImage"	name="InCarView">
+			<struct name="" type="type_less">
+				<simple type="bool" name="UseCameraParameter"><value>1</value></simple>
+				<simple type="double" name="Scale"><value>0.5</value></simple>
+				<simple type="double" name="Transparency"><value>1</value></simple>
+				<struct type="vec3" name= "DisplayRange">
+					<simple type="double" name="0"><value>0</value></simple>
+					<simple type="double" name="1"><value>1</value></simple>
+					<simple type="double" name="2"><value>1</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+<!--	<CallMethod
+			   task="InCarView"
+			   name="reattach">
+		<struct name="" type="type_less">
+			<simple type="string"
+					name="path">
+				<value>CarView/Car</value>
+			</simple>
+		</struct>
+	</CallMethod>-->
+
+        <Include file="../common/ConfigurationStorage.xml"/>
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageOut"
+		targetTask="InCarView"
+		targetPort="TypedImageIn"/>
+	<Connection
+		sourceTask="Config"
+		sourcePort="CameraParameter"
+		targetTask="InCarView"
+		targetPort="CameraParameterIn"/>
+</TaskGraph>
+

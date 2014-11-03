@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <Activity type="SelectDrivenActivity">
+		<TaskContext type="MicroSonic" name="MicroSonic1">
+			<struct name="" type="type_less">
+				<simple type="int" name="Port"><value>8000</value></simple>
+				<simple type="int" name="DeviceId"><value>0</value></simple>
+			</struct>
+		</TaskContext>
+        </Activity>
+
+        <Activity type="SelectDrivenActivity">
+		<TaskContext type="MicroSonic" name="MicroSonic2">
+			<struct name="" type="type_less">
+				<simple type="int" name="Port"><value>8001</value></simple>
+				<simple type="int" name="DeviceId"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+        </Activity>
+
+</TaskGraph>

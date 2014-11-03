@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Include file="../common/LoadHellaRadarConfig.xml" />
+
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+                <simple type="double" name="Period"><value>0.1</value></simple>
+        </struct>
+        <TaskContext
+                type="HellaRadarView"
+                name="DisplayHellaRadar"/>
+    </Activity>
+
+    <Connection
+            sourceTask="SensorCanDecoder"
+            sourcePort="HellaRadar24GhzObjectBundleOut"
+            targetTask="DisplayHellaRadar"
+            targetPort="ObjectPortIn"/>
+
+    <Connection
+            sourceTask="EgoStateSnapshotGenerator"
+            sourcePort="EgoState"
+            targetTask="DisplayHellaRadar"
+            targetPort="EgoStateIn"/>
+
+    <Connection
+            sourceTask="Config"
+            sourcePort="HellaRadarParameter"
+            targetTask="DisplayHellaRadar"
+            targetPort="RadarParameterIn"/>
+
+</TaskGraph>

@@ -1,0 +1,32 @@
+add_module(EgoStateTasks
+	EgoStateSnapshotGenerator.cpp
+LINK_LIBRARIES
+	EgoState
+TEST_SOURCES
+	testEgoState.cpp
+TEST_LINK_LIBRARIES
+	${QT_LIBRARIES}
+	glut
+	TaskGraph
+	Archives
+)
+
+add_module(EgoStateFilterTasks
+	EgoStateFilter.cpp
+	InterpolationModelSetter.cpp
+LINK_LIBRARIES
+    EgoStateFilter
+	PlotData
+	VisionUtils
+)
+add_module(EgoStateKalmanPoseFilter
+        EgoStateKalmanPoseFilter.cpp
+LINK_LIBRARIES
+    EgoState
+)
+add_module(EgoStatePlotDataTask
+	EgoStatePlotDataTask.cpp
+LINK_LIBRARIES
+	EgoState
+	SimplePlotData
+)

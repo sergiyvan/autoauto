@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="EgoState.xml"/>
+
+	<If condition="node_name=='vw'">
+	<Activity type="SequentialActivity">
+		<TaskContext
+			    type="HellaLaneDetectionUdp"
+			    name="HellaLaneDetectionUdp">
+			<struct name="" type="type_less">
+				<simple type="string" name="TargetAddress">
+					<value>192.168.1.110</value>
+				</simple>
+				<simple type="int" name="TargetPort">
+					<value>27015</value>
+				</simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+	</If>
+
+	<If condition="node_name!='vw'">
+	<!--<Activity type="SequentialActivity">-->
+	<Activity type="SelectDrivenActivity">
+		<TaskContext
+			    type="HellaLaneDetectionUdp"
+			    name="HellaLaneDetectionUdp">
+			<struct name="" type="type_less">
+				<simple type="string" name="TargetAddress">
+					<value>192.168.0.110</value>
+				</simple>
+				<simple type="int" name="TargetPort">
+					<value>27015</value>
+				</simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+	</If>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="HellaLaneDetectionUdp"
+		targetPort="EgoStateIn"/>
+</TaskGraph>

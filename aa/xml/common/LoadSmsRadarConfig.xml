@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Include file="ConfigurationStorage.xml" />
+
+    <CallMethod task="Config" name="loadFile">
+            <struct name="" type="type_less">
+                    <simple type="path" name="path">
+                            <value>resources/sensorparameters/SmsRadarParameters.xml</value>
+                    </simple>
+            </struct>
+    </CallMethod>
+
+</TaskGraph>

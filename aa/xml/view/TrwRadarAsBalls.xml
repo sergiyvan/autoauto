@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Include file="../common/LoadTrwRadarConfig.xml" />
+    <Include file="RightTrwRadarAsBalls.xml" />
+    <Include file="LeftTrwRadarAsBalls.xml" />
+    <Include file="RearTrwRadarAsBalls.xml" />
+    <Include file="FrontTrwRadarAsBalls.xml" />
+
+</TaskGraph>

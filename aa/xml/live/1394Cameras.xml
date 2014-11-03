@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<If condition="node_name=='vw'">
+
+<!-- Guppy -->
+<!--
+        <Activity type="SelectDrivenActivity">
+                <TaskContext    type="DC1394Camera"	    name="Camera">
+                        <struct name="" type="type_less">
+                                <simple type="int" name="BytesPerPacket"><value>1524</value></simple>
+                                <simple type="int" name="Mode"><value>0</value></simple>
+                                <simple type="int" name="ColourCoding"><value>0</value></simple>
+                                <simple type="int" name="Shutter"><value>500</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <CallMethod task="Camera" name="selectCameraById">
+                <struct name="" type="type_less">
+                        <simple type="int" name="unit"><value>0</value></simple>
+                        <simple type="long" name="guid"><value>2892819639982668</value></simple>
+                </struct>
+        </CallMethod>
+
+        <CallMethod
+                   task="Camera"
+                   name="renamePort">
+                <struct name="" type="type_less">
+                        <simple type="string" name="name"><value>TypedImage</value></simple>
+                </struct>
+        </CallMethod>
+-->
+
+
+				<Activity type="SelectDrivenActivity">
+						<TaskContext    type="DC1394Camera"	    name="CameraL">
+								<struct name="" type="type_less">
+                                        <simple type="int" name="BytesPerPacket">
+                                                <value>2368</value>
+                                        </simple>
+                                        <simple type="int" name="Mode">
+                                                <value>5</value>
+                                        </simple>
+                                        <simple type="int" name="ColourCoding">
+                                                <value>5</value>
+                                        </simple>
+                                        <simple type="int" name="Shutter">
+                                                <value>55</value>
+                                        </simple>
+                                        <simple type="int" name="InkaHDRFrameDelay">
+                                                <value>22</value>
+                                        </simple>
+                                        <simple type="bool" name="PassiveMode">
+												<value>false</value>
+                                        </simple>
+                                </struct>
+                        </TaskContext>
+                </Activity>
+
+                <CallMethod task="CameraL" name="selectCameraById">
+                        <struct name="" type="type_less">
+                                <simple type="int" name="unit"><value>0</value></simple>
+                                <simple type="long" name="guid"><value>3255654282690602</value></simple>
+
+
+                        </struct>
+                </CallMethod>
+
+
+        <CallMethod
+                   task="CameraL"
+                   name="renamePort">
+                <struct name="" type="type_less">
+                        <simple type="string" name="name"><value>TypedImageL</value></simple>
+                </struct>
+        </CallMethod>
+
+
+                <Activity type="SelectDrivenActivity">
+                        <TaskContext    type="DC1394Camera"	    name="CameraR">
+                                <struct name="" type="type_less">
+                                        <simple type="int" name="BytesPerPacket">
+                                                <value>2368</value>
+                                        </simple>
+                                        <simple type="int" name="Mode">
+                                                <value>5</value>
+                                        </simple>
+                                        <simple type="int" name="ColourCoding">
+                                                <value>5</value>
+                                        </simple>
+                                        <simple type="int" name="Shutter">
+                                                <value>55</value>
+                                        </simple>
+                                         <simple type="int" name="InkaHDRFrameDelay">
+                                                <value>44</value>
+                                        </simple>
+                                        <simple type="bool" name="PassiveMode">
+                                                <value>false</value>
+                                        </simple>
+                                </struct>
+                        </TaskContext>
+                </Activity>
+
+                <CallMethod task="CameraR" name="selectCameraById">
+                        <struct name="" type="type_less">
+                                <simple type="int" name="unit"><value>0</value></simple>
+                                <simple type="long" name="guid"><value>3255654282690603</value></simple>
+
+                        </struct>
+                </CallMethod>
+
+
+        <CallMethod
+                   task="CameraR"
+                   name="renamePort">
+                <struct name="" type="type_less">
+                        <simple type="string" name="name"><value>TypedImageR</value></simple>
+                </struct>
+        </CallMethod>
+
+        </If>
+
+
+
+
+	<If condition='node_name=="dodge"'>
+	<Activity type="SelectDrivenActivity">
+			<TaskContext    type="DC1394Camera"	    name="Camera">
+				<struct name="" type="type_less">
+					<simple type="int" name="BytesPerPacket">
+						<value>2368</value>
+					</simple>
+					<simple type="int" name="Mode">
+						<value>5</value>
+					</simple>
+					<simple type="int" name="ColourCoding">
+						<value>5</value>
+					</simple>
+					<simple type="int" name="Shutter">
+						<value>55</value>
+					</simple>
+					<simple type="bool" name="PassiveMode">
+						<value>false</value>
+					</simple>
+				</struct>
+			</TaskContext>
+		</Activity>
+
+		<CallMethod task="Camera" name="selectCameraById">
+			<struct name="" type="type_less">
+				<simple type="int" name="unit"><value>0</value></simple>
+				<simple type="long" name="guid"><value>3255654282493994</value></simple>
+			</struct>
+		</CallMethod>
+		
+	<CallMethod
+		   task="Camera"
+		   name="renamePort">
+		<struct name="" type="type_less">
+			<simple type="string" name="name"><value>TypedImage</value></simple>
+		</struct>
+	</CallMethod>
+	
+<!-- stereo vision cams -->
+
+<!--	 first (left) cam -->
+		<Activity type="SelectDrivenActivity">
+			<TaskContext    type="DC1394Camera"	    name="CameraL">
+				<struct name="" type="type_less">
+					<simple type="int" name="BytesPerPacket"><value>1524</value></simple>
+					<simple type="int" name="Mode"><value>0</value></simple>
+					<simple type="int" name="ColourCoding"><value>9</value></simple>
+					<simple type="int" name="Shutter"><value>20</value></simple>
+				</struct>
+			</TaskContext>
+		</Activity>
+
+		<CallMethod task="CameraL" name="selectCameraById">
+			<struct name="" type="type_less">
+				<simple type="int" name="unit"><value>0</value></simple>
+				<simple type="long" name="guid"><value>13602058367823114</value></simple>
+			</struct>
+		</CallMethod>	
+		
+		<Activity type="SelectDrivenActivity">
+			<TaskContext    type="DC1394Camera"	    name="CameraR">
+				<struct name="" type="type_less">
+					<simple type="int" name="BytesPerPacket"><value>1524</value></simple>
+					<simple type="int" name="Mode"><value>0</value></simple>
+					<simple type="int" name="ColourCoding"><value>9</value></simple>
+					<simple type="int" name="Shutter"><value>20</value></simple>
+					<simple type="bool" name="ExternalTrigger"><value>true</value></simple>
+					<simple type="bool" name="ExternalTriggerHighPolarity"><value>true</value></simple>
+				</struct>
+			</TaskContext>
+		</Activity>
+
+
+		<CallMethod	task="CameraR" name="selectCameraById">
+			<struct name="" type="type_less">
+				<simple type="int" name="unit"><value>0</value></simple>
+				<simple type="long" name="guid"><value>13602058367823115</value></simple>
+			</struct>
+		</CallMethod>			
+	
+	</If>
+
+
+
+
+
+        <Activity type="SequentialActivity">
+<!--			<TaskContext    type="ConvertImage"     name="ConvertImage"/>
+                <TaskContext    type="ConvertImage"     name="ConvertImageL"/>
+                <TaskContext    type="ConvertImage"     name="ConvertImageR"/>
+				<TaskContext    type="ConvertImage"     name="ConvertImageSR"/> -->
+                <TaskContext    type="DisplayImage"     name="ImageViewRGB"/>
+				<TaskContext	type="PortMapper"	name="PortMapper"/>
+        </Activity>
+
+<!--
+        <Connection
+                sourceTask="Camera"
+                sourcePort="TypedImage"
+                targetTask="ConvertImage"
+                targetPort="TypedImageIn"/>
+
+        <Connection
+                sourceTask="CameraL"
+                sourcePort="TypedImageL"
+                targetTask="ConvertImageL"
+                targetPort="TypedImageIn"/>
+
+	<Connection
+                sourceTask="CameraR"
+                sourcePort="TypedImageR"
+                targetTask="ConvertImageR"
+                targetPort="TypedImageIn"/>
+                
+	<Connection
+                sourceTask="CameraSR"
+                sourcePort="TypedImageSR"
+                targetTask="ConvertImageSR"
+                targetPort="TypedImageIn"/>
+    -->          
+         <Connection
+                sourceTask="Camera"
+                sourcePort="TypedImage"
+                targetTask="PortMapper"
+                targetPort="TypedImageIn"/>
+
+        <Connection
+                sourceTask="CameraL"
+                sourcePort="TypedImageL"
+                targetTask="PortMapper"
+                targetPort="TypedImageLIn"/>
+
+		<Connection
+                sourceTask="CameraR"
+                sourcePort="TypedImageR"
+                targetTask="PortMapper"
+                targetPort="TypedImageRIn"/>
+<!--
+		<Connection
+                sourceTask="CameraSR"
+                sourcePort="TypedImageSR"
+                targetTask="ConvertImageSR"
+                targetPort="TypedImageIn"/> -->
+      
+<!-- stereo bundle -->
+        <Activity type="SequentialActivity">
+                <TaskContext    type="StereoBundle"     name="StereoBundle"/>
+        </Activity>
+        
+        	<Connection
+				sourceTask="PortMapper"
+				sourcePort="TypedImageLOut"
+				targetTask="StereoBundle"
+				targetPort="TypedImageL"/>
+				
+			<Connection
+				sourceTask="PortMapper"
+				sourcePort="TypedImageROut"
+				targetTask="StereoBundle"
+				targetPort="TypedImageR"/>
+        
+	<TaskBrowser
+                    task="Camera"/>
+</TaskGraph>

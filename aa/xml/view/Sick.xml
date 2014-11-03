@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<!-- SickToGlobal -->
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+		<TaskContext type="SickToGlobal" name="SickToGlobal">
+			<struct name="" type="type_less">
+				<simple type="double" name="scannerRoll">
+					<value>0.0</value> <!-- -70.0-->
+				</simple>
+				<simple type="double" name="scannerPitch">
+					<value>24.8</value> <!-- alt: 40. neu:70-->
+				</simple>
+				<simple type="double" name="scannerYaw">
+					<value>0.0</value><!--105.0-->
+				</simple>
+				<simple type="double" name="scannerX">
+					<value>2.7</value><!--  vorwartz von IMU -ketill -->
+				</simple>
+				<simple type="double" name="scannerY">
+					<value>0.4</value><!--links von IMU -->
+				</simple>
+				<simple type="double" name="scannerZ">
+					<value>1.15</value><!--runter zu IMU-->
+				</simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+	
+
+	<Connection
+		   sourceTask="Polar"
+		   sourcePort="ScanPoints"
+		   targetTask="SickToGlobal"
+		   targetPort="ScanPoints"/>
+	<Connection
+		   sourceTask="EgoStateSnapshotGenerator"
+		   sourcePort="EgoState"
+		   targetTask="SickToGlobal"
+		   targetPort="EgoState"/>
+	<!-- for playing live-->
+	<Connection
+		   sourceTask="Laser"
+		   sourcePort="laserData"
+		   targetTask="SickToGlobal"
+		   targetPort="laserData"/>
+	<!-- for playing logged-->
+	<Connection
+		   sourceTask="Log"
+		   sourcePort="laserData"
+		   targetTask="SickToGlobal"
+		   targetPort="laserData"/>
+		
+	<!-- for DisplaySick-->
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+		<TaskContext
+			    type="DisplaySick"
+			    name="DisplaySick">
+			
+			<struct name="" type="type_less">               
+				<simple type="bool" name="showBuffer">
+					<value>true</value>
+				</simple>
+				
+			</struct>
+		</TaskContext>
+	</Activity>
+	
+
+	<Connection
+		   sourceTask="SickToGlobal"
+		   sourcePort="GlobalPoints"
+		   targetTask="DisplaySick"
+		   targetPort="GlobalPoints"/>
+	<!-- for playing live-->   
+-   	<Connection
+		   sourceTask="Laser"
+		   sourcePort="laserData"
+		   targetTask="DisplaySick"
+		   targetPort="LaserData"/>
+	<!-- for playing logged-->
+	<Connection
+		   sourceTask="Log"
+		   sourcePort="laserData"
+		   targetTask="DisplaySick"
+		   targetPort="LaserData"/>
+		   
+	   
+</TaskGraph>

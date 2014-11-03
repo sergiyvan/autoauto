@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <Include file="../common/InsEgoState.xml"/>
+	
+	<!-- =============================== live ============================== -->
+
+	<!-- get data from INS sensors -->
+        <Include file="../live/Ins.xml"/>
+
+	<!-- generate egostate -->
+	<Connection
+		sourceTask="InsDataTask"
+		sourcePort="InsDataOut"
+		targetTask="EgoStateGenerator"
+		targetPort="InsDataIn"/>
+
+	<!-- ===================== snap shot generator ========================= -->
+
+	<Include file="../common/EgoState.xml"/>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoStateSetter"
+		targetTask="EgoStateGenerator"
+		targetPort="EgoStateSetter"/>
+</TaskGraph>

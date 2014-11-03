@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+live for VelodyneImage, also provides VelodyneImageProcessing
+-->
+<TaskGraph>
+
+
+    <Include file="Velodyne.xml"/>
+    <Include file="../common/VelodyneImage.xml"/>
+    <Connection
+            sourceTask="VelodyneUDP"
+            sourcePort="SuperVelodyneBundle"
+            targetTask="VelodyneImage"
+            targetPort="SuperVelodyneBundleIn"/>
+
+
+
+
+</TaskGraph>

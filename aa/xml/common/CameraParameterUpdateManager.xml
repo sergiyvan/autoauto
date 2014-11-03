@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+	<Include file="ConfigurationStorage.xml"/>
+
+	<Activity type="SequentialActivity">
+        <TaskContext
+			type="CameraParameterUpdateManager"
+			name="CameraParameterUpdateManager">
+        </TaskContext>
+    </Activity>
+
+	<Connection
+		sourceTask="Config"
+		sourcePort="CameraParameter"
+		targetTask="CameraParameterUpdateManager"
+		targetPort="CameraParameterListIn"/>
+
+	<Connection
+		sourceTask="CameraParameterUpdateManager"
+		sourcePort="CameraParameterListOut"
+		targetTask="Config"
+		targetPort="UpdateCameraParameter"/>
+
+</TaskGraph>

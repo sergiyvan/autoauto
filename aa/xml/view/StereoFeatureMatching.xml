@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+		<Include file="../logged/ConfigurationStorage.xml" />
+		<Include file="../logged/ImageData.xml"/>
+
+		<CreateTaskGui/>
+
+		<Activity type="SequentialActivity">
+				<TaskContext type="StereoFeatureDetector" name="StereoFeatureDetector">
+				</TaskContext>
+				<TaskContext type="StereoDescriptorExtractor" name="StereoDescriptorExtractor">
+				</TaskContext>
+				<TaskContext type="StereoFeatureBundleCollector" name="StereoFeatureBundleCollector">
+				</TaskContext>
+				<TaskContext type="StereoFeatureMultiMatcher" name="StereoFeatureMultiMatcher">
+						<struct name="" type="type_less">
+								<simple type="flt" name="MaxMatchDistance">
+										<value>0.2</value>
+								</simple>
+						</struct>
+				</TaskContext>
+				<TaskContext type="FeatureMultiMatchDrawer" name="FeatureMultiMatchDrawer">
+				</TaskContext>
+				<TaskContext type="DisplayImage" name="DisplayStereoMatches">
+				</TaskContext>
+		</Activity>
+
+		<Connection
+				sourceTask="StereoBundle"
+				sourcePort="TypedStereoImage"
+				targetTask="StereoFeatureDetector"
+				targetPort="StereoImageIn"/>
+
+		<Connection
+				sourceTask="StereoFeatureDetector"
+				sourcePort="StereoVisionFeatureBundleOut"
+				targetTask="StereoDescriptorExtractor"
+				targetPort="StereoVisionFeatureBundleIn"/>
+
+		<Connection
+				sourceTask="StereoDescriptorExtractor"
+				sourcePort="StereoVisionFeatureBundleOut"
+				targetTask="StereoFeatureBundleCollector"
+				targetPort="StereoVisionFeatureBundleIn"/>
+
+		<Connection
+				sourceTask="StereoFeatureBundleCollector"
+				sourcePort="StereoVisionFeatureBundleListOut"
+				targetTask="StereoFeatureMultiMatcher"
+				targetPort="StereoVisionFeatureBundleListIn"/>
+
+		<Connection
+				sourceTask="StereoFeatureMultiMatcher"
+				sourcePort="StereoVisionFeatureBundleListOut"
+				targetTask="FeatureMultiMatchDrawer"
+				targetPort="StereoVisionFeatureBundleListIn"/>
+
+
+		<Connection
+				sourceTask="FeatureMultiMatchDrawer"
+				sourcePort="ImageOut"
+				targetTask="DisplayStereoMatches"
+				targetPort="TypedImageIn"/>
+
+
+<!-- mrpt slam and egomotion stuff -->
+
+<!--
+                <Activity type="SequentialActivity">
+                                <TaskContext type="EgoMotionTask" name="EgoMotionTask">
+                                </TaskContext>
+                                <TaskContext type="MrptSlam" name="MrptSlam">
+                                </TaskContext>
+                </Activity>
+
+                <Connection
+                                sourceTask="EgoMotionTask"
+                                sourcePort="ActionOut"
+                                targetTask="MrptSlam"
+                                targetPort="ActionIn"/>
+
+
+                <Connection
+                                sourceTask="StereoFeatureMultiMatcher"
+                                sourcePort="StereoVisionFeatureBundleListOut"
+                                targetTask="EgoMotionTask"
+                                targetPort="StereoVisionFeatureBundleListIn"/>
+
+                <Connection
+                                sourceTask="Config"
+                                sourcePort="CameraParameter"
+                                targetTask="EgoMotionTask"
+                                targetPort="CameraParameterIn"/>
+-->
+
+
+</TaskGraph>

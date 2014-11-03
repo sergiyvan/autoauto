@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="../common/Sick.xml"/>
+
+	<Activity type="SelectDrivenActivity">
+		<TaskContext
+			    type="TCPSickLaser"
+			    name="Laser"/>
+	</Activity>
+
+	<Connection
+		   sourceTask="Laser"
+		   sourcePort="laserData"
+		   targetTask="Polar"
+		   targetPort="laserData"/>
+	
+</TaskGraph>

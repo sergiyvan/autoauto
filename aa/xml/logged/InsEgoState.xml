@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Include file="../common/InsEgoState.xml"/>
+
+	<!-- insted of getting data from real device, get it from the log -->
+
+	<Include file="../logged/Default.xml"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="InsDataOut"
+		targetTask="EgoStateGenerator"
+		targetPort="InsDataIn"/>
+
+	<!-- ===================== snap shot generator ========================= -->
+
+	<Include file="../common/EgoState.xml"/>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoStateSetter"
+		targetTask="EgoStateGenerator"
+		targetPort="EgoStateSetter"/>
+</TaskGraph>

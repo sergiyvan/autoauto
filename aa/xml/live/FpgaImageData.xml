@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="ConfigurationStorage.xml"/>
+	<Include file="FpgaCamera.xml"/>
+	
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="ImageRectification" name="ImageRectification">
+		</TaskContext>
+	</Activity>
+		
+	<Activity type="SequentialActivity">
+		<TaskContext type="FpgaCompatibility" name="FpgaCompatibility">
+		</TaskContext>
+	</Activity>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="FreeSpaceAnalysis" name="FreeSpaceAnalysis">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Rotate"><value>0</value></simple>
+		    </struct>
+		</TaskContext>
+	</Activity>			
+
+	<Connection
+		sourceTask="StereoBundle"
+		sourcePort="TypedStereoImage"
+		targetTask="ImageRectification"
+		targetPort="StereoImageIn"/>
+
+	<Connection
+		sourceTask="StereoBundle"
+		sourcePort="StereoCameraOut"
+		targetTask="ImageRectification"
+		targetPort="StereoCameraIn"/>
+
+	<Connection
+		sourceTask="ImageRectification"
+		sourcePort="StereoDataOut"
+		targetTask="FpgaCompatibility"
+		targetPort="StereoDataIn"/>
+		
+	<Connection
+		sourceTask="IRDisparity"
+		sourcePort="Image"
+		targetTask="FpgaCompatibility"
+		targetPort="DisparityImageIn"/>
+
+	<Connection
+		sourceTask="FpgaCompatibility"
+		sourcePort="StereoDataOut"
+		targetTask="FreeSpaceAnalysis"
+		targetPort="StereoDataIn"/>
+
+	<Connection
+		sourceTask="Config"
+		sourcePort="CameraParameter"
+		targetTask="FreeSpaceAnalysis"
+		targetPort="CameraParametersIn"/>
+
+</TaskGraph>

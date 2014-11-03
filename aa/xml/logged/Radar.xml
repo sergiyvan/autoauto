@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <!-- PASSAT INCLUDES -->
+
+        <Include if="node_name=='vw'" file="SmsRadar.xml" />
+        <Include if="node_name=='vw'" file="HellaRadar.xml" />
+        <Include if="node_name=='vw'" file="TrwRadar.xml" />
+
+        <!-- PASSAT EXTRA -->
+        <!-- module for tracking vehicle velocity with radar -->
+<!--        <Include if="node_name=='vw'" file="../common/SmsVelocityTracker.xml" />-->
+
+        <!-- IMIEV INCLUDES -->
+        <Include if="node_name=='imiev'" file="SmsRadar.xml" />
+
+</TaskGraph>

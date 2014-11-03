@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="VehicleData.xml"/>
+	<Include file="ConfigurationStorage.xml"/>
+	<Include file="EgoState.xml"/>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="TrafficLightDetector" name="TrafficLightDetector">
+			<struct name="" type="type_less">
+			<simple type="double" name="MaxRndfDistance"><value>200.0</value></simple>
+			<simple type="int" name="Hysteresis"><value>5</value></simple>
+			<simple type="bool" name="FlipImage"><value>false</value></simple>
+			<simple type="int" name="BayerPattern"><value>0</value></simple>
+			<simple type="double" name="TrafficLightWidth"><value>3.0</value></simple>
+			<simple type="double" name="TrafficLightHeight"><value>2.0</value></simple>
+			<simple type="int" name="MinRed"><value>150</value></simple>
+			<simple type="int" name="MaxRed"><value>10</value></simple>
+			<simple type="int" name="MinYellow"><value>20</value></simple>
+			<simple type="int" name="MaxYellow"><value>30</value></simple>
+			<simple type="int" name="MinGreen"><value>40</value></simple>
+			<simple type="int" name="MaxGreen"><value>90</value></simple>
+			<simple type="int" name="MinSat"><value>120</value></simple>
+			<simple type="int" name="MinVal"><value>120</value></simple>
+			<simple type="int" name="ClusterSize"><value>4</value></simple>
+			<simple type="bool" name="FilterByArea"><value>0</value></simple>
+			<simple type="bool" name="FilterByCircularity"><value>0</value></simple>
+			<simple type="bool" name="FilterByConvexity"><value>0</value></simple>
+			<simple type="bool" name="FilterByBlackness"><value>0</value></simple>
+			<simple type="bool" name="FilterByLearnedClassifier"><value>1</value></simple>
+			<simple type="double" name="ProbThreshold"><value>0.0</value></simple>
+			<simple type="bool" name="ShrinkRegionsOfInterest"><value>0</value></simple>
+			<simple type="bool" name="UseLowerThresholdOnFail"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+
+	<Connection
+		   sourceTask="Config"
+		   sourcePort="CameraParameter"
+		   targetTask="TrafficLightDetector"
+		   targetPort="CameraParameterIn"/>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="TrafficLightDetector"
+		targetPort="EgoStateIn"/>
+
+</TaskGraph>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="IbeoLuxFusion" name="IbeoLuxFusion">
+		</TaskContext>
+	</Activity>
+</TaskGraph>
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="FusedIbeoOccupancyMapGenerator" name="FusedIbeoOccupancyMapGenerator">
+		</TaskContext>
+	</Activity>
+</TaskGraph>
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="StereoMatcher" name="StereoMatcher">
+		</TaskContext>
+	</Activity>
+</TaskGraph>
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="CartOccMapIbeoProj" name="CartOccMapIbeoProj">
+		</TaskContext>
+	</Activity>
+</TaskGraph>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="OccupancyMapProjComparison" name="OccupancyMapProjComparison">
+		</TaskContext>
+	</Activity>
+</TaskGraph>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+
+
+        <Activity type="SequentialActivity">
+            <TaskContext type="DisplayMrptColouredPointsMap" name="DisplayKinect" >
+              </TaskContext>
+	      <TaskContext type="KinectObservation" name="KinectObservation" >
+              </TaskContext>
+        </Activity>
+
+        <Connection
+            sourceTask="MrptKinect"
+            sourcePort="ObservationOut"
+            targetTask="DisplayKinect"
+            targetPort="ObservationIn"/>
+	    
+	    <Connection
+            sourceTask="Log"
+            sourcePort="KinectDataOut"
+            targetTask="KinectObservation"
+            targetPort="KinectDataIn"/>
+	    
+	   	    <Connection
+            sourceTask="Log"
+            sourcePort="KinectDataOut"
+            targetTask="DisplayKinect"
+            targetPort="KinectDataIn"/>
+</TaskGraph>

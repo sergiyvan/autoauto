@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="../common/EgoState.xml"/>
+	
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext type="DisplayCarPosition2d" name="DisplayCarPosition2d"></TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplayCarPosition2d"
+		targetPort="EgoStateIn"/>
+
+
+	<!-- <ConnectPeer task="Log" peer="DisplayCarPosition2d"/> -->
+</TaskGraph>

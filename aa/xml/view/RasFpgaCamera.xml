@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.04</value></simple>
+		</struct>
+
+		<TaskContext type="DisplayFpgaCameraState" name="DisplayFpgaCameraState" />
+	</Activity>
+
+
+<!--	The visualizer draws the disparity map-->
+	<Activity type="SequentialActivity">
+		<TaskContext    type="FpgaDataVisualizer"	    name="Visualizer0">
+		</TaskContext>
+	</Activity>
+	<Activity type="SequentialActivity">
+		<TaskContext    type="FpgaDataVisualizer"	    name="Visualizer1">
+		</TaskContext>
+	</Activity>
+	<Activity type="SequentialActivity">
+		<TaskContext    type="FpgaDataVisualizer"	    name="Visualizer2">
+		</TaskContext>
+	</Activity>
+		
+
+<!--	Image views for fpga data-->
+	<Activity type="SequentialActivity">
+
+		<TaskContext type="DisplayImage" name="ImageView0">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Undistort"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>-800</value></simple>
+				  <simple type="double" name="1"><value>500</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+
+
+		<TaskContext type="DisplayImage" name="ImageView1">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Undistort"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>0</value></simple>
+				  <simple type="double" name="1"><value>500</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageView2">
+			<struct name="" type="type_less">
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>800</value></simple>
+				  <simple type="double" name="1"><value>500</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+
+		<TaskContext type="DisplayImage" name="ImageView3">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Undistort"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				    <simple type="double" name="0"><value>-800</value></simple>
+				    <simple type="double" name="1"><value>0</value></simple>
+				    <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageView4">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Undistort"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>0</value></simple>
+				  <simple type="double" name="1"><value>0</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageView5">
+			<struct name="" type="type_less">
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>800</value></simple>
+				  <simple type="double" name="1"><value>0</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageView6">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Undistort"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>-800</value></simple>
+				  <simple type="double" name="1"><value>-500</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+		
+		<TaskContext type="DisplayImage" name="ImageView7">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Undistort"><value>0</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>0</value></simple>
+				  <simple type="double" name="1"><value>-500</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+	
+
+		<TaskContext type="DisplayImage" name="ImageView8">
+			<struct name="" type="type_less">
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>800</value></simple>
+				  <simple type="double" name="1"><value>-500</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+
+	</Activity>
+	
+
+	<If condition="mode=='play'">
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="FpgaSystemStatus"
+		targetTask="DisplayFpgaCameraState"
+		targetPort="FpgaCameraStateIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="IR0"
+		targetTask="ImageView0"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="IR1"
+		targetTask="ImageView1"
+		targetPort="TypedImageIn"/>
+		
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="IR3"
+		targetTask="ImageView3"
+		targetPort="TypedImageIn"/>
+
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="IR4"
+		targetTask="ImageView4"
+		targetPort="TypedImageIn"/>
+		
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="IR6"
+		targetTask="ImageView6"
+		targetPort="TypedImageIn"/>
+
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="IR7"
+		targetTask="ImageView7"
+		targetPort="TypedImageIn"/>
+		
+        <Connection
+	       sourceTask="Log"
+	       sourcePort="IR2"
+	       targetTask="Visualizer0"
+               targetPort="ImageDisparity"/>
+
+        <Connection
+	       sourceTask="Log"
+	       sourcePort="IR5"
+	       targetTask="Visualizer1"
+               targetPort="ImageDisparity"/>
+
+	<Connection
+	       sourceTask="Log"
+	       sourcePort="IR8"
+	       targetTask="Visualizer2"
+	       targetPort="ImageDisparity"/>
+	</If>
+	
+
+	<If condition="mode=='live'">
+
+	<Connection
+		sourceTask="FpgaCamera"
+		sourcePort="FpgaSystemStatus"
+		targetTask="DisplayFpgaCameraState"
+		targetPort="FpgaCameraStateIn"/>
+
+	<Connection
+		   sourceTask="IR0"
+		   sourcePort="Image"
+		   targetTask="ImageView0"
+		   targetPort="TypedImageIn"/>
+
+	<Connection
+		   sourceTask="IR1"
+		   sourcePort="Image"
+		   targetTask="ImageView1"
+		   targetPort="TypedImageIn"/>
+
+	<Connection
+		   sourceTask="IR2"
+		   sourcePort="Image"
+		   targetTask="Visualizer0"
+		   targetPort="ImageDisparity"/>
+		   
+	<Connection
+		   sourceTask="IR3"
+		   sourcePort="Image"
+		   targetTask="ImageView3"
+		   targetPort="TypedImageIn"/>
+
+	<Connection
+		   sourceTask="IR4"
+		   sourcePort="Image"
+		   targetTask="ImageView4"
+		   targetPort="TypedImageIn"/>
+
+	<Connection
+		   sourceTask="IR5"
+		   sourcePort="Image"
+		   targetTask="Visualizer1"
+		   targetPort="ImageDisparity"/>
+
+	<Connection
+		   sourceTask="IR6"
+		   sourcePort="Image"
+		   targetTask="ImageView6"
+		   targetPort="TypedImageIn"/>
+
+	<Connection
+		   sourceTask="IR7"
+		   sourcePort="Image"
+		   targetTask="ImageView7"
+		   targetPort="TypedImageIn"/>
+
+	<Connection
+		   sourceTask="IR8"
+		   sourcePort="Image"
+		   targetTask="Visualizer2"
+		   targetPort="ImageDisparity"/>
+	</If>
+
+
+
+	<Connection
+		sourceTask="Visualizer0"
+		sourcePort="ImageDisparityVisu"
+		targetTask="ImageView2"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Visualizer1"
+		sourcePort="ImageDisparityVisu"
+		targetTask="ImageView5"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Visualizer2"
+		sourcePort="ImageDisparityVisu"
+		targetTask="ImageView8"
+		targetPort="TypedImageIn"/>
+
+</TaskGraph>

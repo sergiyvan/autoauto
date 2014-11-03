@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+    <Include file="ImageData.xml"/>
+    <Include file="ConfigurationStorage.xml"/>
+	<Include file="EgoState.xml"/>
+    <Include file="../common/StereoBM.xml"/>
+	    
+</TaskGraph>

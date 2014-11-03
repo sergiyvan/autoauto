@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include if="node_name=='dodge'" file="CarStateDodge.xml"/>
+	<Include if="node_name=='vw'" file="CarStatePassat.xml"/>
+	<Include if="node_name=='imiev'" file="CarStateIMiev.xml"/>
+</TaskGraph>

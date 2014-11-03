@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="VehicleData.xml"/>
+
+	<Activity type="SequentialActivity">
+                <TaskContext type="VelodynePointCloud" name="VelodynePointCloud">
+                        <struct name="" type="type_less">
+                                <simple type="bool" name="Static"><value>true</value></simple>
+                        </struct>
+                </TaskContext>
+	</Activity>
+
+	<Connection
+			   sourceTask="Log"
+			   sourcePort="SuperVelodyneBundle"
+			   targetTask="VelodynePointCloud"
+			   targetPort="SuperVelodyneBundle"/>
+</TaskGraph>

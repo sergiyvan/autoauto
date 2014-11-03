@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="CanIMiev.xml"/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+		<TaskContext type="IMievCarStateGenerator" name="CarStateGenerator"/>
+	</Activity>
+
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="BrakeStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="BrakeStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="ThrottleStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="ThrottleStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="GearStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="GearStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="SteerAngleStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="SteerAngleStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="LightStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="LightStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="VelocityStatusOut"
+		targetTask="CarStateGenerator"
+		targetPort="VelocityStatusIn"/>
+</TaskGraph>

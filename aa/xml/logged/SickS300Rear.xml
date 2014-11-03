@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <Include file="Default.xml"/>
+        <Include file="../common/SickS300Rear.xml"/>
+
+        <Connection
+                sourceTask="Log"
+                sourcePort="laserDataRear"
+                targetTask="SickS300RearPolar"
+                targetPort="laserData"/>
+
+</TaskGraph>

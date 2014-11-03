@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+
+	<Include file="Default.xml"/>
+	<Include file="ImageData.xml" />
+
+	<Include file="../common/IbeoLuxFusion.xml"/>
+	<Connection
+		sourceTask="Log"
+		sourcePort="IbeoLuxScanData"
+		targetTask="IbeoLuxFusion"
+		targetPort="LuxScanData1In"/>
+	<Connection
+		sourceTask="Log"
+		sourcePort="IbeoLux8ScanData"
+		targetTask="IbeoLuxFusion"
+		targetPort="LuxScanData2In"/>
+
+	<Include file="../common/ConfigurationStorage.xml"/>
+
+	<CallMethod task="Config" name="loadFile">
+		<struct name="" type="type_less">
+			<simple type="path" name="path">
+				<value>resources/vision/CameraParameterRearAssist.xml</value>
+			</simple>
+		</struct>
+	</CallMethod>
+
+	<Include file="../common/PointCloudColorizer.xml"/>
+
+	<Connection
+		sourceTask="IbeoLuxFusion"
+		sourcePort="PointCloudOut"
+		targetTask="PointCloudColorizer"
+		targetPort="PointCloudIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImageL"
+		targetTask="PointCloudColorizer"
+		targetPort="ImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImageR"
+		targetTask="PointCloudColorizer"
+		targetPort="ImageIn"/>
+
+	<Connection
+		sourceTask="Config"
+		sourcePort="CameraParameter"
+		targetTask="PointCloudColorizer"
+		targetPort="CameraParametersIn"/>
+
+</TaskGraph>

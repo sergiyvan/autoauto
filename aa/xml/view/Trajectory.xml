@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+				<TaskContext type="DisplayTrajectory" name="DisplayTrajectory">
+				</TaskContext>
+<!--                <TaskContext type="DisplayTrajectory" name="DisplayTrajectory2">
+                        <struct name="" type="type_less">
+                                <struct type="vec3" name="Color">
+                                  <simple type="double" name="0"><value>1.0</value></simple>
+                                  <simple type="double" name="1"><value>1.0</value></simple>
+                                  <simple type="double" name="2"><value>1.0</value></simple>
+                                </struct>
+                        </struct>
+				</TaskContext>-->
+        </Activity>
+	
+        <Connection
+				sourceTask="EgoStateSnapshotGenerator"
+				sourcePort="EgoState"
+				targetTask="DisplayTrajectory"
+				targetPort="EgoStateIn"/>
+	
+<!--        <Connection
+                sourceTask="LaneDataGpsCorrector"
+                sourcePort="EgoState"
+                targetTask="DisplayTrajectory2"
+				targetPort="EgoStateIn"/>-->
+
+
+</TaskGraph>

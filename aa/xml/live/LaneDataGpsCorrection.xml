@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+<!--    this file has to be included before any other EgoState (or includes that include an other EgoState), so that a "fake" EgoStateSnapshotGenerator can be created -->
+
+    <!-- TimedMetainfo is needed to distinguish between spob/mig and setting theVehicleData-->
+        <Include file="../common/VehicleData.xml"/>
+
+
+
+
+	<!-- LaneDataGpsCorrector task (named EgoStateSnapshotGenerator so that all modules use corrected EgoState and i dont have to go through all includes)-->
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.02</value></simple>
+		</struct>
+		<TaskContext type="LaneDataGpsCorrector" name="EgoStateSnapshotGenerator">
+		</TaskContext>
+	</Activity>
+
+	<If condition="node_name=='vw'">
+		<!-- include CarState and connect PassatCarState for wheelspeeds-->
+		<Include file="CarStatePassat.xml"/>
+		<Connection
+			sourceTask="CarStateGenerator"
+			sourcePort="PassatCarStateOut"
+			targetTask="EgoStateSnapshotGenerator"
+			targetPort="PassatCarStateIn"/>
+	</If>
+
+
+	<!-- (renamed) original EgoState tasks-->
+	<Include file="Applanix.xml"/>
+
+	<Connection
+		sourceTask="Applanix"
+		sourcePort="VehicleNavigationPerformanceMetrics"
+		targetTask="EgoStateSnapshotGenerator"
+		targetPort="VehicleNavigationPerformanceMetricsIn" />
+
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.02</value></simple>
+                </struct>
+                <TaskContext	type="ApplanixEgoStateGenerator"		name="EgoStateGenerator"/>
+        </Activity>
+
+        <Connection
+                sourceTask="Applanix"
+                sourcePort="VehicleNavigationSolution"
+                targetTask="EgoStateGenerator"
+                targetPort="VehicleNavigationSolution"/>
+
+        <Connection
+                sourceTask="Applanix"
+                sourcePort="VehicleNavigationPerformanceMetrics"
+                targetTask="EgoStateGenerator"
+                targetPort="VehicleNavigationPerformanceMetrics"/>
+
+
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.02</value></simple>
+                </struct>
+                <TaskContext	type="EgoStateSnapshotGenerator"		name="EgoStateSnapshotGeneratorOriginal"/>
+        </Activity>
+
+        <Connection
+                sourceTask="EgoStateSnapshotGeneratorOriginal"
+                sourcePort="EgoStateSetter"
+                targetTask="EgoStateGenerator"
+                targetPort="EgoStateSetter"/>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGeneratorOriginal"
+		sourcePort="EgoState"
+		targetTask="EgoStateSnapshotGenerator"
+		targetPort="EgoStateIn"/>
+
+
+	<!--Lane Detection-->
+	<Include file="HellaLaneDetectionUdp.xml"/>
+	<Include file="ContiLaneDetection.xml"/>
+
+
+	<!--  lane data fusion ==========================================================   -->
+	<Activity type="SequentialActivity">
+			<TaskContext type="LaneDataFusion" name="LaneDataFusion">
+			</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="HellaLaneDetectionUdp"
+		sourcePort="LaneDataOut"
+		targetTask="LaneDataFusion"
+                targetPort="LaneDataIn2"/>
+
+	<Connection
+		sourceTask="ContiLaneDetection"
+		sourcePort="LaneDataOut"
+		targetTask="LaneDataFusion"
+                targetPort="LaneDataIn1"/>
+
+<!--	<Include file="Velodyne.xml"/>
+	<Include file="../common/CurbDetection.xml"/>
+
+	<Connection
+		sourceTask="VelodyneCurbDetection"
+		sourcePort="LaneDataOut"
+		targetTask="LaneDataFusion"
+                targetPort="LaneDataIn3"/>-->
+
+	<Connection
+		sourceTask="EgoStateSnapshotGeneratorOriginal"
+		sourcePort="EgoState"
+		targetTask="LaneDataFusion"
+                targetPort="EgoStateIn"/>
+
+	<Connection
+		sourceTask="LaneDataFusion"
+		sourcePort="LaneDataOut"
+		targetTask="EgoStateSnapshotGenerator"
+		targetPort="LaneDataIn"/>
+
+
+</TaskGraph>
+

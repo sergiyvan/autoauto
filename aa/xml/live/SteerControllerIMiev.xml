@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <Include file="../common/VehicleData.xml"/>
+        <Include file="../live/CarStateIMiev.xml"/>
+        <Include file="../live/ConsoleIMiev.xml"/>
+
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+                <TaskContext type="SteerControllerIMiev" name="SteerControllerIMiev"/>
+	</Activity>
+
+        <Connection
+                sourceTask="SteerControllerIMiev"
+                sourcePort="SteerOut"
+                targetTask="CarGate"
+                targetPort="NormalizedWantedSteeringAngleIn"/>
+
+        <Connection
+                sourceTask="CarStateGenerator"
+                sourcePort="IMievCarStateOut"
+                targetTask="SteerControllerIMiev"
+                targetPort="IMievCarStateIn"/>
+
+
+</TaskGraph>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="ConfigurationStorage.xml"/>
+	
+	
+	<Activity type="SequentialActivity">
+            <TaskContext    type="FpgaDataVisualizer"	    name="Visualizer">
+                <struct name="" type="type_less">
+                        <simple type="int" name="MaxDisparity"><value>65</value></simple>
+                </struct>
+            </TaskContext>
+	</Activity>
+
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.2</value></simple>
+                </struct>
+ 		<TaskContext    type="FpgaCamera"	    name="FpgaCamera">
+                    <struct name="" type="type_less">
+                            <simple type="bool" name="Cam0L0Enabled"><value>true</value></simple>
+                            <simple type="bool" name="Cam0L1Enabled"><value>false</value></simple>
+                            <simple type="bool" name="Cam0L2Enabled"><value>false</value></simple>
+                            <simple type="bool" name="Cam0L3Enabled"><value>false</value></simple>
+                            <simple type="bool" name="Cam0L4Enabled"><value>false</value></simple>
+
+                            <simple type="bool" name="Cam1L0Enabled"><value>false</value></simple>
+                            <simple type="bool" name="Cam1L1Enabled"><value>false</value></simple>
+                            <simple type="bool" name="Cam1L2Enabled"><value>false</value></simple>
+                            <simple type="bool" name="Cam1L3Enabled"><value>false</value></simple>
+                            <simple type="bool" name="Cam1L4Enabled"><value>false</value></simple>
+
+                            <simple type="bool" name="OF1Enabled"><value>false</value></simple>
+
+                            <simple type="bool" name="Stereo0Enabled"><value>true</value></simple>
+                            <simple type="int" name="Stereo0UniqueDiv"><value>26</value></simple>
+                            <simple type="int" name="Stereo0UniqueMul"><value>31</value></simple>
+                    </struct>
+		</TaskContext>
+	</Activity>
+	
+<!--	<Activity type="SequentialActivity">
+		<TaskContext type="ImageRectification"  name="ImageRectification">
+			<struct name="" type="type_less">
+				<simple type="string" name="GuidLeft"><value>3255654282690602</value></simple>
+				<simple type="string" name="GuidRight"><value>3255654282690603</value></simple>
+			</struct>
+		</TaskContext>
+        </Activity>-->
+
+
+        <Activity type="SelectDrivenActivity">
+
+                <!-- camera 0 -->
+                <TaskContext    type="ImageReceiver"	    name="IRCam0L0">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1200</value></simple>
+                    </struct>
+                </TaskContext>
+
+                <TaskContext    type="ImageReceiver"	    name="IRCam0L1">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1201</value></simple>
+                    </struct>
+                </TaskContext>
+
+                <TaskContext    type="ImageReceiver"	    name="IRCam0L2">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1202</value></simple>
+                    </struct>
+                </TaskContext>
+
+                <TaskContext    type="ImageReceiver"	    name="IRCam0L3">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1203</value></simple>
+                    </struct>
+                </TaskContext>
+
+                <TaskContext    type="ImageReceiver"	    name="IRCam0L4">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1204</value></simple>
+                    </struct>
+                </TaskContext>
+
+
+
+                <!-- camera 1 -->
+                <TaskContext    type="ImageReceiver"	    name="IRCam1L0">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1205</value></simple>
+                    </struct>
+                </TaskContext>
+
+                <TaskContext    type="ImageReceiver"	    name="IRCam1L1">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1206</value></simple>
+                    </struct>
+                </TaskContext>
+
+                <TaskContext    type="ImageReceiver"	    name="IRCam1L2">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1207</value></simple>
+                    </struct>
+                </TaskContext>
+
+                <TaskContext    type="ImageReceiver"	    name="IRCam1L3">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1208</value></simple>
+                    </struct>
+                </TaskContext>
+
+                <TaskContext    type="ImageReceiver"	    name="IRCam1L4">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1209</value></simple>
+                    </struct>
+                </TaskContext>
+
+
+                <TaskContext    type="ImageReceiver"	    name="IROF1">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1211</value></simple>
+                    </struct>
+                </TaskContext>
+
+                <TaskContext    type="ImageReceiver"	    name="IRDisparity">
+                    <struct name="" type="type_less">
+                        <simple type="int" name="Port"><value>1212</value></simple>
+                    </struct>
+                </TaskContext>
+        </Activity>
+	
+		<Activity type="SequentialActivity">
+				<TaskContext    type="StereoBundle"     name="StereoBundle"/>
+		</Activity>
+		
+	<Activity type="SequentialActivity">
+		<TaskContext type="RightImageGenerator" name="RightImageGenerator">
+		</TaskContext>
+	</Activity>		
+	
+	<Connection
+		sourceTask="Config"
+		sourcePort="CameraParameter"
+		targetTask="StereoBundle"
+		targetPort="CameraParameterIn"/>
+
+	<Connection
+		sourceTask="StereoBundle"
+		sourcePort="StereoCameraOut"
+		targetTask="FpgaCamera"
+		targetPort="StereoCamera0In"/>
+
+	<Connection
+		sourceTask="IRCam0L0"
+		sourcePort="Image"
+		targetTask="StereoBundle"
+		targetPort="TypedImageL"/>
+
+<!-- 	<Connection
+		sourceTask="IRCam1L0"
+		sourcePort="Image"
+		targetTask="StereoBundle"
+		targetPort="TypedImageR"/> -->
+			
+	<Connection
+		sourceTask="IRCam0L0"
+		sourcePort="Image"
+		targetTask="RightImageGenerator"
+		targetPort="ImageIn"/>
+
+	<Connection
+		sourceTask="RightImageGenerator"
+		sourcePort="ImageOut"
+		targetTask="StereoBundle"
+		targetPort="TypedImageR"/>
+	
+
+</TaskGraph>

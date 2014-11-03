@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="../common/Velodyne.xml"/>
+	<Include file="../common/VehicleData.xml"/>
+
+	<Activity type="SelectDrivenActivity">
+		<TaskContext
+			    type="VelodyneUDP"
+			    name="VelodyneUDP"/>
+	</Activity>
+
+	<Connection
+		   sourceTask="VelodyneUDP"
+		   sourcePort="SuperVelodyneBundle"
+		   targetTask="VelodynePointCloud"
+		   targetPort="SuperVelodyneBundle"/>
+</TaskGraph>

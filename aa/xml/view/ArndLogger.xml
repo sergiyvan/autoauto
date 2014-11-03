@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="../common/EgoState.xml"/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+                <TaskContext type="DisplayArndLogger" name="DisplayARNDLogger"/>
+	</Activity>
+
+	<Connection
+		   sourceTask="EgoStateSnapshotGenerator"
+		   sourcePort="EgoState"
+                   targetTask="DisplayARNDLogger"
+		   targetPort="EgoState"/>
+
+</TaskGraph>

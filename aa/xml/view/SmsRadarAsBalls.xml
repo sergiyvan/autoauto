@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Include file="../common/LoadSmsRadarConfig.xml" />
+
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+                <simple type="double" name="Period"><value>0.1</value></simple>
+        </struct>
+        <TaskContext
+                type="SmsRadarView"
+                name="DisplaySmsRadar"/>
+    </Activity>
+
+    <Connection
+            sourceTask="RadarCanDecoder"
+            sourcePort="SmsRadar24GhzObjectBundleOut"
+            targetTask="DisplaySmsRadar"
+            targetPort="ObjectPortIn"/>
+
+    <Connection
+            sourceTask="EgoStateSnapshotGenerator"
+            sourcePort="EgoState"
+            targetTask="DisplaySmsRadar"
+            targetPort="EgoStateIn"/>
+
+    <Connection
+            sourceTask="Config"
+            sourcePort="SmsRadarParameter"
+            targetTask="DisplaySmsRadar"
+            targetPort="RadarParameterIn"/>
+
+</TaskGraph>

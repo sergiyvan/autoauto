@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Contains vehicle data about the Otto Bock wheelchair 'Xeno'.
+
+File was adapted from mig.xml.
+
+@author  David Latotzky
+
+-->
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext    type="MetaInfoReader"    name="MetaInfoReader">
+			<struct name="" type="type_less">
+				<simple type="string" name="NodeName"><arg description="Node">node-name,N</arg><value></value></simple>
+                                <struct name="theVehicleData">
+					<simple type="string" name="carName" description="name identifier of the car"><value>xeno</value></simple>
+
+					<simple type="double" name="realCarLength" description="length of car in m"><value>1.14</value></simple><!--//4765–4774 mm, 4774 is from data sheet-->
+					<simple type="double" name="realCarWidth" description="width of car in m (including odometer and side mirror)"><value>0.6</value></simple><!--//TODO remeasure, 1820 from data sheet-->
+					<simple type="double" name="realCarHeight" description="height of car in m (including height of velodyne)"><value>1.11</value></simple><!--//TODO add height of velodyne, 1517 from data sheet-->
+                                        <simple type="double" name="mass" description="mass of car in kg (including sensors)"><value>160.0</value></simple>
+                                        <simple type="double" name="torque" description="max torque of the car"><value>2709</value></simple>
+
+                                        <simple type="double" name="frontShaftDistance" description="distance from IMU to front shaft (front axle, Achse) in m"><value>0.605</value></simple>
+                                        <simple type="double" name="rearShaftDistance" description="distance from IMU to rear shaft (rear axle, Achse) in m"><value>0</value></simple>
+					<simple type="double" name="medialAxisDistance" description="distance from IMU to medial axis (Mittelachse) in m, negative=imu is to the right, positive=imu is to the left"><value>0</value></simple>
+					<simple type="double" name="shaftDistance" description="distance between front and rear shaft (Achse)"><value>0.605</value></simple><!--getProperty<flt>("frontShaftDistance")->value() - getProperty<flt>("rearShaftDistance")->value()-->
+
+					<simple type="double" name="frontDistance" description="distance from front shaft to real front of car in m"><value>0.26</value></simple>
+                                        <simple type="double" name="rearDistance" description="distance from rear shaft to real back of car in m"><value>0.27</value></simple>
+                                        <simple type="double" name="groundDistance" description="distance of IMU to ground in m"><value>0.105</value></simple><!--//IMU reference system on front shaft-->
+                                        <simple type="double" name="imuPitch" description="pitch of IMU in radian"><value>0.0</value></simple>
+
+                                        <simple type="double" name="tireDistance" description="distance between left and right tire in m"><value> 0.564</value></simple><!--rear-->
+					<simple type="double" name="tireStiffness" description=""><value> 200000.0</value></simple><!-- no idea for xeno....-->
+                                        <simple type="double" name="tireRadius" description="radius of tire in m"><value> 0.17</value></simple><!--back: 17cm, front: 10.6-->
+
+					<simple type="double" name="maxSpeed" description="maximal safe speed for autonomous drive in m/s"><value>44.444444444</value></simple>
+					<simple type="double" name="maxReverseSpeed" description="maximal safe reverse speed for autonomous drive in m/s"><value>8.333333333</value></simple>
+					<simple type="double" name="maxSpeedChange" description="fastest possible acceleration in m/s/s"><value>1.984126984</value></simple><!--//TODO find real value -->
+					<simple type="double" name="maxBrakeChange" description="fastest possible brake acceleration in m/s/s"><value>9.259259259</value></simple><!--//TODO find real value -->
+
+					<simple type="double" name="maxSteer" description="in Rad"><value>0.591666616</value></simple><!-- math::D2R * 33.9-->
+					<simple type="double" name="maxSteerChange" description="fastest possible steer change in radian/s"><value><!-- 2 * mig.getProperty<flt>("maxSteer")->value() / 2.0-->0.591666616</value></simple>
+					<simple type="double" name="maxSteerAngleAcceleration" description="highest possible steer angle acceleration in radian/s/s"><value>2.233</value></simple>
+
+					<simple type="double" name="turningCircleRadius" description="radius of turning circle in m"><value>5.0</value></simple>
+
+					<!--//from VW - Datasheet, added by Daniel:-->
+                                        <simple type="double" name="wheelBase" description=""><value>0.608</value></simple>
+                                        <!--<simple type="double" name="trackrear" description=""><value>0.558</value></simple>-->
+                                        <simple type="double" name="trackrear" description=""><value>0.567</value></simple>
+                                        <simple type="double" name="trackfront" description=""><value>0.546</value></simple>
+
+					<simple type="double" name="maxSteeringAngleInnerWheel" description="in Rad"><value>0.694641042</value></simple><!-- math::D2R * 39.8-->
+					<simple type="double" name="maxSteeringAngleOuterWheel" description="in Rad"><value>0.5131268</value></simple><!-- math::D2R * 29.4-->
+					<simple type="double" name="maxSteeringWheelAngle" description="in Rad"><value>9.250245036</value></simple><!-- math::D2R * 530.0-->
+					<!--TODO: insert correct odometry-value to enable module MrptActionRobotMovement2D-->
+                                        <!-- Turnhalle -->
+                                        <simple type="double" name="odometryTickLengthLeft" description="in meter per tick"><value>0.002110</value></simple>
+                                        <simple type="double" name="odometryTickLengthRight" description="in meter per tick"><value>0.002122</value></simple>
+                                        <!-- vor dem aufpumpen Arnim -->
+                                       <!-- <simple type="double" name="odometryTickLengthLeft" description="in meter per tick"><value>0.002144</value></simple>
+                                        <simple type="double" name="odometryTickLengthRight" description="in meter per tick"><value>0.002150</value></simple>-->
+                                    <!--    <simple type="double" name="odometryTickLengthLeft" description="in meter per tick"><value>0.00214223989</value></simple>
+                                        <simple type="double" name="odometryTickLengthRight" description="in meter per tick"><value>0.0021549026</value></simple>
+                -->		</struct>
+			</struct>
+		</TaskContext>
+	</Activity>
+</TaskGraph>
+

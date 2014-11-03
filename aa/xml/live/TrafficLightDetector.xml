@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="../common/TrafficLightDetector.xml"/>
+	<Include file="ConfigurationStorage.xml" />
+	<Include file="EgoState.xml" />
+
+
+<If condition="node_name=='vw'">
+
+<!--
+	<Include file="FpgaCamera.xml"/>
+
+	<Connection
+		sourceTask="FpgaCamera"
+		sourcePort="ImageCam1L0"
+		targetTask="TrafficLightDetector"
+		targetPort="ImageIn"/-->
+
+<!--
+	<Include file="MonoCamera.xml"/>
+	<Connection
+		sourceTask="Camera"
+		sourcePort="TypedImage"
+		targetTask="TrafficLightDetector"
+		targetPort="ImageIn"/>-->
+
+	<Include file="Guppy.xml"/>
+	<Connection
+		sourceTask="CameraSL"
+                sourcePort="TypedImage"
+		targetTask="TrafficLightDetector"
+		targetPort="ImageIn"/>
+
+	<Connection
+		sourceTask="CameraSR"
+                sourcePort="TypedImage"
+		targetTask="TrafficLightDetector"
+		targetPort="Image2In"/>
+
+</If>
+<If condition="node_name=='dodge'">
+	<Include file="MonoCamera.xml"/>
+
+	<Connection
+		sourceTask="Camera"
+		sourcePort="TypedImage"
+		targetTask="TrafficLightDetector"
+		targetPort="ImageIn"/>
+</If>
+
+</TaskGraph>

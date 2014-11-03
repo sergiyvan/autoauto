@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+
+	<Include file="../logged/ConfigurationStorage.xml" />
+
+	<CallMethod task="Config" name="loadFile">
+		<struct name="" type="type_less">
+			<simple type="path" name="path">
+				<value>resources/vision/CameraParameterRearAssist.xml</value>
+			</simple>
+		</struct>
+	</CallMethod>
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DrawLuxPointsOnImage" name="ProjectLuxPointsOnImage">
+                        <struct name="" type="type_less">
+                                        <simple type="bool" name="Flip"><value>0</value></simple>
+                                        <simple type="bool" name="Debayer"><value>1</value></simple>
+                                        <simple type="int" name="BayerPattern"><value>1</value></simple>
+                                        <simple type="bool" name="Undistort"><value>1</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+
+	<Connection
+		   sourceTask="Config"
+		   sourcePort="CameraParameter"
+                   targetTask="ProjectLuxPointsOnImage"
+		   targetPort="CameraParameterIn"/>
+
+</TaskGraph>

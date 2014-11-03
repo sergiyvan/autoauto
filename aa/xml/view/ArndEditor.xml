@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+  <Activity type="PeriodicActivity">
+    <struct name="" type="type_less">
+      <simple name="Period" type="double">
+        <value>0.1</value>
+      </simple>
+    </struct>
+    <TaskContext name="DisplayARNDEditor" type="DisplayARNDEditor"/>
+  </Activity>
+</TaskGraph>

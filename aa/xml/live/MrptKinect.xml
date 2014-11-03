@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<TaskGraph>
+
+        <Activity type="PeriodicActivity">
+            <struct name="" type="type_less">
+                    <simple type="double" name="Period"><value>0.001</value></simple>
+            </struct>
+            <TaskContext type="MrptKinect" name="MrptKinect" >
+               <struct name="" type="type_less">
+                    <simple type="double" name="PitchAngle"><value>30.4</value></simple>
+		    <simple type="string" name="ConfigFile"><value>resources/mrptKinect_default.ini</value></simple>
+               </struct>           
+            </TaskContext>
+
+        </Activity>
+
+<Include file="../view/MrptKinect.xml"/>
+
+</TaskGraph>

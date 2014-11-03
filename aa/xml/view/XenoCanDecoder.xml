@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <!-- for DisplayXenoCanDecoder-->
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.01</value></simple>
+                </struct>
+                <TaskContext
+                            type="DisplayXenoCanDecoder"
+                            name="DisplayXenoCanDecoder">
+
+                </TaskContext>
+        </Activity>
+
+       <Connection
+                   sourceTask="XenoCanDecoder"
+                   sourcePort="JoystickReadingOut"
+                   targetTask="DisplayXenoCanDecoder"
+                   targetPort="JoystickReadingIn"/>
+
+
+       <Connection
+                   sourceTask="XenoCanDecoder"
+                   sourcePort="ReroutedJoystickReadingOut"
+                   targetTask="DisplayXenoCanDecoder"
+                   targetPort="ReroutedJoystickReadingIn"/>
+
+       <Connection
+                   sourceTask="XenoCanDecoder"
+                   sourcePort="ModeButtonReadingOut"
+                   targetTask="DisplayXenoCanDecoder"
+                   targetPort="ModeButtonReadingIn"/>
+
+       <Connection
+                   sourceTask="XenoCanDecoder"
+                   sourcePort="LightButtonsReadingOut"
+                   targetTask="DisplayXenoCanDecoder"
+                   targetPort="LightButtonsReadingIn"/>
+
+       <Connection
+                   sourceTask="XenoCanDecoder"
+                   sourcePort="HornButtonReadingOut"
+                   targetTask="DisplayXenoCanDecoder"
+                   targetPort="HornButtonReadingIn"/>
+
+       <Connection
+                   sourceTask="XenoCanDecoder"
+                   sourcePort="VoltageReadingOut"
+                   targetTask="DisplayXenoCanDecoder"
+                   targetPort="VoltageReadingIn"/>
+
+
+</TaskGraph>

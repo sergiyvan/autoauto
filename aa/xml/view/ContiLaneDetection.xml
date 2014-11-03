@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.05</value></simple>
+		</struct>
+		<TaskContext type="DisplayLaneData" name="DisplayContiLaneData"></TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplayContiLaneData"
+		targetPort="EgoStateIn"/>
+
+	<Connection
+		sourceTask="ContiLaneDetection"
+		sourcePort="LaneDataOut"
+		targetTask="DisplayContiLaneData"
+		targetPort="LaneDataIn"/>
+
+</TaskGraph>
+
+

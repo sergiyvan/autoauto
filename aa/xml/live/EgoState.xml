@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="../common/EgoState.xml"/>
+
+	<Include file="Applanix.xml"/>
+
+<!--
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.02</value></simple>
+		</struct>
+                -->
+        <Activity type="SequentialActivity">
+                <TaskContext	type="ApplanixEgoStateGenerator"		name="EgoStateGenerator"/>
+	</Activity>
+	<Connection
+                sourceTask="EgoStateSnapshotGenerator"
+                sourcePort="EgoState"
+		targetTask="InterpolationModelSetter"
+		targetPort="EgoStateIn"
+		/>
+
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoStateSetter"
+		targetTask="EgoStateGenerator"
+		targetPort="EgoStateSetter"/>
+	
+	<Connection
+		sourceTask="Applanix"
+		sourcePort="VehicleNavigationSolution"
+		targetTask="EgoStateGenerator"
+		targetPort="VehicleNavigationSolution"/>
+
+	<Connection
+		sourceTask="Applanix"
+		sourcePort="VehicleNavigationPerformanceMetrics"
+		targetTask="EgoStateGenerator"
+		targetPort="VehicleNavigationPerformanceMetrics"/>
+
+		   
+</TaskGraph>

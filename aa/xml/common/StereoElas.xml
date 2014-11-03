@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Activity type="SequentialActivity">
+		<TaskContext type="ImageRectification"  name="ImageRectification">
+			<struct name="" type="type_less">
+			   <simple type="bool" name="Use16Bits"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+		<TaskContext type="StereoElas" name="StereoMatcher">
+		  <struct name="" type="type_less">
+			 <simple type="bool" name="FullDp"><value>true</value></simple>
+			 <simple type="int" name="Disparities"><value>64</value></simple>
+			 <simple type="int" name="Scale"><value>1</value></simple>
+			 <simple type="int" name="SadWindowSize"><value>3</value></simple>
+			 <simple type="int" name="UniquenessRatio"><value>5</value></simple>
+			 <simple type="int" name="Param1"><value>72</value></simple>
+			 <simple type="int" name="Param2"><value>290</value></simple>
+		  </struct>
+		</TaskContext>
+    </Activity>
+
+    <Connection
+            sourceTask="StereoBundle"
+            sourcePort="TypedStereoImage"
+            targetTask="ImageRectification"
+            targetPort="StereoImageIn"/>
+
+    <Connection
+           sourceTask="Config"
+           sourcePort="CameraParameter"
+           targetTask="ImageRectification"
+           targetPort="CameraParameterIn"/>
+
+    <Connection
+            sourceTask="EgoStateSnapshotGenerator"
+            sourcePort="EgoState"
+            targetTask="InterpolationModelSetter"
+            targetPort="EgoStateIn"/>
+
+    <Connection
+            sourceTask="EgoStateSnapshotGenerator"
+            sourcePort="EgoState"
+            targetTask="EgoStateFilter"
+            targetPort="EgoStateIn"/>
+
+    <Connection
+            sourceTask="EgoStateFilter"
+            sourcePort="EgoStateOut"
+            targetTask="ImageRectification"
+            targetPort="FilteredEgoStateIn"/>
+
+    <Connection
+            sourceTask="ImageRectification"
+            sourcePort="StereoDataOut"
+            targetTask="StereoMatcher"
+            targetPort="StereoDataIn"/>
+
+</TaskGraph>

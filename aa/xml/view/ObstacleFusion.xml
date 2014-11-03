@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayVirtualRangeScan" name="DisplayVirtualRangeScan">
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="PointSetFusion"
+                sourcePort="VirtualRangeScanOut"
+                targetTask="DisplayVirtualRangeScan"
+                targetPort="VirtualRangeScanIn"/>
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayObjects" name="DisplayObjectsFused">
+                        <struct name="" type="type_less">
+                                <simple type="bool" name="DisplayBoundingBoxes"><value>1</value></simple>
+                                <simple type="double" name="PosColorR"><value>1.0</value></simple>
+                                <simple type="double" name="PosColorG"><value>0.0</value></simple>
+                                <simple type="double" name="PosColorB"><value>1.0</value></simple>
+                                <simple type="double" name="VelColorR"><value>1.0</value></simple>
+                                <simple type="double" name="VelColorG"><value>0.5</value></simple>
+                                <simple type="double" name="VelColorB"><value>1.0</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="ObstacleFusion"
+                sourcePort="BaseObjectsOut"
+                targetTask="DisplayObjectsFused"
+                targetPort="BaseObjectsIn"/>
+
+
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayObstacleFusionDebugging" name="DisplayObstacleFusionDebugging">
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="ObstacleFusion"
+                sourcePort="TracksOut"
+                targetTask="DisplayObstacleFusionDebugging"
+                targetPort="TracksIn"/>
+
+
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayObjects" name="DisplayObjectsLidar">
+                        <struct name="" type="type_less">
+                                <simple type="bool" name="DisplayBoundingBoxes"><value>1</value></simple>
+                                <simple type="double" name="PosColorR"><value>1.0</value></simple>
+                                <simple type="double" name="PosColorG"><value>0.0</value></simple>
+                                <simple type="double" name="PosColorB"><value>0.0</value></simple>
+                                <simple type="double" name="VelColorR"><value>1.0</value></simple>
+                                <simple type="double" name="VelColorG"><value>0.0</value></simple>
+                                <simple type="double" name="VelColorB"><value>0.0</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="LidarObstacleDetector"
+                sourcePort="BaseObjectsOut"
+                targetTask="DisplayObjectsLidar"
+                targetPort="BaseObjectsIn"/>
+
+
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayBaseObstacles" name="DisplayObstaclesSentToBehaviour">
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="ObstacleFusion"
+                sourcePort="BaseObstaclesOut"
+                targetTask="DisplayObstaclesSentToBehaviour"
+                targetPort="BaseObstaclesIn"/>
+
+
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayObjects" name="DisplayObjectsRadar">
+                        <struct name="" type="type_less">
+                                <simple type="bool" name="DisplayBoundingBoxes"><value>1</value></simple>
+                                <simple type="double" name="PosColorR"><value>0.0</value></simple>
+                                <simple type="double" name="PosColorG"><value>0.0</value></simple>
+                                <simple type="double" name="PosColorB"><value>1.0</value></simple>
+                                <simple type="double" name="VelColorR"><value>0.0</value></simple>
+                                <simple type="double" name="VelColorG"><value>0.0</value></simple>
+                                <simple type="double" name="VelColorB"><value>1.0</value></simple>
+                        </struct>
+
+                </TaskContext>
+        </Activity>
+
+<!--        <Connection
+                sourceTask="RadarBundler"
+                sourcePort="ObjectBundleOut"
+                targetTask="DisplayObjectsRadar"
+                targetPort="BaseObjectsIn"/>-->
+
+
+        <Connection
+                sourceTask="HellaRadarTracker"
+                sourcePort="BaseObjectsOut"
+                targetTask="DisplayObjectsRadar"
+                targetPort="BaseObjectsIn"/>
+
+
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayObstacleInformation" name="DisplayObstacleInformation">
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="ObstacleFusion"
+		sourcePort="BaseObstaclesOut"
+		targetTask="DisplayObstacleInformation"
+		targetPort="FusedObstaclesIn"/>
+
+        <Connection
+                sourceTask="RadarBundler"
+                sourcePort="ObjectBundleOut"
+		targetTask="DisplayObstacleInformation"
+                targetPort="TrwObstaclesIn"/>
+
+        <Connection
+		sourceTask="IbeoObstacleDetector"
+		sourcePort="ObstaclesOut"
+		targetTask="DisplayObstacleInformation"
+                targetPort="IbeoObstaclesIn"/>
+
+        <Connection
+		sourceTask="OccupancyMap"
+		sourcePort="ObstacleBundle"
+		targetTask="DisplayObstacleInformation"
+                targetPort="VelodyneObstaclesIn"/>
+
+	<Connection
+		sourceTask="ObstacleFusion"
+		sourcePort="VelocityBoxesOut"
+		targetTask="DisplayObstacleInformation"
+		targetPort="VelocityBoxesIn"/>
+
+	<Connection
+		sourceTask="ObstacleFusion"
+		sourcePort="VelocityBoxDeletionsOut"
+		targetTask="DisplayObstacleInformation"
+		targetPort="VelocityBoxDeletionsIn"/>
+
+</TaskGraph>

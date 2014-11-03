@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="5">
+<sensorTypes class_id="0" tracking_level="0" version="0">
+	<count>1</count>
+	<item_version>0</item_version>
+	<item>MaxSonarParameters</item>
+</sensorTypes>
+<sensorType class_id="1" tracking_level="0" version="1">
+	<px class_id="2" class_name="MaxSonarParametersSensorPort" tracking_level="1" version="0" object_id="_0">
+                <sensors class_id="3" tracking_level="0" version="0">
+			<count>2</count>
+			<item_version>0</item_version>
+			<item class_id="5" tracking_level="1" version="0" object_id="_1">
+				<abstractSensor class_id="6" tracking_level="1" version="0" object_id="_2">
+					<position class_id="7" tracking_level="0" version="0">
+						<vnl_float class_id="8" tracking_level="0" version="0">
+							<data>
+								<item>0.00</item>
+								<item>0.00</item>
+								<item>0.00</item>
+							</data>
+						</vnl_float>
+					</position>
+					<rotation>
+						<vnl_float>
+							<data>
+								<item>0.00</item>
+								<item>0.00</item>
+								<item>0.00</item>
+							</data>
+						</vnl_float>
+					</rotation>
+					<delay>0</delay>
+				</abstractSensor>
+				<id>1</id>
+			</item>
+			<item object_id="_3">
+				<abstractSensor object_id="_4">
+					<position>
+						<vnl_float>
+							<data>
+								<item>0.00</item>
+								<item>1.00</item>
+								<item>0.00</item>
+							</data>
+						</vnl_float>
+					</position>
+					<rotation>
+						<vnl_float>
+							<data>
+								<item>0.00</item>
+								<item>0.00</item>
+								<item>0.00</item>
+							</data>
+						</vnl_float>
+					</rotation>
+					<delay>0</delay>
+				</abstractSensor>
+				<id>2</id>
+			</item>
+		</sensors>
+	</px>
+</sensorType>
+</boost_serialization>
+

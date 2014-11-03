@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <!-- PASSAT View -->
+        <Include if="node_name=='vw'" file="../view/SmsRadar.xml" />
+        <Include if="node_name=='vw'" file="../view/DisplayTrwRadar.xml" />
+        <Include if="node_name=='vw'" file="../view/DisplayHellaRadar.xml" />
+
+        <!-- IMIEV View -->
+        <Include if="node_name=='imiev'" file="../view/SmsRadar.xml" />
+
+</TaskGraph>

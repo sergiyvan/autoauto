@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SelectDrivenActivity">
+		<TaskContext    type="DC1394Camera"	    name="LadyBug2">
+			<struct name="" type="type_less">
+				<simple type="int" name="Mode">
+					<value>0</value>
+				</simple>
+				<simple type="int" name="ColourCoding">
+					<value>0</value>
+				</simple>
+				<simple type="int" name="FrameHeight">
+					<value>3840</value>
+				</simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<CallMethod task="LadyBug2" name="selectCameraById">
+		<struct name="" type="type_less">
+			<simple type="long" name="guid"><value>49712223528873590</value></simple>
+			<simple type="int" name="unit"><value>0</value></simple>
+		</struct>
+	</CallMethod>
+
+
+	<CallMethod
+		task="LadyBug2"
+		name="renamePort">
+			<struct name="" type="type_less">
+					<simple type="string" name="name"><value>LadyBug2Image</value></simple>
+			</struct>
+	</CallMethod>
+</TaskGraph>

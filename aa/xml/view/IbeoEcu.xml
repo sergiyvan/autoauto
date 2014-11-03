@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<If condition="mode=='live'">
+		<Include file="../live/InterpolationModelSetter.xml"/>
+	</If>
+
+	<If condition="mode=='play'">
+		<Include file="../logged/InterpolationModelSetter.xml"/>
+	</If>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayIbeoLuxEcu" name="DisplayIbeoEcuPointCloud">
+		</TaskContext>
+	</Activity>
+
+	<If condition="mode=='live'">
+	<Connection
+		sourceTask="IbeoLuxEcu"
+		sourcePort="IbeoLuxEcuScanData"
+		targetTask="DisplayIbeoEcuPointCloud"
+		targetPort="IbeoEcuScanDataIn"/>
+	</If>
+
+	<If condition="mode=='play'">
+	<Connection
+		sourceTask="Log"
+		sourcePort="IbeoLuxEcuScanData"
+		targetTask="DisplayIbeoEcuPointCloud"
+		targetPort="IbeoEcuScanDataIn"/>
+	</If>
+</TaskGraph>

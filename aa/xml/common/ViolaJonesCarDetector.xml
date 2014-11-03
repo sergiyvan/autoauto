@@ -1,0 +1,62 @@
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="ViolaJonesCarDetector" name="ViolaJonesCarDetector">
+	    	    <struct name="" type="type_less">
+					<simple type="double" name="MaxOverlap"><value>-0.3</value></simple>
+					<simple type="double" name="MinOverlap"><value>-0.1</value></simple>
+					<simple type="double" name="Shift"><value>0</value></simple>
+					<simple type="double" name="MaxCarSideDistance"><value>10</value></simple>
+				</struct>
+		</TaskContext>
+		<TaskContext
+			    type="CameraPose"
+			    name="CameraPose">			    
+		</TaskContext>
+	</Activity>
+	   
+	<Connection
+		   sourceTask="Config"
+		   sourcePort="CameraParameter"
+		   targetTask="ViolaJonesCarDetector"
+		   targetPort="CameraParameterIn"/>
+
+	<Connection
+		   sourceTask="Config"
+		   sourcePort="CameraParameter"
+		   targetTask="CameraPose"
+		   targetPort="CameraParameterIn"/>
+		   
+	<Connection 
+		   sourceTask="PortMapper"
+		   sourcePort="TypedImageLOut"
+		   targetTask="CameraPose"
+		   targetPort="ImageIn"/>
+		   		   
+	<Connection
+			sourceTask="EgoStateSnapshotGenerator"
+			sourcePort="EgoState"
+			targetTask="CameraPose"
+			targetPort="EgoStateIn"/>
+			
+	<Connection
+			sourceTask="CameraPose"
+			sourcePort="CameraPoseDataOut"
+			targetTask="ViolaJonesCarDetector"
+			targetPort="CameraPoseDataIn"/>
+
+	<Connection
+		   sourceTask="PortMapper"
+		   sourcePort="TypedImageLOut"
+		   targetTask="ViolaJonesCarDetector"
+		   targetPort="ImageIn"/>
+
+
+	<Connection
+			sourceTask="EgoStateSnapshotGenerator"
+			sourcePort="EgoState"
+			targetTask="ViolaJonesCarDetector"
+			targetPort="EgoStateIn"/>
+ 
+		
+</TaskGraph>

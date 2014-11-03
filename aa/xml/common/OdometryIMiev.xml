@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+common for OdometryIMiev
+-->
+<TaskGraph>
+	<Include file="CanIMiev.xml"/>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="IMievOdometry" name="Odometry"/>
+	</Activity>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="VelocityStatusOut"
+		targetTask="Odometry"
+		targetPort="VelocityStatusIn"/>
+
+        <Connection
+                sourceTask="IMievCanDecoder"
+                sourcePort="GearStatusOut"
+                targetTask="Odometry"
+                targetPort="GearStatusIn"/>
+</TaskGraph>

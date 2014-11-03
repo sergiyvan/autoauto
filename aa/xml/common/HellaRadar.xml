@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <Include file="LoadHellaRadarConfig.xml" />
+        <Include file="EgoState.xml"/>
+        <Include file="CanPassat.xml" />
+
+        <Activity type="SequentialActivity">
+		<TaskContext type="HellaRadarTracker" name="HellaRadarTracker"></TaskContext>
+	</Activity>
+
+        <Connection
+                sourceTask="Config"
+                sourcePort="HellaRadarParameter"
+                targetTask="HellaRadarTracker"
+                targetPort="RadarParameterIn"/>
+
+        <Connection
+                sourceTask="SensorCanDecoder"
+                sourcePort="HellaRadar24GhzObjectBundleOut"
+                targetTask="HellaRadarTracker"
+                targetPort="ObjectPortIn"/>
+
+        <Connection
+                sourceTask="ControllerCanDecoder"
+                sourcePort="WheelSpeedsOut"
+                targetTask="HellaRadarTracker"
+                targetPort="WheelSpeedsIn"/>
+
+        <Connection
+                sourceTask="ControllerCanDecoder"
+                sourcePort="SteerAssist3StatusOut"
+                targetTask="HellaRadarTracker"
+                targetPort="SteerAssist3StatusIn"/>
+
+</TaskGraph>
+

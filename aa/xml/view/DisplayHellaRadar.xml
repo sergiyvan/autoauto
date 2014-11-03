@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<!-- =============== hella radar =============== -->
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+		<TaskContext
+			type="DisplayHellaRadar"
+			name="DisplayHellaRadar"/>
+	</Activity>
+
+	<Connection
+		sourceTask="HellaRadarTracker"
+		sourcePort="ObjectPortOut"
+		targetTask="DisplayHellaRadar"
+		targetPort="ObjectsIn"/>
+
+</TaskGraph>

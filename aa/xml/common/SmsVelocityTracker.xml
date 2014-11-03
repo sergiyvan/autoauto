@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Include file="../common/SmsRadar.xml" />
+
+    <!-- =============== SmsVelocityTracker =============== -->
+
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+            <simple type="double" name="Period"><value>0.1</value></simple>
+        </struct>
+        <TaskContext
+            type="SmsVelocityTracker"
+            name="SmsVelocityTracker"/>
+    </Activity>
+
+    <Connection
+        sourceTask="SmsRadarTracker"
+        sourcePort="ObjectOut"
+        targetTask="SmsVelocityTracker"
+        targetPort="SmsDataFrameIn"/>
+
+    <Connection
+        sourceTask="EgoStateSnapshotGenerator"
+        sourcePort="EgoState"
+        targetTask="SmsVelocityTracker"
+        targetPort="EgoStateIn"/>
+
+
+</TaskGraph> 

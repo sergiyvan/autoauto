@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<!-- Ibeo Lux mounted at the front center of MiG -->
+	
+	<Activity type="SelectDrivenActivity">
+		<TaskContext type="modules::io::ibeolux::IbeoLux" name="IbeoLuxFC">
+			<struct name="" type="type_less">
+				<simple type="string" name="HostAddress"><value>192.168.1.61</value></simple>
+				<simple type="int" name="Port"><value>12002</value>
+				</simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+	
+</TaskGraph>

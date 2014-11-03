@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="ObstacleFusion" name="ObstacleFusion">
+		<struct type="type_less">
+			<simple type="bool" name="UseIbeoObstacles"><value>true</value></simple>
+			<simple type="bool" name="UseTrwFrontObstacles"><value>false</value></simple>
+			<simple type="bool" name="UseSmsRadarObstacles"><value>false</value></simple>
+			<simple type="bool" name="UseVelodyneObstacles"><value>false</value></simple>
+			<simple type="bool" name="UseStereoVisionObstacles"><value>false</value></simple>
+			<simple type="bool" name="UseVelodyneForPhantomDetection"><value>false</value></simple>
+			<simple type="bool" name="TrackObstaclesLargelyOnLane"><value>true</value></simple>
+			<simple type="bool" name="TrackObstaclesSparselyOnLane"><value>false</value></simple>
+			<simple type="bool" name="TrackObstaclesNearLane"><value>false</value></simple>
+			<simple type="bool" name="TrackObstaclesOffLane"><value>false</value></simple>
+			<simple type="bool" name="PredictTracks"><value>false</value></simple>
+			<simple type="bool" name="ConsolidateTracks"><value>false</value></simple>
+		</struct>
+		</TaskContext>
+	</Activity>
+	    
+</TaskGraph>

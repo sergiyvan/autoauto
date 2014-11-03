@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.02</value></simple>
+        </struct>
+        <TaskContext type="LocatorEgoState" name="EgoStateSnapshotGenerator"/>
+    </Activity>
+
+
+    <Include file="../live/Odometry.xml"/>
+    <Include file="../live/CarState.xml"/>
+    <Include file="../live/Velodyne.xml"/>
+
+
+
+        <!-- ===================== LOCALISATION ======================== -->
+
+
+   <!-- Abstract Odometry -->
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext
+                        type="OdometryImu"
+                        name="OdometryImu">
+                </TaskContext>
+        </Activity>
+
+
+        <Connection
+                sourceTask="Odometry"
+                sourcePort="OdometryOut"
+                targetTask="OdometryImu"
+                targetPort="OdometryIn"/>
+
+
+    <Connection
+        sourceTask="OdometryImu"
+        sourcePort="EgoStateOut"
+        targetTask="EgoStateSnapshotGenerator"
+        targetPort="EgoStateIn"/>
+
+
+</TaskGraph>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext type="DisplayAerialData" name="DisplayAerialData">
+			<struct name="" type="type_less">
+				<simple type="string" name="AerialImage">
+					<arg description="The name of the aerial image file">aerial</arg>
+					<!--<value>tempelhof/tempelhof.jpg</value>-->
+<!-- 					<value>swri/swri.jpg</value> -->
+ 					<value>dahlem/breitenbachplatz_smaller.jpg</value>
+<!-- 					<value>bahngelaende/bahngelaende.jpg</value> -->
+<!-- 					<value>dahlem/breitenbachplatz_smaller.jpg</value> -->
+				</simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+
+</TaskGraph>

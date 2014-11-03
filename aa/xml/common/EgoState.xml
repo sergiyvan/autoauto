@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.02</value></simple>
+		</struct>
+		<TaskContext	type="EgoStateSnapshotGenerator"		name="EgoStateSnapshotGenerator"/>
+	</Activity>	
+	<Activity type="SequentialActivity">
+		<TaskContext type="InterpolationModelSetter" name="InterpolationModelSetter"/>
+	</Activity>
+
+</TaskGraph>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+    <Include file="../lanedetection/commonLaneDetectionFromImu6.xml"/>
+
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+            <simple type="double" name="Period"><value>0.05</value></simple>
+        </struct>
+        <TaskContext
+                        type="DisplayHellaLaneData"
+                        name="DisplayHellaLaneData">
+        </TaskContext>
+    </Activity>
+    
+    <Connection
+        sourceTask="BtImu6"
+        sourcePort="EgoStateOut"
+        targetTask="DisplayHellaLaneData"
+        targetPort="EgoState"/>
+        
+    <Connection
+        sourceTask="HellaLaneDetectionUdp"
+        sourcePort="TimedHellaLaneData"
+        targetTask="DisplayHellaLaneData"
+        targetPort="TimedHellaLaneData"/>
+
+    <Connection
+        sourceTask="Log"
+        sourcePort="TimedHellaLaneData"
+        targetTask="DisplayHellaLaneData"
+        targetPort="TimedHellaLaneData"/>
+
+    
+</TaskGraph>

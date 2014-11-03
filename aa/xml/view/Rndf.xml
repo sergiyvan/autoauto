@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext	type="DisplayRNDF" name="DisplayRNDF"/>
+	</Activity>
+
+	<CallMethod
+		   task="DisplayRNDF"
+		   name="loadRNDF">
+		<struct name="" type="type_less">
+			<simple type="string" name="fileName">
+				<arg description="The name of the rndf file">rndf</arg>
+<!--				<value>avus/avus.rndf</value>-->
+	<!--				<value>tempelhof/speedway.rndf</value>-->
+		<!--				<value>resources/avus/avus.arnd</value>-->
+<!--				<value>tempelhof/vorfuehrung_final.rndf</value>-->
+                                <value>resources/berlin.arnd</value>
+			</simple>
+		</struct>
+	</CallMethod>
+
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext	type="DisplayLaneVariance" name="DisplayLaneVariance"/>
+	</Activity>
+
+</TaskGraph>

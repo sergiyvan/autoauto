@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="../ras/common/FpgaCamera.xml"/>
+	<Include file="RasCan.xml"/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.04</value></simple>
+		</struct>
+		<TaskContext type="SensoricActoricStateCheckerEconic" name="SensoricActoricStateChecker"/>
+	</Activity>
+
+	<Connection
+		sourceTask="PeakCanUsb"
+		sourcePort="CanMessageOut"
+		targetTask="SensoricActoricStateChecker"
+		targetPort="CanMessageIn"/>
+
+	<Connection
+		sourceTask="IR0"
+                sourcePort="IR0"
+		targetTask="SensoricActoricStateChecker"
+		targetPort="CameraLLIn"/>
+	
+	<Connection
+		sourceTask="IR1"
+                sourcePort="IR1"
+		targetTask="SensoricActoricStateChecker"
+		targetPort="CameraLCIn"/>
+	
+	<Connection
+		sourceTask="IR3"
+                sourcePort="IR3"
+		targetTask="SensoricActoricStateChecker"
+		targetPort="CameraLRIn"/>
+	
+	<Connection
+		sourceTask="IR4"
+                sourcePort="IR4"
+		targetTask="SensoricActoricStateChecker"
+		targetPort="CameraRLIn"/>
+	
+	<Connection
+		sourceTask="IR5"
+                sourcePort="IR5"
+		targetTask="SensoricActoricStateChecker"
+		targetPort="CameraRCIn"/>
+	
+	<Connection
+		sourceTask="IR6"
+                sourcePort="IR6"
+		targetTask="SensoricActoricStateChecker"
+		targetPort="CameraRRIn"/>
+	
+</TaskGraph>

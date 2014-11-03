@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+      <!-- views-->
+
+        <!-- create pointcloud that contains only points whcih are horizontal planes-->
+        <Activity type="SequentialActivity">
+                <TaskContext	type="VelodynePointCloud"	name="VelodynePointCloudFiltered">
+                        <struct name="" type="type_less">
+                                <simple type="string" name="CalibrationDB"><value>velodyne/velodyne2011-32.dbxml</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="VelodyneDeimage"
+                sourcePort="SuperVelodyneBundleOut"
+                targetTask="VelodynePointCloudFiltered"
+                targetPort="SuperVelodyneBundle"/>
+
+        <Connection
+                sourceTask="EgoStateSnapshotGenerator"
+                sourcePort="EgoState"
+                targetTask="VelodynePointCloudFiltered"
+                targetPort="EgoState"/>
+
+
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.1</value></simple>
+                </struct>
+                <TaskContext type="PointCloudView" name="DisplayPointCloudFiltered"/>
+        </Activity>
+
+        <Connection
+                sourceTask="VelodynePointCloudFiltered"
+                sourcePort="PointCloud"
+                targetTask="DisplayPointCloudFiltered"
+                targetPort="PointCloud"/>
+
+
+
+
+      <Activity type="SequentialActivity">
+              <TaskContext type="MultiMetricMapDisplay" name="MultiMetricMapDisplay">
+              <struct name="" type="type_less">
+<!--                      <simple type="double" name="OffsetX"><value>-230</value></simple>
+                      <simple type="double" name="OffsetY"><value>35</value></simple>
+                      <simple type="double" name="OffsetYaw"><value>55</value></simple>-->
+                  <!-- offsets for mrptmaps/institut.simplemap and institut/institut.rndf-->
+<!--                  <simple type="double" name="OffsetX"><value>-1139.5</value></simple>
+                  <simple type="double" name="OffsetY"><value>-1126.0</value></simple>
+                  <simple type="double" name="OffsetYaw"><value>39.0</value></simple>-->
+              </struct>
+              </TaskContext>
+      </Activity>
+      <Connection
+                 sourceTask="EgoStateSnapshotGenerator"
+                 sourcePort="MapOut"
+                 targetTask="MultiMetricMapDisplay"
+                 targetPort="MapIn"/>
+
+</TaskGraph>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+<!-- Guppy -->
+		 <Activity type="SelectDrivenActivity">
+				<TaskContext    type="DC1394Camera"	    name="Camera">
+						<struct name="" type="type_less">
+-                               <simple type="int" name="BytesPerPacket"><value>7680</value></simple>
+								<simple type="int" name="Mode"><value>3</value></simple>
+								<simple type="int" name="ColourCoding"><value>4</value></simple>
+								<simple type="int" name="MaxTimeoutsInARow"><value>500</value></simple>
+								<simple type="int" name="OperationMode"><value>1</value></simple>
+								<simple type="int" name="IsoSpeed"><value>3</value></simple>
+								<simple type="int" name="Shutter"><value>100</value></simple>
+								<simple type="int" name="Gain"><value>256</value></simple>
+						</struct>
+				</TaskContext>
+		</Activity>
+
+		<CallMethod task="Camera" name="selectCameraById">
+				<struct name="" type="type_less">
+						<simple type="int" name="unit"><value>0</value></simple>
+						<simple type="long" name="guid"><value>49712223532654738</value></simple>
+				</struct>
+		</CallMethod>
+
+</TaskGraph>
+

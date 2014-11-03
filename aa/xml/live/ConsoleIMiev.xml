@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- just a dummy file TODO implement -->
+<TaskGraph>
+	<Include file="CanIMiev.xml"/>
+
+	<Activity type="PeriodicActivity">
+			<struct name="" type="type_less">
+					<simple type="double" name="Period"><value>0.01</value></simple>
+					<simple type="int" name="Priority"><value>-15</value></simple>
+			</struct>
+			<TaskContext type="CarGate" name="CarGate">
+					<struct name="" type="type_less">
+							<simple type="double" name="MaxThrottle"><value>1.0</value></simple>
+							<simple type="double" name="MinThrottle"><value>0.0</value></simple>
+							<simple type="double" name="MaxBrake"><value>1.0</value></simple>
+							<simple type="double" name="MinBrake"><value>0.0</value></simple>
+					</struct>
+			</TaskContext>
+	</Activity>
+
+</TaskGraph>

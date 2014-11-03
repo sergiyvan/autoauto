@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisparityMapFilter" name="DisparityMapFilter">
+                    <struct name="" type="type_less">
+                        <simple type="bool" name="ApplyFilter"><value>true</value></simple>
+                        <simple type="bool" name="TestMode"><value>false</value></simple>
+                    </struct>
+                </TaskContext>
+        </Activity>
+
+
+
+</TaskGraph>

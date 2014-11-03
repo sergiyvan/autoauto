@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+	<CreateTaskGui/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.02</value></simple>
+		</struct>
+                <TaskContext type="DisplayUltraSonic" name="DisplayUltraSonic"/>
+	</Activity>
+
+	<Connection
+		sourceTask="UltraSonicProcessor"
+		sourcePort="USonicObstaclesOut"
+                targetTask="DisplayUltraSonic"
+		targetPort="USonicObstaclesIn"/>
+</TaskGraph>

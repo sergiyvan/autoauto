@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <Include file="../common/XenoSteerDetection.xml"/>
+        <Include file="XenoSteerAngleMicroController.xml"/>
+        <Include file="SickS300Front.xml"/>
+
+        <Connection
+            sourceTask="XenoSteerAngleMicroController"
+            sourcePort="SteerAngleSensorDataOut"
+            targetTask="XenoSteerDetection"
+            targetPort="SteerAngleSensorDataIn" />
+
+        <Connection
+            sourceTask="SickS300FrontPolar"
+            sourcePort="ScanPoints"
+            targetTask="XenoSteerDetection"
+            targetPort="ScanPointsIn"/>
+
+</TaskGraph>

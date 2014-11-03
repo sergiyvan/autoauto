@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+<!-- 	<Script>print("AAA");</Script> -->
+
+
+	<!-- views -->
+	<!-- 	Ctrl+F-Key is catched by KDE! Shift+F-Key and Ctrl+Shift+F-Key work fine -->
+
+	<BindMethod keys="F1" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>CarView</Task>
+	</BindMethod>
+
+
+	<BindMethod keys="Shift+F1" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+				<Task>DisplayLaneDataGpsCorrector</Task>
+				<Task>DisplayCarDataOriginal</Task>
+	</BindMethod>
+
+	<BindMethod keys="Ctrl+Shift+F1" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+				<Task>DisplayCarState</Task>
+	</BindMethod>
+
+	<BindMethod keys="Alt+Shift+F1" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayTrajectory</Task>
+		<Task>DisplayTrajectory2</Task>
+	</BindMethod>
+
+	<BindMethod keys="F2" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayARND</Task>
+		<Task>DisplayCheckpoints</Task>
+	</BindMethod>
+
+	<BindMethod keys="Shift+F2" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayARNDEditor</Task>
+		<Task>DisplayARNDLogger</Task>
+		<Task>DisplayAerialData</Task>
+	</BindMethod>
+
+	<BindMethod keys="Ctrl+Shift+F2" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayOsgEarth</Task>
+		<Task>DisplaySatelliteData</Task>
+		<Task>DisplayCityGml</Task>
+	</BindMethod>
+
+	<BindMethod keys="F3" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayBehaviour</Task>
+		<Task>DisplayMissionControl</Task>
+		<Task>DisplayController</Task>
+<!-- 		<Task>FreeFormNavigation</Task> -->
+	</BindMethod>
+
+	<BindMethod keys="Shift+F3" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayRightOfWay</Task>
+		<Task>DisplayObstacleMath</Task>
+		<Task>DisplayReactiveBrake</Task>
+	</BindMethod>
+
+	<BindMethod keys="Ctrl+Shift+F3" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplaySimulator</Task>
+	</BindMethod>
+
+	<BindMethod keys="F4" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayControllerData</Task>
+		<Task>DisplayStateMachine</Task>
+	</BindMethod>
+
+
+		<BindMethod keys="Shift+F4" name="toggleView" mode="silent">
+				<struct name="" type="type_less">
+						<simple type="int" name="number"><value>-1</value></simple>
+				</struct>
+				<Task>DisplaySplineKdTree</Task>
+		</BindMethod>
+
+	<BindMethod keys="F5" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>VelodyneDisplayObstacles</Task>
+		<Task>DisplayVelodyneObstacles</Task>
+	</BindMethod>
+
+	<BindMethod keys="Shift+F5" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>PointCloudView</Task>
+	</BindMethod>
+
+	<BindMethod keys="Ctrl+Shift+F5" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>VelodyneDisplayTrackedObstacles</Task>
+		<Task>OccupancyMap</Task>
+	</BindMethod>
+
+	<BindMethod keys="F6" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayIbeoObstacleDetector</Task>
+	</BindMethod>
+
+	<BindMethod keys="Shift+F6" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayIbeoLux</Task>
+		<Task>DisplayIbeoAlasca</Task>
+		<Task>DisplayIbeoLuxEcu</Task>
+	</BindMethod>
+
+	<BindMethod keys="F7" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayObstacleFusion</Task>
+		<Task>DisplaySick</Task>
+	</BindMethod>
+
+	<BindMethod keys="Shift+F7" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayLaserIntensity</Task>
+	</BindMethod>
+
+	<BindMethod keys="F8" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+				<Task>DisplayTrwRadar</Task>
+	</BindMethod>
+
+	<BindMethod keys="Shift+F8" name="toggleView" mode="silent">
+			<struct name="" type="type_less">
+					<simple type="int" name="number"><value>-1</value></simple>
+			</struct>
+						<Task>DisplayHellaRadar</Task>
+	</BindMethod>
+
+	<BindMethod keys="Shift+Alt+F8" name="toggleView" mode="silent">
+			<struct name="" type="type_less">
+					<simple type="int" name="number"><value>-1</value></simple>
+			</struct>
+			<Task>DisplaySmsRadar</Task>
+	</BindMethod>
+
+  <BindMethod keys="Ctrl+F8" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>UltraSonicWarningBoxesView</Task>
+		<Task>DisplayMicrosonic</Task>
+	</BindMethod>
+
+	<BindMethod keys="Ctrl+Shift+F8" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+                <Task>DisplayUltraSonic</Task>
+	</BindMethod>
+
+	<BindMethod keys="F9" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>ImageViewRGB</Task>
+	</BindMethod>
+
+	<BindMethod task="InCarView" name="reattach" keys="Shift+F9">
+			<struct name="" type="type_less">
+					<simple type="std::string" name="path">
+							<value>Root</value>
+					</simple>
+			</struct>
+	</BindMethod>
+	<BindMethod keys="Shift+F9" name="toggleView" mode="silent">
+			<struct name="" type="type_less">
+					<simple type="int" name="number"><value>-1</value></simple>
+			</struct>
+			<Task>InCarView</Task>
+	</BindMethod>
+	<BindMethod task="InCarView" name="reattach" keys="Shift+F9">
+			<struct name="" type="type_less">
+					<simple type="std::string" name="path">
+							<value>Root/CarView/Car</value>
+					</simple>
+			</struct>
+	</BindMethod>
+
+	<BindMethod keys="Alt+F9" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>ImageViewTracking</Task>
+		<Task>ImageViewTracking1</Task>
+	</BindMethod>
+
+
+
+	<BindMethod keys="F10" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>ImageViewRGB1</Task>
+		<Task>ImageViewL</Task>
+		<Task>ImageViewM</Task>
+		<Task>ImageViewR</Task>
+		<Task>ImageViewSR</Task>
+		<Task>ImageViewSL</Task>
+	</BindMethod>
+
+
+	<BindMethod keys="Ctrl+Shift+F10" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>ImageViewCam0L0</Task>
+		<Task>ImageViewCam0L1</Task>
+		<Task>ImageViewCam0L2</Task>
+		<Task>ImageViewCam0L3</Task>
+		<Task>ImageViewCam0L4</Task>
+		<Task>ImageViewCam1L0</Task>
+		<Task>ImageViewCam1L1</Task>
+		<Task>ImageViewCam1L2</Task>
+		<Task>ImageViewCam1L3</Task>
+		<Task>ImageViewCam1L4</Task>
+		<Task>ImageViewDisparity</Task>
+		<Task>ImageViewOF1</Task>
+		<Task>ImageView0</Task>
+		<Task>ImageView1</Task>
+		<Task>ImageView2</Task>
+		<Task>ImageView3</Task>
+		<Task>ImageView4</Task>
+		<Task>ImageView5</Task>
+		<Task>ImageView6</Task>
+		<Task>ImageView7</Task>
+		<Task>ImageView8</Task>
+	</BindMethod>
+	
+	<BindMethod keys="Ctrl+F10" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>TopView0</Task>
+		<Task>TopView1</Task>
+		<Task>TopView2</Task>
+	</BindMethod>
+	
+
+	<BindMethod keys="Shift+F10" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>ImageViewRectified</Task>
+		<Task>DisplayStereoMatches</Task>
+	</BindMethod>
+
+	<BindMethod keys="F11" name="toggleView" mode="silent">
+			<struct name="" type="type_less">
+					<simple type="int" name="number"><value>-1</value></simple>
+			</struct>
+			<Task>DisplayLaneData</Task>
+	</BindMethod>
+
+	<BindMethod keys="Shift+F11" name="toggleView" mode="silent">
+			<struct name="" type="type_less">
+					<simple type="int" name="number"><value>-1</value></simple>
+			</struct>
+			<Task>DisplayContiLaneData</Task>
+	</BindMethod>
+
+	<BindMethod keys="F12" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayOccupancyMap</Task>
+		<Task>DisplayStereoOccupancyMap</Task>
+	</BindMethod>
+
+	<BindMethod keys="F12" task="DisplayOccupancyMap" name="reattach">
+			<struct name="" type="type_less">
+					<simple type="std::string" name="path">
+							<value>Root/CarView/Car</value>
+					</simple>
+			</struct>
+	</BindMethod>
+
+	<BindMethod keys="Shift+F12" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayStereoObstacles</Task>
+				<Task>DisplayStereoObstacle</Task>
+				<Task>DisplayLeftImage</Task>
+				<Task>DisplayRightImage</Task>
+	</BindMethod>
+
+	<BindMethod keys="Alt+F12" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayFusionObstacles</Task>
+	</BindMethod>
+
+	<BindMethod keys="Ctrl+Shift+F12" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayCars</Task>
+	</BindMethod>
+
+		<!-- ARND editor -->
+        <BindMethod keys="Ctrl+S" task="DisplayARNDEditor" name="saveRndf" >
+		<struct name="" type="type_less">
+						<simple type="string" name="filename"><value>out.arnd</value></simple>
+		</struct>
+	</BindMethod>
+
+	<BindMethod keys="Ctrl+E" task="DisplayARNDEditor" name="toggleEditMode"/>
+	<BindMethod keys="Ctrl+A" task="DisplayARNDEditor" name="toggleArielViewEditMode"/>
+	<BindMethod keys="Ctrl+O" task="DisplayARNDEditor" name="doGraphOptimise"/>
+
+	<!-- editMode Bindings-->
+        <BindMethod keys="Ctrl+W" task="DisplayARNDEditor" name="startDrawNewLane"/>
+	<BindMethod keys="Ctrl+B" task="DisplayARNDEditor" name="splitSelectedLane"/>
+        <BindMethod keys="Ctrl+J" task="DisplayARNDEditor" name="removeSupportPoint"/>
+	<BindMethod keys="Ctrl+K" task="DisplayARNDEditor" name="convertSelectedEdgeToConnectingEdge"/>
+	<BindMethod keys="Del" task="DisplayARNDEditor" name="deleteEdge"/>
+	<BindMethod keys="Ctrl+Y" task="DisplayARNDEditor" name="toggleLaneDirection"/>
+        <BindMethod keys="Shift+H" task="DisplayARNDEditor" name="toggleStopsignTrafficlight"/>
+	<BindMethod keys="Ctrl+G" task="DisplayARNDEditor" name="mergeSelectedLanesIntoSegment"/>
+	<BindMethod keys="Ctrl+F" task="DisplayARNDEditor" name="moveSelectedLaneToNewSegment"/>
+        <BindMethod keys="Shift+C" task="DisplayARNDEditor" name="toggleCheckpoint"/>
+        <BindMethod keys="Ctrl+C" task="DisplayARNDEditor" name="cancelEditing"/>
+	<BindMethod keys="Ctrl+T" task="DisplayARNDEditor" name="switchStreetType"/>
+
+	<!-- ARND Logger -->
+        <BindMethod keys="Ctrl+X" task="DisplayARNDLogger" name="dropPoint"/>
+	<BindMethod keys="Ctrl+V" task="DisplayARNDLogger" name="addPointsToRndfGraph"/>
+	<BindMethod keys="Ctrl+L" task="DisplayARNDLogger" name="toggleAutomaticCaptureMode"/>
+	<BindMethod keys="Ctrl+N" task="DisplayARNDLogger" name="startNewLane"/>
+
+	<!-- Simulator -->
+	<BindMethod keys="Alt+M" task="DisplaySimulatorCtrl" name="chooseModel"/>
+	<BindMethod keys="Alt+P" task="DisplaySimulatorCtrl" name="previousObstacleInScenery"/>
+	<BindMethod keys="Alt+N" task="DisplaySimulatorCtrl" name="nextObstacleInScenery"/>
+	<BindMethod keys="Alt+X" task="DisplaySimulatorCtrl" name="saveSimScene"/>
+	<BindMethod keys="Alt+Del" task="DisplaySimulatorCtrl" name="deleteSelectedObstacle"/>
+	<BindMethod keys="Alt+W" task="DisplaySimulatorCtrl" name="obsManipulPushForward"/>
+	<BindMethod keys="Alt+A" task="DisplaySimulatorCtrl" name="obsManipulPushLeft"/>
+	<BindMethod keys="Alt+S" task="DisplaySimulatorCtrl" name="obsManipulPushBackwards"/>
+	<BindMethod keys="Alt+D" task="DisplaySimulatorCtrl" name="obsManipulPushRight"/>
+	<BindMethod keys="Alt+U" task="DisplaySimulatorCtrl" name="obsManipulLift"/>
+	<BindMethod keys="Alt+Q" task="DisplaySimulatorCtrl" name="obsManipulRotateZAxis"/>
+	<BindMethod keys="Alt+J" task="DisplaySimulatorCtrl" name="obsManipulLower"/>
+	<BindMethod keys="Alt+E" task="DisplaySimulatorCtrl" name="obsManipulRotateZAxisN"/>
+	<BindMethod keys="Alt+Up" task="DisplaySimulatorCtrl" name="obsManipulIncreaseSizeFront"/>
+	<BindMethod keys="Alt+Down" task="DisplaySimulatorCtrl" name="obsManipulDecreaseSize"/>
+	<BindMethod keys="Alt+Left" task="DisplaySimulatorCtrl" name="obsManipulDecreaseSizeSideways"/>
+	<BindMethod keys="Alt+Right" task="DisplaySimulatorCtrl" name="obsManipulIncreaseSizeSideways"/>
+
+	<!-- misc -->
+	<BindMethod keys="Down" task="Controller" name="PauseDrive"/>
+	<BindMethod keys="Up" task="Controller" name="ResumeDrive"/>
+        <BindMethod keys="Ctrl+K" task="MissionControl" name="skipNextCheckpoint"/>
+
+        <BindMethod keys="Left" task="EgoStateGenerator" name="shiftOffsetLeft"/>
+        <BindMethod keys="Right" task="EgoStateGenerator" name="shiftOffsetRight"/>
+
+        <BindMethod keys="Shift+R" task="Behaviour" name="ReplanNow"/>
+        <BindMethod keys="Shift+R" task="CarFollowingBehaviour" name="ReplanNow"/>
+        <BindMethod keys="P" task="Behaviour" name="EnableLaneChanges"/>
+	<BindMethod keys="Ö" task="Behaviour" name="DisableLaneChanges"/>
+	<BindMethod keys="Ü" task="Behaviour" name="EnableShifts"/>
+	<BindMethod keys="Ä" task="Behaviour" name="DisableShifts"/>
+
+	<BindMethod keys="Ctrl+M" task="EgoStateGenerator" name="mapToReferencePoint">
+		<struct name="" type="type_less">
+			<simple type="int" name="filename"><value>0</value></simple>
+		</struct>
+	</BindMethod>
+
+<!--	<BindMethod keys="Ctrl+T" task="Simulator" name="togglePause"/>-->
+	<BindMethod keys="Ctrl+Shift+P" task="Dropper" name="drop"/>
+
+	<BindMethod keys="Ctrl+1" task="ImageViewL" name="switchMode" />
+	<BindMethod keys="Ctrl+2" task="ImageViewR" name="switchMode" />
+	<BindMethod keys="Ctrl+3" task="ImageViewRGB" name="switchMode" />
+	<BindMethod keys="Ctrl+4" task="ImageViewSR" name="switchMode" />
+
+	<!--toggle IgnoreZ-->
+	<BindMethod keys="Ctrl+Z" task="EgoStateGenerator" name="ToggleUseZ"/>
+	<BindMethod keys="Ctrl+Z" task="EgoStateGeneratorOriginal" name="ToggleUseZ"/>
+
+
+	<BindMethod keys="Ctrl+T" name="toggleView" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>-1</value></simple>
+		</struct>
+		<Task>DisplayTrafficLightDetector</Task>
+		<Task>DisplayTrafficLights</Task>
+	</BindMethod>
+
+	<BindMethod keys="i" name="ForceTrafficLightRed" mode="silent">
+		<Task>Controller</Task>
+	</BindMethod>
+
+	<BindMethod keys="k" name="ForceTrafficLightGreen" mode="silent">
+		<Task>Controller</Task>
+	</BindMethod>
+
+        <!--<BindMethod keys="i" name="ForceRed" mode="silent">
+		<Task>TrafficLightDetector</Task>
+	</BindMethod>
+
+	<BindMethod keys="k" name="ForceGreen" mode="silent">
+		<Task>TrafficLightDetector</Task>
+        </BindMethod>-->
+
+	<!--Logger save-->
+	<BindMethod keys="Ctrl+s" name="stop" mode="silent" task="Logger"/>
+
+	<!--Logger start-->
+	<BindMethod keys="Ctrl+Shift+s" name="start" mode="silent" task="Logger"/>
+	<BindMethod keys="Ctrl+Shift+s" name="triggerConfig" mode="silent" task="Config"/>
+
+	<!--Logger restart-->
+	<BindMethod keys="Ctrl+Shift+r" name="stop" mode="silent" task="Logger"/>
+	<BindMethod keys="Ctrl+Shift+r" name="start" mode="silent" task="Logger"/>
+	<BindMethod keys="Ctrl+Shift+r" name="triggerConfig" mode="silent" task="Config"/>
+
+<!--
+	<BindMethod keys="0" task="TrafficLightDetector" name="CorrectPosition" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="uint" name="Number"><value>0</value></simple>
+		</struct>
+	</BindMethod>
+	<BindMethod keys="1" task="TrafficLightDetector" name="CorrectPosition" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="uint" name="Number"><value>1</value></simple>
+		</struct>
+	</BindMethod>
+	<BindMethod keys="2" task="TrafficLightDetector" name="CorrectPosition" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="uint" name="Number"><value>2</value></simple>
+		</struct>
+	</BindMethod>
+	<BindMethod keys="3" task="TrafficLightDetector" name="CorrectPosition" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="uint" name="Number"><value>3</value></simple>
+		</struct>
+	</BindMethod>
+	<BindMethod keys="4" task="TrafficLightDetector" name="CorrectPosition" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="uint" name="Number"><value>4</value></simple>
+		</struct>
+	</BindMethod>
+	<BindMethod keys="5" task="TrafficLightDetector" name="CorrectPosition" mode="silent">
+		<struct name="" type="type_less">
+			<simple type="uint" name="Number"><value>5</value></simple>
+		</struct>
+	</BindMethod>
+-->
+
+
+
+</TaskGraph>

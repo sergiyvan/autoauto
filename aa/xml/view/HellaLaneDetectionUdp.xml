@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="../common/EgoState.xml"/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.05</value></simple>
+		</struct>
+		<TaskContext
+						type="DisplayLaneData"
+						name="DisplayLaneData">
+		</TaskContext>
+	</Activity>
+	
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplayLaneData"
+		targetPort="EgoStateIn"/>
+
+<!-- for live -->
+
+	<Connection
+		sourceTask="HellaLaneDetectionUdp"
+		sourcePort="LaneDataOut"
+		targetTask="DisplayLaneData"
+		targetPort="LaneDataIn"/>
+
+<!-- for logged -->
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="LaneDataOut"
+		targetTask="DisplayLaneData"
+		targetPort="LaneDataIn"/>
+
+
+<!-- for logged old lane data-->
+
+<!--	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.05</value></simple>
+		</struct>
+		<TaskContext
+						type="DisplayHellaLaneData"
+						name="DisplayHellaLaneData">
+		</TaskContext>
+	</Activity>
+	
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplayHellaLaneData"
+		targetPort="EgoState"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="TimedHellaLaneData"
+		targetTask="DisplayHellaLaneData"
+		targetPort="TimedHellaLaneData"/>-->
+
+	
+	
+	
+	
+</TaskGraph>

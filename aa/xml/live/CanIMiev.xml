@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Script>if (mode=='') mode = 'live';</Script>
+
+<!-- IMievCanDecoder -->
+	<Include file="../common/CanIMiev.xml"/>
+        <Include file="../common/SmsEthernetParser.xml"/>
+
+	<!-- CarGate -->
+	<Activity type="SelectDrivenActivity">
+                <TaskContext type="AnagateCanbus"	name="CanBusA">
+			<struct name="" type="type_less">
+				<simple type="int" name="Port"><value>5001</value></simple>
+				<!-- CarGate -->
+				<simple type="bool" name="ConnectHandshake"><value>false</value></simple>
+				<simple type="string" name="HostAddress"><value>192.168.1.20</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="CanBusA"
+                sourcePort="canMsgPort"
+		targetTask="IMievCanDecoder"
+                targetPort="CanMessageIn"/>
+
+        <Connection
+                sourceTask="SmsEthernetParser"
+                sourcePort="SmsCanMessageOut"
+                targetTask="RadarCanDecoder"
+                targetPort="CanMessageIn"/>
+
+
+</TaskGraph>

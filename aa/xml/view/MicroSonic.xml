@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayMicroSonic" name="DisplayMicroSonic">
+		</TaskContext>
+	</Activity>
+
+	<!--<If condition="mode=='live'">-->
+        <Connection
+		sourceTask="MicroSonic1"
+                sourcePort="MicroSonicRangeData"
+		targetTask="DisplayMicroSonic"
+                targetPort="MicroSonicRangeDataIn"/>
+        <Connection
+		sourceTask="MicroSonic2"
+                sourcePort="MicroSonicRangeData"
+		targetTask="DisplayMicroSonic"
+                targetPort="MicroSonicRangeDataIn"/>
+	<!--</If>-->
+
+	<!--<If condition="mode=='play'">-->
+        <Connection
+		sourceTask="Log"
+		sourcePort="MicroSonicRangeData1"
+		targetTask="DisplayMicroSonic"
+                targetPort="MicroSonicRangeDataIn"/>
+		<!--<Connection
+		sourceTask="Log"
+		sourcePort="MicroSonicRangeData2"
+		targetTask="DisplayMicroSonic"
+				targetPort="MicroSonicRangeDataIn"/>-->
+	<!--</If>-->
+
+</TaskGraph>

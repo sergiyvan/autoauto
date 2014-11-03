@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+common for VelodyneImage
+-->
+<TaskGraph>
+    <Activity type="SequentialActivity">
+            <TaskContext
+                                    type="VelodyneImage"
+                                    name="VelodyneImage">
+                    <struct name="" type="type_less">
+                            <simple type="string" name="CalibrationDB"><value>velodyne/velodyne2011.dbxml</value></simple>
+                    </struct>
+            </TaskContext>
+    </Activity>
+
+    <Activity type="SequentialActivity">
+            <TaskContext	type="VelodyneImageProcessing"	name="VelodyneImageProcessing">
+            </TaskContext>
+    </Activity>
+    <Connection
+            sourceTask="VelodyneImage"
+            sourcePort="ImageOut"
+            targetTask="VelodyneImageProcessing"
+            targetPort="ImageIn"/>
+
+
+</TaskGraph>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <If condition="mode=='live'">
+                <Include file="../live/InterpolationModelSetter.xml"/>
+        </If>
+
+        <If condition="mode=='play'">
+                <Include file="../logged/InterpolationModelSetter.xml"/>
+        </If>
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="IbeoEcuIntensityPointSetGenerator" name="IbeoEcuIntensityPointSetGenerator">
+                </TaskContext>
+        </Activity>
+        <If condition="mode=='live'">
+        <Connection
+                sourceTask="IbeoLuxEcu"
+                sourcePort="IbeoLuxEcuScanData"
+                targetTask="IbeoEcuIntensityPointSetGenerator"
+                targetPort="IbeoLuxEcuScanDataIn"/>
+        </If>
+
+        <If condition="mode=='play'">
+        <Connection
+                sourceTask="Log"
+                sourcePort="IbeoLuxEcuScanData"
+                targetTask="IbeoEcuIntensityPointSetGenerator"
+                targetPort="IbeoLuxEcuScanDataIn"/>
+        </If>
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayIntensityPointSet" name="DisplayIntensityPointSet">
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="IbeoEcuIntensityPointSetGenerator"
+                sourcePort="IntensityPointSetOut"
+                targetTask="DisplayIntensityPointSet"
+                targetPort="IntensityPointSetIn"/>
+</TaskGraph>

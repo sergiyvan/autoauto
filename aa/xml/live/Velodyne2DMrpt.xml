@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+live for Velodyne2DMrpt
+-->
+<TaskGraph>
+
+
+    <Include file="VelodyneImage.xml"/>
+
+    <Include file="../common/Velodyne2DMrpt.xml"/>
+
+</TaskGraph>

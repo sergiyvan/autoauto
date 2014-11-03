@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="ContiLaneDetection" name="ContiLaneDetection"></TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="CameraLaneDetectionBorderInfoOut"
+		targetTask="ContiLaneDetection"
+		targetPort="CameraLaneDetectionBorderInfoIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="CameraLaneDetectionCurvatureInfoOut"
+		targetTask="ContiLaneDetection"
+		targetPort="CameraLaneDetectionCurvatureInfoIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="CameraLaneDetectionLaneInfoOut"
+		targetTask="ContiLaneDetection"
+		targetPort="CameraLaneDetectionLaneInfoIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="CameraLaneDetectionLaneRangeInfoOut"
+		targetTask="ContiLaneDetection"
+		targetPort="CameraLaneDetectionLaneRangeInfoIn"/>
+
+</TaskGraph>

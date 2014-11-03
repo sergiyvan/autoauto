@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="PointCloudColorizer" name="PointCloudColorizer">
+		</TaskContext>
+	</Activity>
+
+</TaskGraph>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="Default.xml"/>
+
+	<Include file="../common/IbeoScanDataMux.xml"/>
+
+	<If condition="node_name=='vw'">
+		<Connection
+			sourceTask="Log"
+			sourcePort="IbeoLuxEcuScanData"
+			targetTask="IbeoScanDataMux"
+			targetPort="IbeoLuxEcuScanData"/>
+	</If>
+
+	<Include file="../common/IbeoObstacleDetector.xml"/>
+
+	<Connection
+		sourceTask="IbeoScanDataMux"
+		sourcePort="IbeoScanPointObstacleBundle"
+		targetTask="IbeoObstacleDetector"
+		targetPort="IbeoScanPointObstacleBundle"/>
+
+</TaskGraph>

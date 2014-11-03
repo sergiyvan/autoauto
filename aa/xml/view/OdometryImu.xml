@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+        <!-- ===================== LOCALISATION ======================== -->
+
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+            <simple type="double" name="Period"><value>0.1</value></simple>
+        </struct>
+        <TaskContext
+                    type="DisplayOdometryImu"
+                    name="DisplayOdometryImu"/>
+    </Activity>
+
+
+    <Connection
+        sourceTask="OdometryImu"
+        sourcePort="ImuDataOut"
+        targetTask="DisplayOdometryImu"
+        targetPort="ImuDataIn"/>
+
+</TaskGraph>

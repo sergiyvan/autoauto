@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <Include file="Default.xml"/>
+
+<!--        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.01</value></simple>
+                </struct>
+                <TaskContext type="PmdPointCloud" name="PmdPointCloud"/>
+        </Activity>-->
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="PmdPointCloud" name="PmdPointCloud"/>
+        </Activity>
+
+        <Connection
+                sourceTask="Log"
+                sourcePort="PmdDataOut"
+                targetTask="PmdPointCloud"
+                targetPort="PmdDataIn"/>
+
+</TaskGraph>

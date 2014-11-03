@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+<If condition="typeof commonVelodyneObstacles == 'undefined'">
+<Script>commonVelodyneObstacles='pragma_once';</Script>
+
+	<Include file="Velodyne.xml"/>
+
+	<!-- ==================== OCCUPANCY MAP ==================== -->
+	<Activity type="SequentialActivity">
+		<TaskContext
+		    type="OccupancyMap"
+		    name="OccupancyMap">
+		</TaskContext>
+	</Activity>
+	
+	<Connection
+		sourceTask="VelodynePointCloud"
+		sourcePort="PointCloud"
+		targetTask="OccupancyMap"
+		targetPort="PointCloud"/>
+		    
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="OccupancyMap"
+		targetPort="EgoState"/>
+
+	<Connection
+		sourceTask="VelodynePointCloud"
+		sourcePort="TargetAngleOut"
+		targetTask="OccupancyMap"
+		targetPort="TargetAngleIn"/>
+		
+</If>	
+</TaskGraph>

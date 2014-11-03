@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+        <Include if="node_name=='vw'" file="OdometryPassat.xml"/>
+        <!-- <Include if="node_name=='dodge'" file="OdometryDodge.xml"/> -->
+        <Include if="node_name=='xeno'" file="OdometryXeno.xml"/>
+        <Include if="node_name=='imiev'" file="OdometryIMiev.xml"/>
+</TaskGraph>

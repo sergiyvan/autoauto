@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>	
+        <If condition="node_name=='vw'">
+                <Activity type="PeriodicActivity">
+                        <struct name="" type="type_less">
+                                <simple type="double" name="Period"><value>0.04</value></simple>
+                        </struct>
+
+                        <TaskContext type="SensoricActoricStateChecker" name="SensoricActoricStateChecker"/>
+
+                        <TaskContext
+                                                type="DisplaySensoricActoricState"
+                                                name="DisplaySensoricActoricState">
+
+                                <struct name="" type="type_less">
+                                    <simple type="string" name="CarFile"><value>outline_passat.png</value></simple>
+                                </struct>
+                        </TaskContext>
+                </Activity>
+        </If>
+	
+</TaskGraph>
+
+

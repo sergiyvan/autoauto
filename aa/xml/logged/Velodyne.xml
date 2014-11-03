@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="EgoState.xml"/>
+	<Include file="Default.xml"/>
+	<Include file="../common/Velodyne.xml"/>
+        <Include file="VehicleData.xml"/>
+        <Include file="ConfigurationStorage.xml"/>
+
+	<Connection
+			   sourceTask="Log"
+			   sourcePort="SuperVelodyneBundle"
+			   targetTask="VelodynePointCloud"
+			   targetPort="SuperVelodyneBundle"/>
+
+</TaskGraph>

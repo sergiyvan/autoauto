@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+<!--	 first (left) cam -->
+		<Activity type="SelectDrivenActivity">
+			<TaskContext    type="DC1394Camera"	    name="CameraL">
+				<struct name="" type="type_less">
+					<simple type="int" name="BytesPerPacket"><value>1524</value></simple>
+					<simple type="int" name="Mode"><value>0</value></simple>
+					<simple type="int" name="ColourCoding"><value>9</value></simple>
+					<simple type="int" name="Shutter"><value>20</value></simple>
+				</struct>
+			</TaskContext>
+		</Activity>
+
+		<CallMethod task="CameraL" name="selectCameraById">
+			<struct name="" type="type_less">
+				<simple type="int" name="unit"><value>0</value></simple>
+				<simple type="long" name="guid"><value>13602058367823114</value></simple>
+			</struct>
+		</CallMethod>	
+
+        <CallMethod
+                   task="CameraL"
+                   name="renamePort">
+                <struct name="" type="type_less">
+                        <simple type="string" name="name"><value>TypedImageL</value></simple>
+                </struct>
+        </CallMethod>
+		
+		<Activity type="SelectDrivenActivity">
+			<TaskContext    type="DC1394Camera"	    name="CameraR">
+				<struct name="" type="type_less">
+					<simple type="int" name="BytesPerPacket"><value>1524</value></simple>
+					<simple type="int" name="Mode"><value>0</value></simple>
+					<simple type="int" name="ColourCoding"><value>9</value></simple>
+					<simple type="int" name="Shutter"><value>20</value></simple>
+					<simple type="bool" name="ExternalTrigger"><value>true</value></simple>
+					<simple type="bool" name="ExternalTriggerHighPolarity"><value>true</value></simple>
+				</struct>
+			</TaskContext>
+		</Activity>
+
+
+		<CallMethod	task="CameraR" name="selectCameraById">
+			<struct name="" type="type_less">
+				<simple type="int" name="unit"><value>0</value></simple>
+				<simple type="long" name="guid"><value>13602058367823115</value></simple>
+			</struct>
+		</CallMethod>			
+
+        <CallMethod
+                   task="CameraR"
+                   name="renamePort">
+                <struct name="" type="type_less">
+                        <simple type="string" name="name"><value>TypedImageR</value></simple>
+                </struct>
+        </CallMethod>
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext	type="PortMapper"	name="PortMapper"/>
+        </Activity>
+
+
+        <Connection
+                sourceTask="CameraL"
+                sourcePort="TypedImageL"
+                targetTask="PortMapper"
+                targetPort="TypedImageLIn"/>
+
+		<Connection
+                sourceTask="CameraR"
+                sourcePort="TypedImageR"
+                targetTask="PortMapper"
+                targetPort="TypedImageRIn"/>
+      
+<!-- stereo bundle -->
+        <Activity type="SequentialActivity">
+                <TaskContext    type="StereoBundle"     name="StereoBundle"/>
+        </Activity>
+        
+        	<Connection
+				sourceTask="PortMapper"
+				sourcePort="TypedImageLOut"
+				targetTask="StereoBundle"
+				targetPort="TypedImageL"/>
+				
+			<Connection
+				sourceTask="PortMapper"
+				sourcePort="TypedImageROut"
+				targetTask="StereoBundle"
+				targetPort="TypedImageR"/>
+        
+	<TaskBrowser
+                    task="PortMapper"/>
+</TaskGraph>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+logged for VelodyneImage, also provides VelodyneImageProcessing
+-->
+<TaskGraph>
+    <Include file="Default.xml"/>
+    <Include file="../common/VelodyneImage.xml"/>
+    <Connection
+            sourceTask="Log"
+            sourcePort="SuperVelodyneBundle"
+            targetTask="VelodyneImage"
+            targetPort="SuperVelodyneBundleIn"/>
+
+
+
+
+</TaskGraph>

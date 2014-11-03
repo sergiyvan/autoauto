@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="../common/EgoState.xml"/>
+
+<!--
+<If condition="node_name=='xeno'">
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext
+					type="DisplayCarData"
+					name="CarView">
+			<struct name="" type="type_less">
+				<simple type="string" name="CarModelFileName"><value>3dmodels/Invalid_chair.3DS</value></simple>
+				<simple type="bool" name="CentreOnMe"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+</If>
+-->
+
+<If condition="node_name=='dodge'">
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext
+					type="DisplayCarData"
+					name="CarView">
+			<struct name="" type="type_less">
+				<simple type="string" name="CarModelFileName"><value>3dmodels/dodge.3ds</value></simple>
+				<simple type="bool" name="CentreOnMe"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+</If>
+
+<If condition="node_name=='vw'">
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.04</value></simple>
+		</struct>
+		<TaskContext
+					type="DisplayCarData"
+					name="CarView">
+			<struct name="" type="type_less">
+				<simple type="string" name="CarModelFileName"><value>3dmodels/passat.3ds</value></simple>
+				<simple type="bool" name="CentreOnMe"><value>1</value></simple>
+
+			</struct>
+		</TaskContext>
+	</Activity>
+</If>
+
+
+<If condition="node_name=='imiev'">
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext
+					type="DisplayCarData"
+					name="CarView">
+			<struct name="" type="type_less">
+				<simple type="string" name="CarModelFileName"><value>3dmodels/imiev.3ds</value></simple>
+				<simple type="bool" name="CentreOnMe"><value>1</value></simple>
+
+			</struct>
+		</TaskContext>
+	</Activity>
+</If>
+
+<If condition="node_name=='truck'">
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext
+					type="DisplayCarData"
+					name="CarView">
+			<struct name="" type="type_less">
+								<simple type="string" name="CarModelFileName"><value>3dmodels/T282C_std.3DS</value></simple>
+
+				<simple type="bool" name="CentreOnMe"><value>1</value></simple>
+
+			</struct>
+		</TaskContext>
+	</Activity>
+</If>
+
+<If condition="node_name=='ras'">
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext
+					type="DisplayCarData"
+					name="CarView">
+			<struct name="" type="type_less">
+<!--                                                                 <simple type="string" name="CarModelFileName"><value>/mnt/autonomos/autonomos/data/3dmodelsExtra/M21x2c_Delta Premium.stp</value></simple>-->
+								<simple type="string" name="CarModelFileName"><value>/import/autonomos/autonomos/data/3dmodelsExtra/muellfahrzeug.3ds</value></simple>
+				<simple type="bool" name="CentreOnMe"><value>1</value></simple>
+
+			</struct>
+		</TaskContext>
+	</Activity>
+</If>
+
+
+<If condition="node_name=='xeno'">
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext
+					type="DisplayCarData"
+					name="CarView">
+			<struct name="" type="type_less">
+				<simple type="string" name="CarModelFileName"><value>3dmodels/box.ac</value></simple>
+				<simple type="bool" name="CentreOnMe"><value>1</value></simple>
+
+			</struct>
+		</TaskContext>
+	</Activity>
+</If>
+
+
+
+
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="CarView"
+		targetPort="EgoState"/>
+	<If condition="mode=='live'">
+	<Connection
+		sourceTask="Applanix"
+		sourcePort="VehicleNavigationPerformanceMetrics"
+		targetTask="CarView"
+		targetPort="VehicleNavigationPerformanceMetricsIn"/>
+	</If>
+
+	<If condition="mode=='play'">
+	<Connection
+		sourceTask="Log"
+		sourcePort="VehicleNavigationPerformanceMetrics"
+		targetTask="CarView"
+		targetPort="VehicleNavigationPerformanceMetricsIn"/>
+
+	<ConnectPeer task="Log" peer="CarView"/>
+	</If>
+</TaskGraph>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Resources>
+	<ResourcePath>${CMAKE_BINARY_DIR}/resources</ResourcePath>
+	<ResourcePath>${CORE_LIBRARY_DIR}/../resources</ResourcePath>
+</Resources>

@@ -1,0 +1,11 @@
+add_data(StateMachine
+	State.cpp
+	StateChangeInfo.cpp
+)
+add_module(StateMachineTask
+	StateMachine.cpp
+LINK_LIBRARIES
+	StateMachine
+	Util
+	${QT_LIBRARIES}
+)

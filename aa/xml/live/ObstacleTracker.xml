@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+<!-- Ibeo Obstacles -->	
+	<Include file="IbeoObstacles.xml"/>
+
+
+<!-- Velodyne Obstacles -->
+	<Include file="VelodyneObstacles.xml"/>
+
+<!-- Radar -->
+	<Include file="FrontTrwRadar.xml"/>
+
+<!-- Obstacle Tracker -->
+	<Include file="../common/ObstacleTracker.xml"/>
+
+	<Connection
+		sourceTask="LuxObstacleDetector"
+		sourcePort="ObstacleBundle"
+		targetTask="ObstacleTracker"
+		targetPort="IbeoObstacles"/>
+
+	<Connection
+		sourceTask="OccupancyMap"
+		sourcePort="ObstacleBundle"
+		targetTask="ObstacleTracker"
+		targetPort="VelodyneObstacles"/>
+
+	<Connection
+		sourceTask="FrontTrwRadarTracker"
+		sourcePort="ObstaclePortOut"
+		targetTask="ObstacleTracker"
+		targetPort="TrwFrontObstacles"/>
+
+</TaskGraph>

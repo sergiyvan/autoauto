@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="9">
+<sensorTypes class_id="0" tracking_level="0" version="0">
+	<count>1</count>
+	<item_version>0</item_version>
+	<item>TrwRadarParameter</item>
+</sensorTypes>
+<sensorType class_id="1" tracking_level="0" version="1">
+	<px class_id="2" class_name="TrwRadarParameterList" tracking_level="1" version="0" object_id="_0">
+		<sensors class_id="3" tracking_level="0" version="0">
+			<count>4</count>
+			<item_version>0</item_version>
+			<item class_id="4" tracking_level="1" version="0" object_id="_1">
+				<abstractSensor class_id="5" tracking_level="0" version="4">
+					<position class_id="6" tracking_level="0" version="0">
+						<data>
+							<item>0</item>
+							<item>-1</item>
+							<item>-0</item>
+						</data>
+					</position>
+					<rotation class_id="7" tracking_level="0" version="0">
+						<data>
+							<item>0</item>
+							<item>0</item>
+							<item>-0.70710679664085752</item>
+							<item>0.70710676573223719</item>
+						</data>
+					</rotation>
+					<delay>0</delay>
+				</abstractSensor>
+				<canID>1637</canID>
+				<name>left</name>
+			</item>
+			<item object_id="_2">
+				<abstractSensor>
+					<position>
+						<data>
+							<item>-3.4089999198913574</item>
+							<item>-0</item>
+							<item>-0</item>
+						</data>
+					</position>
+					<rotation>
+						<data>
+							<item>0</item>
+							<item>0</item>
+							<item>-0.999999999999999</item>
+							<item>-4.3711390001864437e-08</item>
+						</data>
+					</rotation>
+					<delay>0</delay>
+				</abstractSensor>
+				<canID>1639</canID>
+				<name>rear</name>
+			</item>
+			<item object_id="_3">
+				<abstractSensor>
+					<position>
+						<data>
+							<item>0.29999999999999999</item>
+							<item>0</item>
+							<item>0</item>
+						</data>
+					</position>
+					<rotation>
+						<data>
+							<item>0</item>
+							<item>0</item>
+							<item>0</item>
+							<item>1</item>
+						</data>
+					</rotation>
+					<delay>0</delay>
+				</abstractSensor>
+				<canID>1635</canID>
+				<name>front</name>
+			</item>
+			<item object_id="_4">
+				<abstractSensor>
+					<position>
+						<data>
+							<item>0</item>
+							<item>1</item>
+							<item>-0</item>
+						</data>
+					</position>
+					<rotation>
+						<data>
+							<item>0</item>
+							<item>0</item>
+							<item>0.70710679664085752</item>
+							<item>0.70710676573223719</item>
+						</data>
+					</rotation>
+					<delay>0</delay>
+				</abstractSensor>
+				<canID>1641</canID>
+				<name>right</name>
+			</item>
+		</sensors>
+	</px>
+</sensorType>
+</boost_serialization>
+

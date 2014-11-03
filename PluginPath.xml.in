@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<PluginPath>${CORE_LIBRARY_DIR}</PluginPath>
+	<PluginPath>${CMAKE_LIBRARY_OUTPUT_DIRECTORY}</PluginPath>
+	<Script>
+		CORE_BUILD = '${CORE_LIBRARY_DIR}/../';
+		${PROJECT_NAME_UPPER}_BUILD = '${CMAKE_BINARY_DIR}';
+	</Script>
+</TaskGraph>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="EgoState.xml"/>
+	<Include file="Velodyne.xml"/>
+	<Include file="ImageData.xml"/>
+	<Include file="HellaLaneDetectionUdp.xml"/>
+	<Include file="ConfigurationStorage.xml"/>
+        <Include file="IbeoObstacleDetector.xml"/>
+	<Include file="Can.xml"/>
+        <Include file="../live/SmsRadar.xml"/>
+
+	<!-- Dodge only -->
+	<Include if="node_name=='dodge'" file="Sick.xml"/>
+
+	<!-- Passat only -->
+	<Include if="node_name=='vw'" file="ContiLaneDetection.xml"/>
+        <Include if="node_name=='vw'" file="TrwRadar.xml"/>
+        <Include if="node_name=='vw'" file="HellaRadar.xml"/>
+
+	<Include file="VehicleData.xml"/>
+</TaskGraph>

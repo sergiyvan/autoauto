@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Activity type="PeriodicActivity">
+	    <struct name="" type="type_less">
+		    <simple type="double" name="Period"><value>0.1</value></simple>
+	    </struct>
+
+            <TaskContext type="TrwRadarView" name="DisplayRightTrwRadar">
+                    <struct name="" type="type_less">
+                            <simple type="int" name="CanID">
+                                    <value>1641</value>
+                            </simple>
+                    </struct>
+            </TaskContext>
+    </Activity>
+
+    <Connection
+            sourceTask="SensorCanDecoder"
+            sourcePort="RightTrwRadar77GhzTrackBundleOut"
+            targetTask="DisplayRightTrwRadar"
+            targetPort="ObjectPortIn"/>
+
+    <Connection
+            sourceTask="EgoStateSnapshotGenerator"
+            sourcePort="EgoState"
+            targetTask="DisplayRightTrwRadar"
+            targetPort="EgoStateIn"/>
+
+    <Connection
+            sourceTask="Config"
+            sourcePort="TrwRadarParameter"
+            targetTask="DisplayRightTrwRadar"
+            targetPort="RadarParameterIn"/>
+
+</TaskGraph>

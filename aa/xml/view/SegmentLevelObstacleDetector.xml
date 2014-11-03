@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.05</value></simple>
+		</struct>
+		<TaskContext type="DisplayIbeoObstacleDetector" name="DisplaySegmentLevelObstacleDetector">
+			<struct type="type_less">
+				<simple type="bool" name="DrawRoi"><value>false</value></simple>
+				<simple type="bool" name="MarkFilteredObstacles"><value>false</value></simple>
+				<simple type="bool" name="MarkPotentialPhantomObstacles"><value>false</value></simple>
+				<simple type="bool" name="DrawScanner"><value>false</value></simple>
+				<simple type="bool" name="DrawSightField"><value>true</value></simple>
+				<simple type="bool" name="DrawGroundPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawDirtPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawClutterPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawInvalidPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawTransparentPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawNonRoiPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawProcessedPoints"><value>true</value></simple>
+				<simple type="bool" name="DrawFeedbackObstacles"><value>false</value></simple>
+				<simple type="bool" name="DrawContour"><value>true</value></simple>
+				<simple type="bool" name="DrawBoxes"><value>false</value></simple>
+				<simple type="bool" name="DrawOcclusionMap"><value>false</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+</TaskGraph>
+
+
+

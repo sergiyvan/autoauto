@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- logged -->
+<TaskGraph>
+	<Include file="Odometry.xml"/>
+	<Include file="../common/MrptActionRobotMovement2D.xml"/>
+</TaskGraph>

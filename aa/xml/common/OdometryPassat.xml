@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- common for OdometryPassat-->
+<TaskGraph>
+	<Include file="CanPassat.xml"/>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="PassatOdometry" name="Odometry"/>
+	</Activity>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="PathPulseOut"
+		targetTask="Odometry"
+		targetPort="PathPulseIn"/>
+
+</TaskGraph>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+common MrptActionRobotMovement2D for iMiev
+-->
+<TaskGraph>
+        <Include file="VehicleData.xml"/>
+
+        <Activity type="SequentialActivity">
+            <TaskContext type="MrptActionRobotMovement2D" name="MrptActionRobotMovement2D">
+                <struct name="" type="type_less">
+<!--				TODO:find real values. these values are from passat-->
+                        <simple type="double" name="ThrunModelAlfa1RotRot"><value>0.02</value></simple>
+                        <simple type="double" name="ThrunModelAlfa2RotTrans"><value>0.015</value></simple>
+                        <simple type="double" name="ThrunModelAlfa3TransTrans"><value>0.02</value></simple>
+                        <simple type="double" name="ThrunModelAlfa4TransRot"><value>0.004</value></simple>
+                        <simple type="double" name="ThrunModelAdditionalStdXY"><value>0.0</value></simple>
+                        <simple type="double" name="ThrunModelAdditionalStdPhi"><value>0.07</value></simple>
+
+                        <!--TODO:find real values. these are default values from MRPT-->
+                        <simple type="double" name="GaussModelAlfa1MotionToXYStdDev"><value>0.01</value></simple>
+                        <simple type="double" name="GaussModelAlfa2RotationToXYStdDev"><value>0.001</value></simple>
+                        <simple type="double" name="GaussModelAlfa3MotionToPhiStdDev"><value>1.0</value></simple>
+                        <simple type="double" name="GaussModelAlfa4RotationToPhiStdDev"><value>0.05</value></simple>
+                        <simple type="double" name="GaussModelMinXYStdDev"><value>0.01</value></simple>
+                        <simple type="double" name="GaussModelMinPhiStdDev"><value>0.20</value></simple>
+
+                        <simple type="bool" name="UseThrunModel"><value>true</value></simple>
+                </struct>
+            </TaskContext>
+
+
+        </Activity>
+
+
+</TaskGraph>

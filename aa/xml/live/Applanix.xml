@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Script>if (mode=='') mode = 'live';</Script>
+	<Activity type="SelectDrivenActivity">
+		<TaskContext    type="ApplanixGPSRealTimeData"		name="Applanix"/>
+	</Activity>
+</TaskGraph>

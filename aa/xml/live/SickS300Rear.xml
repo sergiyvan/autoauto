@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <Include file="../common/SickS300Rear.xml"/>
+
+        <Activity type="SelectDrivenActivity">
+            <TaskContext type="SickS300" name="SickS300Rear">
+                <struct name="" type="type_less">
+                        <simple type="string" name="DeviceName"><value>/dev/sensors/ftdi_A4001iqU</value></simple>
+                </struct>
+            </TaskContext>
+        </Activity>
+
+        <CallMethod task="SickS300Rear" name="renameDataPort">
+                <struct name="" type="type_less">
+                        <simple type="string" name="name"><value>laserDataRear</value></simple>
+                </struct>
+        </CallMethod>
+        <Connection
+                   sourceTask="SickS300Rear"
+                   sourcePort="laserDataRear"
+                   targetTask="SickS300RearPolar"
+                   targetPort="laserData"/>
+
+</TaskGraph>

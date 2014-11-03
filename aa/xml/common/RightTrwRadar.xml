@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="LoadTrwRadarConfig.xml"/>
+        <Include file="InterpolationModelSetter.xml"/>
+        <Include file="CanPassat.xml"/>
+
+	<Activity type="SequentialActivity">
+                <TaskContext type="TrwRadarTracker" name="RightTrwRadarTracker">
+			<struct name="" type="type_less">
+                                <simple type="int" name="CanID"><value>1641</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="Config"
+		sourcePort="TrwRadarParameter"
+                targetTask="RightTrwRadarTracker"
+		targetPort="RadarParameterIn"/>
+
+        <Connection
+                sourceTask="SensorCanDecoder"
+                sourcePort="RightTrwRadar77GhzTrackBundleOut"
+                targetTask="RightTrwRadarTracker"
+                targetPort="ObjectPortIn"/>
+
+        <Connection
+                sourceTask="ControllerCanDecoder"
+                sourcePort="WheelSpeedsOut"
+                targetTask="RightTrwRadarTracker"
+                targetPort="WheelSpeedsIn"/>
+
+        <Connection
+                sourceTask="ControllerCanDecoder"
+                sourcePort="SteerAssist3StatusOut"
+                targetTask="RightTrwRadarTracker"
+                targetPort="SteerAssist3StatusIn"/>
+
+</TaskGraph>

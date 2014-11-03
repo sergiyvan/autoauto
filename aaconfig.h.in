@@ -1,0 +1,5 @@
+#pragma once
+
+static char const * const cmake_source_dir = "${CMAKE_SOURCE_DIR}/";
+static char const * const cmake_resource_dir = "${CMAKE_SOURCE_DIR}/aa/resources/";
+static char const * const cmake_binary_dir = "${CMAKE_BINARY_DIR}/";

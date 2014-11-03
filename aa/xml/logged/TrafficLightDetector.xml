@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="../common/TrafficLightDetector.xml"/>
+	<Include file="ConfigurationStorage.xml" />
+	<Include file="EgoState.xml" />
+	<Include file="ImageData.xml" />
+
+	
+<If condition="node_name=='vw'">	
+<!--<Connection
+		sourceTask="Log"
+		sourcePort="TypedImage"
+		targetTask="TrafficLightDetector"
+		targetPort="ImageIn"/>-->
+
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImageSL"
+		targetTask="TrafficLightDetector"
+		targetPort="ImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImageSR"
+		targetTask="TrafficLightDetector"
+		targetPort="Image2In"/>
+
+</If>
+<If condition="node_name=='dodge'">	
+	<Connection 
+		sourceTask="PortMapper"
+		sourcePort="TypedImageOut"
+		targetTask="TrafficLightDetector"
+		targetPort="ImageIn"/>		
+</If>
+
+</TaskGraph>

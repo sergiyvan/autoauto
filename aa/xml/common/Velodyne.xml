@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="EgoState.xml"/>
+        <Include file="ConfigurationStorage.xml"/>
+
+<!--        <Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.001</value></simple>
+		</struct>
+                <TaskContext type="VelodynePointCloud" name="VelodynePointCloud"/>
+        </Activity>-->
+
+        <Activity type="SequentialActivity">
+                        <TaskContext type="VelodynePointCloud" name="VelodynePointCloud">
+                        </TaskContext>
+        </Activity>
+
+        <Connection
+                   sourceTask="Config"
+                   sourcePort="VelodyneParameter"
+                   targetTask="VelodynePointCloud"
+                   targetPort="VelodyneParameterIn"/>
+
+
+</TaskGraph>
+
+

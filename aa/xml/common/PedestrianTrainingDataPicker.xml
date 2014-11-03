@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="TrainingDataPicker" name="PedestrianTrainingDataPicker">
+		<struct name="" type="type_less">
+			<simple type="int"  name="Classification"><value>-1</value></simple>
+			<simple type="bool" name="UseLogConfiguration"><value>true</value></simple>
+			<simple type="path" name="LogName">
+				<arg>0</arg>
+				<value>NoLogFile</value>
+			</simple>
+		</struct>
+		</TaskContext>
+	</Activity>
+
+</TaskGraph>

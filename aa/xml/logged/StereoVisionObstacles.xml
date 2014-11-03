@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="StereoBM.xml"/>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="CartesianOccupancyMap" name="CartesianOccupancyMap"/>
+		<TaskContext type="DisplayOccupancyMap" name="DisplayOccupancyMap"/>		
+	</Activity>
+	  
+	<Connection
+	 	sourceTask="StereoMatcher"
+                sourcePort="StereoDataOut"
+		targetTask="CartesianOccupancyMap"
+                targetPort="StereoDataIn"/>
+	
+	<Connection
+	 	sourceTask="CartesianOccupancyMap"
+                sourcePort="StereoDataOut"
+		targetTask="DisplayOccupancyMap"
+                targetPort="StereoDataIn"/>
+	   
+   	<Connection
+	   sourceTask="CartesianOccupancyMap"
+	   sourcePort="OccupancyGridOut"
+	   targetTask="DisplayOccupancyMap"
+	   targetPort="OccupancyGridIn"/>	   
+	
+</TaskGraph>

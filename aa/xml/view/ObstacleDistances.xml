@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.1</value></simple>
+		</struct>
+		<TaskContext
+					type="DisplayObstacleDistances"
+					name="DisplayObstacleDistances"/>
+	</Activity>
+
+	<Connection
+		sourceTask="ObstacleFusion"
+		sourcePort="BaseObstacles"
+		targetTask="DisplayObstacleDistances"
+		targetPort="Obstacles"/>
+
+    <Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplayObstacleDistances"
+		targetPort="EgoState"/>
+
+</TaskGraph>
+

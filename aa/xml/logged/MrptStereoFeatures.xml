@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+		<Include file="../logged/ImageData.xml"/>
+
+		<CreateTaskGui/>
+
+		<Activity type="SequentialActivity">
+				<TaskContext type="StereoFeatureDetector" name="StereoFeatureDetector">
+						<struct name="" type="type_less">
+								<simple type="int" name="Algorithm"><value>5</value></simple>
+						</struct>
+				</TaskContext>
+				<TaskContext type="StereoDescriptorExtractor" name="StereoDescriptorExtractor">
+						<struct name="" type="type_less">
+								<simple type="int" name="Algorithm"><value>5</value></simple>
+						</struct>
+				</TaskContext>
+				<TaskContext type="StereoFeatureMatcher" name="StereoFeatureMatcher">
+						<struct name="" type="type_less">
+								<simple type="flt" name="MaxMatchDistance"><value>0.2</value></simple>
+						</struct>
+				</TaskContext>
+				<TaskContext type="FeatureMatchDrawer" name="FeatureMatchDrawer">
+				</TaskContext>
+				<TaskContext type="DisplayImage" name="DisplayStereoMatches">
+				</TaskContext>
+		</Activity>
+
+		<Connection
+				sourceTask="StereoBundle"
+				sourcePort="TypedStereoImage"
+				targetTask="StereoFeatureDetector"
+				targetPort="StereoImageIn"/>
+
+		<Connection
+				sourceTask="StereoFeatureDetector"
+				sourcePort="StereoVisionFeatureBundleOut"
+				targetTask="StereoDescriptorExtractor"
+				targetPort="StereoVisionFeatureBundleIn"/>
+
+		<Connection
+				sourceTask="StereoDescriptorExtractor"
+				sourcePort="StereoVisionFeatureBundleOut"
+				targetTask="StereoFeatureMatcher"
+				targetPort="StereoVisionFeatureBundleIn"/>
+
+		<Connection
+				sourceTask="StereoFeatureMatcher"
+				sourcePort="StereoVisionFeatureBundleOut"
+				targetTask="FeatureMatchDrawer"
+				targetPort="StereoVisionFeatureBundleIn"/>
+
+
+		<Connection
+				sourceTask="FeatureMatchDrawer"
+				sourcePort="ImageOut"
+				targetTask="DisplayStereoMatches"
+				targetPort="TypedImageIn"/>
+
+</TaskGraph>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+
+	<Include file="Default.xml"/>
+
+	<Include file="../common/ProjectLuxPointsOnImage.xml" />
+
+	<Connection
+		   sourceTask="Log"
+		   sourcePort="TypedImageL"
+                   targetTask="ProjectLuxPointsOnImage"
+                   targetPort="Image1In"/>
+
+
+        <Connection
+                   sourceTask="Log"
+                   sourcePort="TypedImageM"
+                   targetTask="ProjectLuxPointsOnImage"
+                   targetPort="Image2In"/>
+
+	<Connection
+		   sourceTask="Log"
+		   sourcePort="TypedImageR"
+                   targetTask="ProjectLuxPointsOnImage"
+                   targetPort="Image3In"/>
+
+       <Connection
+                   sourceTask="Log"
+                   sourcePort="IbeoLuxScanData"
+                   targetTask="ProjectLuxPointsOnImage"
+                   targetPort="IbeoLuxScanDataIn"/>
+
+</TaskGraph>

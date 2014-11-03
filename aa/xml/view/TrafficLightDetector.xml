@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="DrawDebugImage" name="DrawTrafficLightDetectorDebugImage"/>
+		<TaskContext type="DisplayImage" name="DisplayTrafficLightDetector">
+			<struct name="" type="type_less">
+				<simple type="bool" name="DrawPyramid"><value>false</value></simple>
+				<struct type="vec3" name="Position">
+				  <simple type="float" name="0"><value>0</value></simple>
+				  <simple type="float" name="1"><value>0</value></simple>
+				  <simple type="float" name="2"><value>0</value></simple>
+				</struct>
+			</struct>
+		</TaskContext>
+	</Activity>
+	   				
+	<Connection 
+		   sourceTask="TrafficLightDetector"
+		   sourcePort="DebugDataOut"
+		   targetTask="DrawTrafficLightDetectorDebugImage"
+		   targetPort="DebugDataIn"/>
+
+	<Connection
+		   sourceTask="DrawTrafficLightDetectorDebugImage"
+		   sourcePort="ImageOut"
+		   targetTask="DisplayTrafficLightDetector"
+		   targetPort="TypedImageIn"/>
+
+	<CallMethod
+		task="DisplayTrafficLightDetector"
+		name="registerView">
+		<struct name="" type="type_less">
+			<simple type="int" name="number"><value>2</value></simple>
+		</struct>
+	</CallMethod>
+
+</TaskGraph>

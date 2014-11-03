@@ -1,0 +1,12 @@
+#ADD_DEFINITIONS(-Werror)
+add_subdirectory(behaviour)
+add_subdirectory(carstate)
+add_subdirectory(carview)
+add_subdirectory(controller)
+add_subdirectory(obstacledistances)
+add_subdirectory(obstacles)
+add_subdirectory(osgcamera)
+add_subdirectory(statemachine)
+add_subdirectory(trajectory)
+add_subdirectory(utilities)
+

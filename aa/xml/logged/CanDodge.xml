@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="Default.xml"/>
+	<!-- Dodge Anagate -->
+	<Activity type="PeriodicActivity">
+		<TaskContext type="CarStateGenerator" name="CarStateGenerator"/>
+	</Activity>
+
+	<!-- requirements for dodge carstate -->
+	<Connection
+		sourceTask="Log"
+		sourcePort="canMsgPort"
+		targetTask="CarStateGenerator"
+		targetPort="CanMessageIn"/>
+
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="CanMessageAOut"
+		targetTask="CarStateGenerator"
+		targetPort="CanMessageIn"/>
+</TaskGraph>

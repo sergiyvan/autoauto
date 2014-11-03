@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<!--<Include file="LuxEcu.xml"/>
+
+	<Include file="../common/IbeoScanDataMux.xml"/>
+
+	<Connection
+		sourceTask="IbeoLuxEcu"
+		sourcePort="IbeoLuxEcuScanData"
+		targetTask="IbeoScanDataMux"
+		targetPort="IbeoLuxEcuScanData"/>
+
+	<Include file="../common/IbeoObstacleDetector.xml"/>
+
+	<Connection
+		sourceTask="IbeoScanDataMux"
+		sourcePort="IbeoScanPointObstacleBundle"
+		targetTask="IbeoObstacleDetector"
+		targetPort="IbeoScanPointObstacleBundle"/>-->
+
+
+	<Include file="../common/EgoState.xml"/>
+
+	<Activity type="SequentialActivity">
+			<TaskContext type="InterpolationModelSetter" name="InterpolationModelSetter">
+			</TaskContext>
+	</Activity>
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="InterpolationModelSetter"
+		targetPort="EgoStateIn"/>
+
+
+	<If condition="node_name=='vw'">
+		<Include file="LuxEcu.xml"/>
+		<Activity type="SequentialActivity">
+			<TaskContext type="IbeoEcuToPointSet" name="IbeoEcuToPointSet">
+			</TaskContext>
+		</Activity>
+		<Connection
+			sourceTask="IbeoLuxEcu"
+			sourcePort="IbeoLuxEcuScanData"
+			targetTask="IbeoEcuToPointSet"
+			targetPort="IbeoEcuScanDataIn"/>
+
+		<Activity type="SequentialActivity">
+			<TaskContext type="VirtualScanObstacleDetector" name="IbeoObstacleDetector">
+				<struct name="" type="type_less">
+					<simple type="double" name="StartScanAngleDeg"><value>-180.0</value></simple>
+					<simple type="double" name="EndScanAngleDeg"><value>180.0</value></simple>
+					<simple type="uint" name="NumSectors"><value>720</value></simple>
+				</struct>
+			</TaskContext>
+		</Activity>
+		<Connection
+			sourceTask="IbeoEcuToPointSet"
+			sourcePort="PointSetOut"
+			targetTask="IbeoObstacleDetector"
+			targetPort="PointSetIn"/>
+	</If>
+
+        <If condition="node_name=='imiev'">
+
+                <Include file="LuxIMiev.xml"/>
+
+                <Activity type="SequentialActivity">
+                        <TaskContext type="IbeoLuxToPointSet" name="IbeoLuxToPointSet">
+                        </TaskContext>
+                </Activity>
+                <Connection
+			sourceTask="IbeoLux"
+			sourcePort="IbeoLuxScanData"
+			targetTask="IbeoLuxToPointSet"
+			targetPort="IbeoLuxScanDataIn"/>
+
+		<Activity type="SequentialActivity">
+			<TaskContext type="VirtualScanObstacleDetector" name="IbeoObstacleDetector">
+				<struct name="" type="type_less">
+					<simple type="double" name="StartScanAngleDeg"><value>-60.0</value></simple>
+					<simple type="double" name="EndScanAngleDeg"><value>60.0</value></simple>
+					<simple type="uint" name="NumSectors"><value>240</value></simple>
+				</struct>
+			</TaskContext>
+		</Activity>
+		<Connection
+			sourceTask="IbeoLuxToPointSet"
+			sourcePort="PointSetOut"
+			targetTask="IbeoObstacleDetector"
+			targetPort="PointSetIn"/>
+        </If>
+
+
+</TaskGraph>

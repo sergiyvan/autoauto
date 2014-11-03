@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayOsgEarth" name="DisplayOsgEarth">
+			<struct name="" type="type_less">
+			<simple type="path" name="ModelPath">
+				<value>/usr/share/osgearth/maps/openstreetmap.earth</value>
+			</simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+</TaskGraph>
+

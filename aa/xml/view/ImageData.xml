@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext	type="DisplayImage"	name="ImageViewRGB">
+						<struct name="" type="type_less">
+								<struct type="vec3" name="DisplayRange">
+								  <simple type="double" name="0"><value>0</value></simple>
+								  <simple type="double" name="1"><value>1.0</value></simple>
+								  <simple type="double" name="2"><value>1</value></simple>
+								</struct>
+						</struct>
+				</TaskContext>
+		<TaskContext	type="DisplayImage"	name="ImageViewL">
+			<struct name="" type="type_less">
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>-390</value></simple>
+				  <simple type="double" name="1"><value>-252</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+				<simple type="bool" name="Demosaice"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+		<TaskContext	type="DisplayImage"	name="ImageViewR">
+			<struct name="" type="type_less">
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>390</value></simple>
+				  <simple type="double" name="1"><value>-252</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+				<simple type="bool" name="Demosaice"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+		<TaskContext	type="DisplayImage"	name="ImageViewSL">
+			<struct name="" type="type_less">
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>-390</value></simple>
+				  <simple type="double" name="1"><value>240</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+				<simple type="bool" name="Demosaice"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+		<TaskContext	type="DisplayImage"	name="ImageViewSR">
+			<struct name="" type="type_less">
+				<struct type="vec3" name="Position">
+				  <simple type="double" name="0"><value>390</value></simple>
+				  <simple type="double" name="1"><value>240</value></simple>
+				  <simple type="double" name="2"><value>0</value></simple>
+				</struct>
+				<simple type="bool" name="Demosaice"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageOut"
+		targetTask="ImageViewRGB"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageLOut"
+		targetTask="ImageViewL"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageROut"
+		targetTask="ImageViewR"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImageSR"
+		targetTask="ImageViewSR"
+		targetPort="TypedImageIn"/>
+
+		<Connection
+				sourceTask="CameraSR"
+				sourcePort="TypedImage"
+				targetTask="ImageViewSR"
+				targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImageSL"
+		targetTask="ImageViewSL"
+		targetPort="TypedImageIn"/>
+
+		<Connection
+				sourceTask="CameraSL"
+				sourcePort="TypedImage"
+				targetTask="ImageViewSL"
+				targetPort="TypedImageIn"/>
+
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>1</value></simple>
+		</struct>
+
+		<TaskContext type="ImageFrameDropper" name="Dropper">
+			<struct name="" type="type_less">
+				<simple type="path" name="path"><arg description="Path where ImageDropper saves images">dropPath</arg><value>.</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageOut"
+		targetTask="Dropper"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="StereoBundle"
+		sourcePort="TypedStereoImage"
+		targetTask="Dropper"
+		targetPort="TypedStereoImage"/>
+</TaskGraph>

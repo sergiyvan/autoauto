@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+    <Include file="Radar.xml"/>
+    <Include file="../common/RadarBundler.xml" />
+</TaskGraph>

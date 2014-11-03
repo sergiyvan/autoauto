@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Script>if (mode=='') mode = 'live';</Script>
+	<!-- Dodge Anagate -->
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+
+		<TaskContext type="AnagateCanbus" name="AnagateCanbus">
+		  <struct name="" type="type_less">
+				<simple type="bool" name="Quattro"><value>false</value></simple>
+				<simple type="string" name="HostAddress"><value>192.168.1.254</value></simple>
+				<simple type="int" name="Port"><value>5001</value></simple>
+			</struct>
+		</TaskContext>
+		<TaskContext type="CanMessageDuplicator" name="CanBus"/>
+	</Activity>
+
+	<!-- requirements for dodge carstate -->
+	<Connection
+		sourceTask="AnagateCanbus"
+		sourcePort="canMsgPort"
+		targetTask="CanBus"
+		targetPort="CanMessageIn"/>
+</TaskGraph>

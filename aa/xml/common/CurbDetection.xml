@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+				<TaskContext type="VelodyneCurbDetection" name="VelodyneCurbDetection"/>
+				<TaskContext type="DisplayObstacles" name="DisplayCurbObstacles"/>
+				<TaskContext type="PointCloudView" name="DisplayCurbPoints"/>
+	</Activity>
+
+
+	<CallMethod task="DisplayCurbPoints" name="setPointSize">
+		<struct name="" type="type_less">
+			<simple type="double" name="size"><value>5.0</value></simple>
+		</struct>
+	</CallMethod>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="VelodyneCurbDetection"
+		targetPort="EgoStateIn"/>
+
+	<Connection
+		sourceTask="VelodynePointCloud"
+		sourcePort="PointCloud"
+		targetTask="VelodyneCurbDetection"
+		targetPort="PointCloudIn"/>
+
+	<Connection
+		sourceTask="VelodyneCurbDetection"
+		sourcePort="ObstaclesOut"
+		targetTask="DisplayCurbObstacles"
+		targetPort="ObstacleBundle"/>
+
+	<Connection
+		sourceTask="VelodyneCurbDetection"
+		sourcePort="PointCloudOut"
+		targetTask="DisplayCurbPoints"
+		targetPort="PointCloud"/>
+
+</TaskGraph>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+ 
+	<Activity type="SequentialActivity">
+		<TaskContext type="FileAppender" name="AppenderA">
+			<struct name="Properties" type="PropertyBag">
+				<simple name="append" type="bool"><value>true</value></simple>
+				<simple name="directory" type="path"><value>.</value></simple>
+				<simple name="filenamesuffix" type="string"><value>appender.log</value></simple>
+				<simple name="LayoutName" type="string"><value>pattern</value></simple>
+				<simple name="LayoutPattern" type="string"><value>%d [%t] %-5p %c %x - %m%n</value></simple>
+				<simple name="MaxEventsPerCycle" type="int"><value>1000000</value></simple>
+			</struct>
+
+		</TaskContext>
+
+		<TaskContext type="ConsoleAppender" name="ConsoleAppender">
+			<struct name="Properties" type="PropertyBag">
+				<simple name="LayoutName" type="string"><value>pattern</value></simple>
+				<simple name="LayoutPattern" type="string"><value>[%-5p] [%c{1}] %m%n</value></simple>
+				<simple name="MaxEventsPerCycle" type="int"><value>10000</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+
+	<Activity type="SequentialActivity">
+		<struct name="" type="type_less">
+		    <simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+
+ 		<TaskContext type="LoggingService" name="LoggingService">
+			<struct name="Properties" type="PropertyBag">
+				<struct name="Levels" type="PropertyBag">
+					<simple name="modules.io.logger" type="string"><value>debug</value></simple>
+                                        <simple name="modules" type="string"><value>error</value></simple>
+				</struct>
+
+				<struct name="Appenders" type="PropertyBag">
+					<simple name="" type="string"><value>ConsoleAppender</value></simple>
+					<simple name="modules" type="string"><value>AppenderA</value></simple>
+				</struct>
+			</struct>	
+			<simple name="AutoConf" type="boolean"><value>1</value></simple>
+			<simple name="AutoStart" type="boolean"><value>1</value></simple>
+		</TaskContext>
+	</Activity>
+
+
+	<ConnectPeer task="LoggingService">
+		<Peer>AppenderA</Peer>
+		<Peer>ConsoleAppender</Peer>
+	</ConnectPeer>
+			
+	<CallMethod name="configure">
+		<Task>AppenderA</Task>
+		<Task>ConsoleAppender</Task>
+		<Task>LoggingService</Task><!-- This one last! -->
+	</CallMethod>
+	<CallMethod name="start">
+		<Task>AppenderA</Task>
+		<Task>ConsoleAppender</Task>
+		<Task>LoggingService</Task><!-- This one last! -->
+	</CallMethod>
+	<CallMethod name="activate">
+		<Task>AppenderA</Task>
+		<Task>ConsoleAppender</Task>
+		<Task>LoggingService</Task><!-- This one last! -->
+	</CallMethod>
+
+</TaskGraph>

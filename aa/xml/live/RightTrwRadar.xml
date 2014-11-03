@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <!--  radar are used the same way in log and live-->
+        <Include file="../common/RightTrwRadar.xml"/>
+
+</TaskGraph>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<!-- TimedMetainfo-->
+
+	<Activity type="SequentialActivity">
+		<TaskContext    type="MetaInfoReader"    name="MetaInfoReader">
+			<struct name="" type="type_less">
+				<simple type="string" name="NodeName"><arg description="Nope">node-name,N</arg><value></value></simple>
+								<struct name="theVehicleData">
+					<simple type="string" name="carName" description="name identifier of the car"><value>spob</value></simple>
+					
+					<simple type="double" name="realCarLength" description="length of car in m (including length of alasca)"><value>5.20</value></simple>
+					<simple type="double" name="realCarWidth" description="width of car in m (including odometer and side mirror)"><value>2.50</value></simple>
+					<simple type="double" name="realCarHeight" description="height of car in m (including height of velodyne)"><value>2.40</value></simple>
+					<simple type="double" name="mass" description="mass of car in kg (including sensors)"><value>2300.0</value></simple><!--// 800 kg Motor an der Front Achse, der Rest gleichverteilt -->
+					<simple type="double" name="torque" description="max torque of the car"><value>3050</value></simple><!--getProperty<flt>("shaftDistance")->value() * 1000.0--> 
+
+					<simple type="double" name="frontShaftDistance" description="distance from IMU to front shaft (front axle, Achse) in m"><value>3.15</value></simple>
+					<simple type="double" name="rearShaftDistance" description="distance from IMU to rear shaft (rear axle, Achse) in m"><value>0.1</value></simple>
+					<simple type="double" name="medialAxisDistance" description="distance from IMU to medial axis (Mittelachse) in m, negative=imu is to the right, positive=imu is to the left"><value>0.27</value></simple>
+					<simple type="double" name="shaftDistance" description="distance between front and rear shaft (Achse)"><value>3.05</value></simple><!--getProperty<flt>("frontShaftDistance")->value() - getProperty<flt>("rearShaftDistance")->value()--> 
+					
+					<simple type="double" name="frontDistance" description="distance from front shaft to real front of car in m"><value>1.0</value></simple>
+					<simple type="double" name="rearDistance" description="distance from rear shaft to real back of car in m"><value>0.40</value></simple>
+					<simple type="double" name="groundDistance" description="distance of IMU to ground in m"><value>0.40</value></simple>
+					<simple type="double" name="imuPitch" description="pitch of IMU in radian"><value>-0.0559</value></simple><!--	// 3.2°-->
+					
+					<simple type="double" name="tireDistance" description="distance between left and right tire in m"><value>1.9</value></simple>
+					<simple type="double" name="tireStiffness" description=""><value>200000.0</value></simple>
+					<simple type="double" name="tireRadius" description="radius of tire in m"><value>0.2</value></simple>
+					
+					<simple type="double" name="maxSpeed" description="maximal safe speed for autonomous drive in m/s"><value>44.444444444</value></simple>
+					<simple type="double" name="maxReverseSpeed" description="maximal safe reverse speed for autonomous drive in m/s"><value>8.333333333</value></simple>
+
+					<simple type="double" name="maxSpeedChange" description="fastest possible acceleration in m/s/s"><value>1.984126984</value></simple> <!--// in 14 sek von 0-100-->
+					<simple type="double" name="maxBrakeChange" description="fastest possible brake acceleration in m/s/s"><value>9.259259259</value></simple> <!--// in 3.2 sek von 100-0-->
+
+					<simple type="double" name="maxSteer" description="maximal possible steer in radian"><value>0.6092</value></simple><!--// 34.9049 grad maximal Einschlag hochinterpoliert (eig. 32.6253)-->
+					<simple type="double" name="maxSteerChange" description="fastest possible steer change in radian/s"><value>0.348114286</value></simple><!--// 3.5 sek für vollen Lenkeinschlag von -1 nach 1 (in Lenksignalen), bzw. von -maxSteer bis maxSteer (in Radian) ==> 2 * getProperty<flt>("maxSteer")->value() / 3.5 -->
+					<simple type="double" name="maxSteerAngleAcceleration" description="highest possible steer angle acceleration in radian/s/s"><value>1.5</value></simple>
+					
+					<simple type="double" name="turningCircleRadius" description="radius of turning circle in m"><value>6.0</value></simple>
+					<!--TODO: insert correct odometry-value to enable module MrptActionRobotMovement2D-->
+					<simple type="double" name="odometryTickLengthLeft" description="in meter per tick"><value>0.0</value></simple>
+					<simple type="double" name="odometryTickLengthRight" description="in meter per tick"><value>0.0</value></simple>
+
+				</struct>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+</TaskGraph>
+

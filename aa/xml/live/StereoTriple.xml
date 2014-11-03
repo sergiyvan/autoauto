@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+<!-- Guppy -->
+		<Activity type="SelectDrivenActivity">
+				<TaskContext    type="DC1394Camera"	    name="CameraR">
+						<struct name="" type="type_less">
+								<simple type="int" name="BytesPerPacket"><value>752</value></simple>
+								<simple type="int" name="Mode"><value>0</value></simple>
+								<simple type="int" name="ColourCoding"><value>0</value></simple>
+								<simple type="int" name="Shutter"><value>50</value></simple>
+								<simple type="int" name="Gain"><value>16</value></simple>
+								<simple type="int" name="MaxTimeoutsInARow"><value>10</value></simple>
+								<simple type="bool" name="DropFrames"><value>false</value></simple>
+						</struct>
+				</TaskContext>
+		</Activity>
+
+		<CallMethod task="CameraR" name="selectCameraById">
+				<struct name="" type="type_less">
+						<simple type="int" name="unit"><value>0</value></simple>
+						<simple type="long" name="guid"><value>2892819639991128</value></simple>
+				</struct>
+		</CallMethod>
+
+		<CallMethod task="CameraR" name="setGuppyHdrKneepoints">
+				<struct name="" type="type_less">
+				<simple type="int" name="v1"><value>28</value></simple>
+				<simple type="int" name="v2"><value>24</value></simple>
+				<simple type="int" name="v3"><value>20</value></simple>
+				<simple type="int" name="v4"><value>0</value></simple>
+				</struct>
+		</CallMethod>
+
+<!--
+		<CallMethod task="CameraR" name="setAutoShutterMode">
+				<struct name="" type="type_less">
+					<simple type="int" name="minShutter"><value>1</value></simple>
+					<simple type="int" name="maxShutter"><value>5000</value></simple>
+				</struct>
+		</CallMethod>
+
+		<CallMethod task="CameraR" name="setAutoGainMode">
+				<struct name="" type="type_less">
+					<simple type="int" name="minGain"><value>16</value></simple>
+					<simple type="int" name="maxGain"><value>64</value></simple>
+				</struct>
+		</CallMethod>-->
+
+
+
+				<Activity type="SelectDrivenActivity">
+				<TaskContext    type="DC1394Camera"	    name="CameraM">
+						<struct name="" type="type_less">
+								<simple type="int" name="BytesPerPacket"><value>1504</value></simple>
+								<simple type="int" name="Mode"><value>0</value></simple>
+								<simple type="int" name="ColourCoding"><value>0</value></simple>
+								<simple type="int" name="Shutter"><value>50</value></simple>
+								<simple type="int" name="Gain"><value>16</value></simple>
+								<simple type="bool" name="ExternalTrigger"><value>true</value></simple>
+								<simple type="bool" name="ExternalTriggerPolarity"><value>true</value></simple>
+								<simple type="int" name="MaxTimeoutsInARow"><value>10</value></simple>
+								<simple type="bool" name="DropFrames"><value>false</value></simple>
+                                                </struct>
+				</TaskContext>
+		</Activity>
+
+		<CallMethod task="CameraM" name="selectCameraById">
+				<struct name="" type="type_less">
+						<simple type="int" name="unit"><value>0</value></simple>
+						<simple type="long" name="guid"><value>2892819639990765</value></simple>
+				</struct>
+				</CallMethod>
+
+		<CallMethod task="CameraM" name="setGuppyHdrKneepoints">
+				<struct name="" type="type_less">
+				<simple type="int" name="v1"><value>28</value></simple>
+				<simple type="int" name="v2"><value>24</value></simple>
+				<simple type="int" name="v3"><value>20</value></simple>
+				<simple type="int" name="v4"><value>0</value></simple>
+				</struct>
+		</CallMethod>
+
+<!--
+		<CallMethod task="CameraM" name="setAutoShutterMode">
+				<struct name="" type="type_less">
+					<simple type="int" name="minShutter"><value>1</value></simple>
+					<simple type="int" name="maxShutter"><value>5000</value></simple>
+				</struct>
+		</CallMethod>
+		<CallMethod task="CameraM" name="setAutoGainMode">
+				<struct name="" type="type_less">
+					<simple type="int" name="minGain"><value>16</value></simple>
+					<simple type="int" name="maxGain"><value>64</value></simple>
+				</struct>
+		</CallMethod>-->
+
+		<Activity type="SelectDrivenActivity">
+                                <TaskContext    type="DC1394Camera"	    name="CameraL">
+						<struct name="" type="type_less">
+								<simple type="int" name="BytesPerPacket"><value>1504</value></simple>
+								<simple type="int" name="Mode"><value>0</value></simple>
+								<simple type="int" name="ColourCoding"><value>0</value></simple>
+								<simple type="int" name="Shutter"><value>50</value></simple>
+								<simple type="int" name="Gain"><value>16</value></simple>
+								<simple type="bool" name="ExternalTrigger"><value>true</value></simple>
+								<simple type="bool" name="ExternalTriggerPolarity"><value>true</value></simple>
+								<simple type="int" name="MaxTimeoutsInARow"><value>10</value></simple>
+								<simple type="bool" name="DropFrames"><value>false</value></simple>
+						</struct>
+				</TaskContext>
+		</Activity>
+
+                <CallMethod task="CameraL" name="selectCameraById">
+				<struct name="" type="type_less">
+						<simple type="int" name="unit"><value>0</value></simple>
+						<simple type="long" name="guid"><value>2892819639991127</value></simple>
+				</struct>
+		</CallMethod>
+
+		<CallMethod task="CameraL" name="setGuppyHdrKneepoints">
+				<struct name="" type="type_less">
+					<simple type="int" name="v1"><value>28</value></simple>
+					<simple type="int" name="v2"><value>24</value></simple>
+					<simple type="int" name="v3"><value>20</value></simple>
+					<simple type="int" name="v4"><value>0</value></simple>
+				</struct>
+		</CallMethod>
+
+<!--
+		<CallMethod task="CameraL" name="setAutoShutterMode">
+				<struct name="" type="type_less">
+					<simple type="int" name="minShutter"><value>1</value></simple>
+					<simple type="int" name="maxShutter"><value>5000</value></simple>
+				</struct>
+		</CallMethod>
+		<CallMethod task="CameraL" name="setAutoGainMode">
+				<struct name="" type="type_less">
+					<simple type="int" name="minGain"><value>16</value></simple>
+					<simple type="int" name="maxGain"><value>64</value></simple>
+				</struct>
+		</CallMethod>-->
+
+		<Activity type="SequentialActivity">
+			<TaskContext    type="StereoBundle"     name="StereoBundle"/>
+		</Activity>
+
+
+		<Connection
+			sourceTask="CameraL"
+			sourcePort="TypedImage"
+			targetTask="StereoBundle"
+			targetPort="TypedImageL"/>
+
+		<Connection
+			sourceTask="CameraM"
+			sourcePort="TypedImage"
+			targetTask="StereoBundle"
+			targetPort="TypedImageM"/>
+
+		<Connection
+			sourceTask="CameraR"
+			sourcePort="TypedImage"
+			targetTask="StereoBundle"
+			targetPort="TypedImageR"/>
+
+</TaskGraph>
+

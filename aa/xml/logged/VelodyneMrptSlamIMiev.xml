@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <Include file="../logged/MrptActionRobotMovement2D.xml"/>
+        <Include file="../logged/Velodyne2DMrpt.xml"/>
+
+<!-- SLAM-->
+        <Activity type="SequentialActivity">
+                <TaskContext type="MrptSlam" name="EgoStateSnapshotGenerator">
+                <struct name="" type="type_less">
+                <simple type="path" name="SlamParameterFile"><value>velodyneSlam.ini</value></simple>
+
+                    <simple type="bool" name="EnableMapUpdating"><value>false</value></simple>
+
+                    <simple type="path" name="MapFile"><value>mrptmaps/institut.simplemap</value></simple>
+                    <!-- offsets for mrptmaps/institut.simplemap and institut/institut.rndf-->
+                    <simple type="double" name="OffsetX"><value>-886.0</value></simple>
+                    <simple type="double" name="OffsetY"><value>-1177.0</value></simple>
+                    <simple type="double" name="OffsetYaw"><value>125.0</value></simple>
+<!--
+                    <simple type="double" name="InitX"><value>-7.0</value></simple>
+                    <simple type="double" name="InitY"><value>16.0</value></simple>
+                    <simple type="double" name="InitPhi"><value>1.5</value></simple>
+
+-->
+
+                </struct>
+                </TaskContext>
+        </Activity>
+        <Connection
+                   sourceTask="Velodyne2DMrpt"
+                   sourcePort="ObservationOut"
+                   targetTask="EgoStateSnapshotGenerator"
+                   targetPort="ObservationIn"/>
+       <Connection
+                  sourceTask="MrptActionRobotMovement2D"
+                  sourcePort="ActionRobotMovement2DOut"
+                  targetTask="EgoStateSnapshotGenerator"
+                  targetPort="ActionIn"/>
+</TaskGraph>

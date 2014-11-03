@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="Default.xml"/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.04</value></simple>
+		</struct>
+
+                <TaskContext type="SensoricActoricStateChecker" name="SensoricActoricStateChecker"/>
+	</Activity>
+
+        <Connection
+                sourceTask="Log"
+                sourcePort="IbeoLuxEcuScanData"
+                targetTask="SensoricActoricStateChecker"
+                targetPort="IbeoLuxEcuScanDataIn"/>
+
+        <Connection
+                sourceTask="Log"
+                sourcePort="SuperVelodyneBundle"
+                targetTask="SensoricActoricStateChecker"
+                targetPort="SuperVelodyneBundleIn"/>
+
+        <Connection
+                sourceTask="Log"
+                sourcePort="TypedImageSL"
+                targetTask="SensoricActoricStateChecker"
+                targetPort="CameraLeftIn"/>
+
+        <Connection
+                sourceTask="Log"
+                sourcePort="TypedImageSR"
+                targetTask="SensoricActoricStateChecker"
+                targetPort="CameraRightIn"/>
+	
+</TaskGraph>

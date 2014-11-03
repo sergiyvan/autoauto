@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="Default.xml"/>
+	<Include file="VehicleData.xml"/>
+	<Include file="ConfigurationStorage.xml"/>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="StereoBundle" name="StereoBundle">
+		</TaskContext>
+	</Activity>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="RightImageGenerator" name="RightImageGenerator">
+		</TaskContext>
+	</Activity>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="ImageRectification"  name="ImageRectification">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Remap"><value>0</value></simple>
+				<simple type="bool" name="UseImagesAsRectified"><value>1</value></simple>
+			</struct>		
+		</TaskContext>
+	</Activity>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="StereoMatcherTask" name="StereoMatcherTask">
+			<struct name="" type="type_less">
+				<simple type="string" name="MatchingMethod"><value>StereoBM</value></simple>
+				<struct name="StereoBM">
+					<simple type="int" name="SadWindowSize"><value>21</value></simple>
+					<simple type="double" name="UniquenessRatio"><value>30</value></simple>
+				</struct>
+			</struct>	
+		</TaskContext>
+	</Activity>	
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="FpgaCompatibility" name="FpgaCompatibility">
+		</TaskContext>
+	</Activity>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="FpgaDataVisualizer" name="Visualizer">
+			<struct name="" type="type_less">
+				<simple type="double" name="AlphaValid"><value>0.7</value></simple>
+				<simple type="double" name="AlphaInvalid"><value>0.0</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="StereoToPointSet" name="StereoToPointSet">
+		</TaskContext>
+	</Activity>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayPointSet" name="DisplayGridPointSet">
+		</TaskContext>
+	</Activity>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayPointSet" name="DisplayStereoPointSet">
+		</TaskContext>
+	</Activity>	
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayImage" name="DisplayLeft">
+				<struct name="" type="type_less">
+						<struct type="vec3" name="Position">
+						  <simple type="double" name="0"><value>0</value></simple>
+						  <simple type="double" name="1"><value>0</value></simple>
+						  <simple type="double" name="2"><value>0</value></simple>
+						</struct>
+				</struct>
+		</TaskContext>
+		<TaskContext type="DisplayImage" name="DisplayRight">
+				<struct name="" type="type_less">
+						<struct type="vec3" name="Position">
+						  <simple type="double" name="0"><value>0</value></simple>
+						  <simple type="double" name="1"><value>0</value></simple>
+						  <simple type="double" name="2"><value>0</value></simple>
+						</struct>
+				</struct>
+		</TaskContext>
+	</Activity>	
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayImage" name="DisplayDisparityMap">
+			<struct name="" type="type_less">
+					<struct type="vec3" name="Position">
+					  <simple type="double" name="0"><value>0</value></simple>
+					  <simple type="double" name="1"><value>0</value></simple>
+					  <simple type="double" name="2"><value>0</value></simple>
+					</struct>
+			</struct>		
+		</TaskContext>
+	</Activity>
+	
+	<Activity type="SequentialActivity">
+		<TaskContext type="FreeSpaceAnalysis" name="FreeSpaceAnalysis">
+			<struct name="" type="type_less">
+				<simple type="bool" name="Rotate"><value>0</value></simple>
+		    </struct>
+		</TaskContext>
+	</Activity>			
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam0L0"
+		targetTask="PortMapper"
+		targetPort="TypedImageLIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="ImageCam0L0"
+		targetTask="RightImageGenerator"
+		targetPort="ImageIn"/>
+
+	<Connection
+		sourceTask="RightImageGenerator"
+		sourcePort="ImageOut"
+		targetTask="PortMapper"
+		targetPort="TypedImageRIn"/>
+		
+<!-- 	<Connection -->
+<!-- 		sourceTask="Log" -->
+<!-- 		sourcePort="ImageCam1L0" -->
+<!-- 		targetTask="PortMapper" -->
+<!-- 		targetPort="TypedImageRIn"/> -->
+		
+	<Connection
+		sourceTask="Log"	
+		sourcePort="ImageDisparity"
+		targetTask="PortMapper"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageLOut"
+		targetTask="StereoBundle"
+		targetPort="TypedImageL"/>
+		
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageROut"
+		targetTask="StereoBundle"
+		targetPort="TypedImageR"/>
+
+	<Connection
+		sourceTask="Config"
+		sourcePort="CameraParameter"
+		targetTask="StereoBundle"
+		targetPort="CameraParameterIn"/>
+
+	<Connection
+		sourceTask="StereoBundle"
+		sourcePort="TypedStereoImage"
+		targetTask="ImageRectification"
+		targetPort="StereoImageIn"/>
+
+	<Connection
+		sourceTask="StereoBundle"
+		sourcePort="StereoCameraOut"
+		targetTask="ImageRectification"
+		targetPort="StereoCameraIn"/>
+
+	<Connection
+		sourceTask="ImageRectification"
+		sourcePort="StereoDataOut"
+		targetTask="FpgaCompatibility"
+		targetPort="StereoDataIn"/>
+		
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageOut"
+		targetTask="FpgaCompatibility"
+		targetPort="DisparityImageIn"/>
+
+	<Connection
+		sourceTask="FpgaCompatibility"
+		sourcePort="StereoDataOut"
+		targetTask="StereoToPointSet"
+		targetPort="StereoDataIn"/>		
+
+	<Connection
+		sourceTask="ImageRectification"
+		sourcePort="RectifiedLeftImageOut"
+		targetTask="DisplayLeft"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="ImageRectification"
+		sourcePort="RectifiedRightImageOut"
+		targetTask="DisplayRight"
+		targetPort="TypedImageIn"/>
+
+<!-- 	<Connection -->
+<!-- 		sourceTask="ImageRectification" -->
+<!-- 		sourcePort="StereoDataOut" -->
+<!-- 		targetTask="StereoMatcherTask" -->
+<!-- 		targetPort="StereoDataIn"/> -->
+
+<!-- 	<Connection -->
+<!-- 		sourceTask="StereoMatcherTask" -->
+<!-- 		sourcePort="DisparityMapOut" -->
+<!-- 		targetTask="Visualizer" -->
+<!-- 		targetPort="ImageDisparity"/> -->
+
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageOut"
+		targetTask="Visualizer"
+		targetPort="ImageDisparity"/>
+
+	<Connection
+		sourceTask="Visualizer"
+		sourcePort="ImageDisparityVisu"
+		targetTask="DisplayDisparityMap"
+		targetPort="TypedImageIn"/>
+
+<!-- 	<Connection -->
+<!-- 		sourceTask="StereoMatcherTask" -->
+<!-- 		sourcePort="StereoDataOut" -->
+<!-- 		targetTask="StereoToPointSet" -->
+<!-- 		targetPort="StereoDataIn"/> -->
+
+	<Connection
+		sourceTask="StereoToPointSet"
+		sourcePort="PointSetOut"
+		targetTask="DisplayStereoPointSet"
+		targetPort="PointSetIn"/>
+		
+	<Connection
+		sourceTask="Config"
+		sourcePort="CameraParameter"
+		targetTask="FreeSpaceAnalysis"
+		targetPort="CameraParametersIn"/>
+		
+<!-- 	<Connection -->
+<!-- 		sourceTask="StereoMatcherTask" -->
+<!-- 		sourcePort="StereoDataOut" -->
+<!-- 		targetTask="FreeSpaceAnalysis" -->
+<!-- 		targetPort="StereoDataIn"/>		 -->
+
+	<Connection
+		sourceTask="FpgaCompatibility"
+		sourcePort="StereoDataOut"
+		targetTask="FreeSpaceAnalysis"
+		targetPort="StereoDataIn"/>		
+
+ 
+ 	<Connection
+		sourceTask="FreeSpaceAnalysis"
+		sourcePort="PointSetOut"
+		targetTask="DisplayGridPointSet"
+		targetPort="PointSetIn"/>
+ 
+ 	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayGeode" name="DisplayMesh">
+		</TaskContext>
+	</Activity>
+	
+	<Connection
+		sourceTask="FreeSpaceAnalysis"
+		sourcePort="MeshGeodeOut"
+		targetTask="DisplayMesh"
+		targetPort="GeodeIn"/>	
+ 
+ 
+</TaskGraph>

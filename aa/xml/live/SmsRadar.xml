@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+    <Include if="node_name=='vw'" file="CanPassat.xml" />
+    <Include if="node_name=='imiev'" file="CanIMiev.xml" />
+
+    <!--  radar are used the same way in log and live-->
+    <Include file="../common/SmsRadar.xml" />
+
+</TaskGraph>

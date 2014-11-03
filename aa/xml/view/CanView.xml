@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <Activity type="SequentialActivity">
+                <TaskContext type="CanView" name="CanView"/>
+	</Activity>
+
+<!-- 		ControllerCan ===> CanView 			-->
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="WatchdogStatusOut"
+		targetTask="CanView"
+		targetPort="WatchdogStatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="WatchdogBatteryStatusOut"
+		targetTask="CanView"
+		targetPort="WatchdogBatteryStatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="BrakeStatus1Out"
+		targetTask="CanView"
+		targetPort="BrakeStatus1In"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="BrakeStatus2Out"
+		targetTask="CanView"
+		targetPort="BrakeStatus2In"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="ThrottleStatusOut"
+		targetTask="CanView"
+		targetPort="ThrottleStatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="GearStatusOut"
+		targetTask="CanView"
+		targetPort="GearStatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="SignalWipersStatusOut"
+		targetTask="CanView"
+		targetPort="SignalWipersStatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="Light1StatusOut"
+		targetTask="CanView"
+		targetPort="Light1StatusIn"/>
+
+<!-- 		SensorCanDecoder ===> CanView 			-->
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="SteerAssist3StatusOut"
+		targetTask="CanView"
+		targetPort="SteerAssist3StatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="SteerAssist3WheelSpeedOut"
+		targetTask="CanView"
+		targetPort="SteerAssist3WheelSpeedIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="Motor1StatusOut"
+		targetTask="CanView"
+		targetPort="Motor1StatusIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="SteeringWheelSpeedOut"
+		targetTask="CanView"
+		targetPort="SteeringWheelSpeedIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="WheelSpeedsOut"
+		targetTask="CanView"
+		targetPort="WheelSpeedsIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="ParkAssistDataOut"
+		targetTask="CanView"
+		targetPort="ParkAssistDataIn"/>
+
+	<Connection
+		sourceTask="ControllerCanDecoder"
+		sourcePort="PathPulseOut"
+		targetTask="CanView"
+		targetPort="PathPulseIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="GraMainSwitchOut"
+		targetTask="CanView"
+		targetPort="GraMainSwitchIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="AirbagOut"
+		targetTask="CanView"
+		targetPort="AirbagIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="AbsEspOut"
+		targetTask="CanView"
+		targetPort="AbsEspIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="TargetGearOut"
+		targetTask="CanView"
+		targetPort="TargetGearIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="AccelerationOut"
+		targetTask="CanView"
+		targetPort="AccelerationIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="YawAndBrakePressureOut"
+		targetTask="CanView"
+		targetPort="YawAndBrakePressureIn"/>
+
+	<Connection
+		sourceTask="SensorCanDecoder"
+		sourcePort="AccelerationAndTeethOut"
+		targetTask="CanView"
+		targetPort="AccelerationAndTeethIn"/>
+
+        <Connection
+                sourceTask="SensorCanDecoder"
+                sourcePort="HellaRadar24GhzObjectBundleOut"
+                targetTask="CanView"
+                targetPort="HellaRadarIn"/>
+
+<!-- 		SteerController ===> CanView
+
+	<Connection
+		sourceTask="SteerController"
+		sourcePort="DesiredMomentumToAnalogOut"
+		targetTask="CanView"
+		targetPort="DesiredMomentumToAnalogIn"/>
+	-->
+<!-- 		CanView ===> ControllerCanEncoder 			-->
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="ActivationRequestOut"
+		targetTask="ControllerCanEncoder"
+		targetPort="ActivationRequestIn"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredThrottleVoltageOut"
+		targetTask="ControllerCanEncoder"
+		targetPort="DesiredThrottleVoltageIn"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredBrakePressureOut"
+		targetTask="ControllerCanEncoder"
+		targetPort="DesiredBrakePressureIn"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredGearPositionOut"
+		targetTask="ControllerCanEncoder"
+		targetPort="DesiredShiftPos"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredSirenOut"
+		targetTask="ControllerCanEncoder"
+		targetPort="DesiredSiren"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredTurnSignalOut"
+		targetTask="ControllerCanEncoder"
+		targetPort="DesiredTurnSignal"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="WantedSteeringAngleOut"
+		targetTask="ControllerCanEncoder"
+		targetPort="WantedSteeringAngleIn"/>
+
+	<!-- CarGate -->
+	
+	<Connection
+		sourceTask="CanView"
+		sourcePort="ActivationRequestOut"
+		targetTask="CarGate"
+		targetPort="ActivationRequestIn"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredThrottleVoltageOut"
+		targetTask="CarGate"
+		targetPort="DesiredThrottleVoltageIn"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredBrakePressureOut"
+		targetTask="CarGate"
+		targetPort="DesiredBrakePressureIn"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredGearPositionOut"
+		targetTask="CarGate"
+		targetPort="DesiredGearPositionIn"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredSirenOut"
+		targetTask="CarGate"
+		targetPort="DesiredSirenIn"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="DesiredTurnSignalOut"
+		targetTask="CarGate"
+		targetPort="DesiredTurnSignalIn"/>
+
+	<Connection
+		sourceTask="CanView"
+		sourcePort="WantedSteeringAngleOut"
+		targetTask="CarGate"
+		targetPort="WantedSteeringAngleIn"/>
+
+	<!-- Included by Daniel 15.02.2011 -->
+	<Connection
+			sourceTask="CanView"
+			sourcePort="WantedSteeringAngleOut"
+			targetTask="SteerController"
+			targetPort="WantedSteeringAngleIn"/>
+
+
+
+
+</TaskGraph>

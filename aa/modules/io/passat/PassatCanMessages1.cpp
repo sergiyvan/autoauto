@@ -1,0 +1,7 @@
+#include "PassatCanMessages.h"
+#include <boost/preprocessor/list.hpp>
+
+#define SUBSETB BOOST_PP_LIST_FIRST_N(20, PASSAT_CAN_MESSAGES_TYPES)
+#define SUBSET BOOST_PP_LIST_REST_N(10, SUBSETB)
+
+BOOST_PP_LIST_FOR_EACH(PASSAT_CAN_MESSAGE_INSTANTIATE, _, SUBSET);

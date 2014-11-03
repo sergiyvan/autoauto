@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="CanPassat.xml"/>
+
+<!-- DO NEVER GENERATE AN EGOSTATE HERE. IT MESSES UP THE LANE CORRECTION. -->
+<!--        <Include file="EgoState.xml"/>-->
+
+	<Activity type="PeriodicActivity">
+			<struct name="" type="type_less">
+					<simple type="double" name="Period"><value>0.01</value></simple>
+					<simple type="int" name="Priority"><value>-15</value></simple>
+			</struct>
+			<TaskContext type="CarGate" name="CarGate"/>
+	</Activity>
+
+</TaskGraph>

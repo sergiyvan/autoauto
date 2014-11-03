@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+				<TaskContext type="DisparityMapSegmentation" name="DisparityMapSegmentation"/>
+				<TaskContext type="DisplayObstacles" name="DisplayStereoObstacles"/>
+				<TaskContext type="DisplayImage" name="DisplayFreeSpaceImage">
+						<struct name="" type="type_less">
+								<struct type="vec3" name="Position">
+								  <simple type="double" name="0"><value>0</value></simple>
+								  <simple type="double" name="1"><value>0</value></simple>
+								  <simple type="double" name="2"><value>0</value></simple>
+								</struct>
+						</struct>
+				</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="StereoMatcher"
+		sourcePort="StereoDataOut"
+		targetTask="DisparityMapSegmentation"
+		targetPort="StereoDataIn"/>
+		
+	<Connection
+		sourceTask="DisparityMapSegmentation"
+		sourcePort="ObstaclesOut"
+		targetTask="DisplayStereoObstacles"
+		targetPort="ObstacleBundle"/>
+		
+	<Connection
+		sourceTask="DisparityMapSegmentation"
+		sourcePort="FreeSpaceImageOut"
+		targetTask="DisplayFreeSpaceImage"
+		targetPort="TypedImageIn"/>		
+
+</TaskGraph>

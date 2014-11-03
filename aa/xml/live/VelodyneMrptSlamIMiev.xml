@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+<!-- SLAM-->
+        <Activity type="SequentialActivity">
+                                <TaskContext type="MrptSlam" name="EgoStateSnapshotGenerator">
+                <struct name="" type="type_less">
+                                        <simple type="int" name="MapBuilderType"><value>1</value></simple>
+
+                                        <simple type="path" name="SlamParameterFile"><value>mrptSlamRbpf.ini</value></simple>
+
+<!--                                        <simple type="path" name="SlamParameterFile"><value>velodyneSlam.ini</value></simple>-->
+
+                                        <simple type="bool" name="EnableMapUpdating"><value>true</value></simple>
+
+<!--                    <simple type="double" name="OffsetX"><value>-230</value></simple>
+                    <simple type="double" name="OffsetY"><value>35</value></simple>
+                    <simple type="double" name="OffsetYaw"><value>55</value></simple>
+-->
+
+<!--                    <simple type="path" name="MapFile"><value>tempelhof_3d_filtered.simplemap</value></simple>-->
+                    <!-- offsets for mrptmaps/institut.simplemap and institut/institut.rndf -->
+<!--                    <simple type="double" name="OffsetX"><value>-1139.5</value></simple>
+                    <simple type="double" name="OffsetY"><value>-1126.0</value></simple>
+                    <simple type="double" name="OffsetYaw"><value>39.0</value></simple>-->
+
+                    <!-- offsets for mrptmaps/institut.simplemap and institut/institut.rndf -->
+<!--                    <simple type="double" name="OffsetX"><value>-883.0</value></simple>
+                    <simple type="double" name="OffsetY"><value>-1174.5</value></simple>
+                    <simple type="double" name="OffsetYaw"><value>130.0</value></simple>-->
+
+<!--
+                    <simple type="double" name="InitX"><value>-7.0</value></simple>
+                    <simple type="double" name="InitY"><value>16.0</value></simple>
+                    <simple type="double" name="InitPhi"><value>1.5</value></simple>
+
+-->
+
+                </struct>
+                </TaskContext>
+        </Activity>
+
+        <Include file="../common/VehicleData.xml"/>
+
+
+        <!-- Velodyne image creation-->
+<!--        <Activity type="SequentialActivity">
+                <TaskContext	type="VelodyneImageProcessing"	name="VelodyneImageProcessing">
+                        <struct name="" type="type_less">
+                                <simple type="int" name="MinDist"><value>1000</value></simple>
+                                <simple type="int" name="MaxDist"><value>20000</value></simple>
+                                <simple type="int" name="AngleCompression"><value>1</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Include file="../live/VelodyneImage.xml"/>-->
+
+
+        <!-- create velodyne-distances from roadmarking-classified pixels in velodyne-image-->
+<!--        <Activity type="SequentialActivity">
+                <TaskContext	type="VelodyneDeimage"	name="VelodyneDeimage">
+                <struct name="" type="type_less">
+                                <simple type="int" name="IntensitySubImage"><value>1</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="VelodyneImageProcessing"
+                sourcePort="ImageOut"
+                targetTask="VelodyneDeimage"
+                targetPort="ImageIn"/>-->
+
+        <!-- create pointcloud that contains only points whcih are horizontal planes-->
+<!--        <Activity type="SequentialActivity">
+                <TaskContext	type="VelodynePointCloud"	name="VelodynePointCloudFilteredStatic">
+                        <struct name="" type="type_less">
+                                <simple type="string" name="CalibrationDB"><value>velodyne/velodyne2011-32.dbxml</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="VelodyneDeimage"
+                sourcePort="SuperVelodyneBundleOut"
+                targetTask="VelodynePointCloudFilteredStatic"
+                targetPort="SuperVelodyneBundle"/>
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="PointCloudObservation" name="PointCloudObservation"/>
+                <TaskContext type="MrptLog" name="MrptLog"/>
+        </Activity>
+
+
+        <Connection
+                   sourceTask="VelodynePointCloudFilteredStatic"
+                   sourcePort="PointCloud"
+                   targetTask="PointCloudObservation"
+                   targetPort="PointCloudIn"/>-->
+
+
+
+
+
+
+        <Include file="../live/CarState.xml"/>
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="MrptActionRobotMovement2D" name="MrptActionRobotMovement2D">
+                        <struct name="" type="type_less">
+<!--                        <simple type="double" name="ThrunModelAlfa1RotRot"><value>0.000001</value></simple>
+                        <simple type="double" name="ThrunModelAlfa2RotTrans"><value>0.000001</value></simple>
+                        <simple type="double" name="ThrunModelAlfa3TransTrans"><value>0.000001</value></simple>
+                        <simple type="double" name="ThrunModelAlfa4TransRot"><value>0.000001</value></simple>
+                        <simple type="double" name="ThrunModelAdditionalStdXY"><value>0.000001</value></simple>
+                        <simple type="double" name="ThrunModelAdditionalStdPhi"><value>0.000001</value></simple>-->
+                        <simple type="int" name="AngleFilterSize"><value>10</value></simple>
+                        <simple type="bool" name="UseWheelAngle"><value>false</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                           sourceTask="CarStateGenerator"
+                           sourcePort="CarStateOut"
+                           targetTask="MrptActionRobotMovement2D"
+                           targetPort="CarStateIn"/>
+
+
+        <Include file="../live/MrptActionRobotMovement2D.xml"/>
+
+        <Include file="../live/Velodyne2DMrpt.xml"/>
+
+
+        <!-- Velodyne image creation-->
+        <Include file="../live/StaticVelodyne.xml"/>
+        <Activity type="SequentialActivity">
+                <TaskContext	type="VelodyneImageProcessing"	name="VelodyneImageProcessing">
+                        <struct name="" type="type_less">
+                                <simple type="int" name="MinDist"><value>1000</value></simple>
+                                <simple type="int" name="MaxDist"><value>20000</value></simple>
+                                <simple type="int" name="AngleCompression"><value>1</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Include file="../live/VelodyneImage.xml"/>
+
+        <Activity type="SequentialActivity">
+                <TaskContext	type="DisplayImage"	name="DisplayVelodyneImage">
+                        <struct name="" type="type_less">
+                                <simple type="bool" name="Demosaice"><value>0</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="VelodyneImageProcessing"
+                sourcePort="ImageOut"
+                targetTask="DisplayVelodyneImage"
+                targetPort="TypedImageIn"/>
+
+
+
+        <Activity type="SequentialActivity">
+                <TaskContext	type="VelodyneDeimage"	name="VelodyneDeimage">
+                <struct name="" type="type_less">
+                                <simple type="int" name="IntensitySubImage"><value>1</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="VelodyneImageProcessing"
+                sourcePort="ImageOut"
+                targetTask="VelodyneDeimage"
+                targetPort="ImageIn"/>
+
+
+
+        <!-- create pointcloud that contains only points whcih are horizontal planes-->
+        <Activity type="SequentialActivity">
+                <TaskContext	type="VelodynePointCloud"	name="VelodynePointCloudHorizontal">
+                        <struct name="" type="type_less">
+                                <simple type="bool" name="Static"><value>true</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="VelodyneDeimage"
+                sourcePort="SuperVelodyneBundleOut"
+                targetTask="VelodynePointCloudHorizontal"
+                targetPort="SuperVelodyneBundle"/>
+
+
+
+<!--mrpt observation 3d-->
+<Activity type="SequentialActivity">
+        <TaskContext type="PointCloudObservation" name="PointCloudObservation"/>
+</Activity>
+
+
+<Connection
+           sourceTask="VelodynePointCloudHorizontal"
+           sourcePort="PointCloud"
+           targetTask="PointCloudObservation"
+           targetPort="PointCloudIn"/>
+
+
+       <Connection
+                  sourceTask="PointCloudObservation"
+                  sourcePort="ObservationOut"
+                  targetTask="EgoStateSnapshotGenerator"
+                  targetPort="ObservationIn"/>
+
+<!--      <Connection
+                 sourceTask="Velodyne2DMrpt"
+                 sourcePort="ObservationOut"
+                 targetTask="EgoStateSnapshotGenerator"
+                 targetPort="ObservationIn"/>-->
+       <Connection
+                  sourceTask="MrptActionRobotMovement2D"
+                  sourcePort="ActionRobotMovement2DOut"
+                  targetTask="EgoStateSnapshotGenerator"
+                  targetPort="ActionIn"/>
+
+
+</TaskGraph>

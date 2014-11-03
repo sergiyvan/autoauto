@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="../common/EgoState.xml"/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.05</value></simple>
+		</struct>
+		<TaskContext
+						type="DisplayLaneData"
+						name="DisplayCurbLaneData">
+		</TaskContext>
+	</Activity>
+	
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplayCurbLaneData"
+		targetPort="EgoStateIn"/>
+
+	<Connection
+		sourceTask="VelodyneCurbDetection"
+		sourcePort="LaneDataOut"
+		targetTask="DisplayCurbLaneData"
+		targetPort="LaneDataIn"/>
+
+</TaskGraph>

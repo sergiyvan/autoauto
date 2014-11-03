@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<!-- logged -->
+	<Include file="LuxEcu.xml"/>
+	<Include file="Velodyne.xml"/>
+	<Include file="Guppy.xml"/>
+	<Include file="FpgaCamera.xml"/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.04</value></simple>
+		</struct>
+
+		<TaskContext type="SensoricActoricStateChecker" name="SensoricActoricStateChecker"/>
+	</Activity>
+
+		<Connection
+				sourceTask="IbeoLuxEcu"
+				sourcePort="IbeoLuxEcuScanData"
+				targetTask="SensoricActoricStateChecker"
+				targetPort="IbeoLuxEcuScanDataIn"/>
+
+		<Connection
+				sourceTask="VelodyneUDP"
+				sourcePort="SuperVelodyneBundle"
+				targetTask="SensoricActoricStateChecker"
+				targetPort="SuperVelodyneBundleIn"/>
+
+		<Connection
+				sourceTask="CameraSL"
+				sourcePort="TypedImage"
+				targetTask="SensoricActoricStateChecker"
+				targetPort="CameraLeftIn"/>
+
+		<Connection
+				sourceTask="CameraSR"
+				sourcePort="TypedImage"
+				targetTask="SensoricActoricStateChecker"
+				targetPort="CameraRightIn"/>
+
+
+<!--
+		<Connection
+				sourceTask="IRCam0L0"
+				sourcePort="Image"
+				targetTask="SensoricActoricStateChecker"
+				targetPort="CameraLeftIn"/>
+
+		<Connection
+				sourceTask="IRCam1L0"
+				sourcePort="Image"
+				targetTask="SensoricActoricStateChecker"
+				targetPort="CameraRightIn"/>-->
+
+</TaskGraph>

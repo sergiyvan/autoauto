@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+		<Activity type="SequentialActivity">
+		<TaskContext type="DisplayMaxSonar" name="DisplayMaxSonar">
+		</TaskContext>
+	</Activity>
+
+	<!-- <If condition="mode=='live'"> -->
+	<Connection
+		sourceTask="MaxSonar1"
+                sourcePort="MaxSonarRangeData"
+		targetTask="DisplayMaxSonar"
+		targetPort="MaxSonarRangeDataIn"/>
+	<Connection
+		sourceTask="MaxSonar2"
+                sourcePort="MaxSonarRangeData"
+		targetTask="DisplayMaxSonar"
+		targetPort="MaxSonarRangeDataIn"/>
+	<!-- </If> -->
+
+	<!-- <If condition="mode=='play'"> -->
+	<Connection
+		sourceTask="Log"
+		sourcePort="MaxSonarRangeData1"
+		targetTask="DisplayMaxSonar"
+		targetPort="MaxSonarRangeDataIn"/>
+	<Connection
+		sourceTask="Log"
+		sourcePort="MaxSonarRangeData2"
+		targetTask="DisplayMaxSonar"
+		targetPort="MaxSonarRangeDataIn"/>
+	<!-- </If> -->
+
+	<!--
+	<Include file="../common/ConfigurationStorage.xml"/>
+
+	<CallMethod task="Config" name="loadFile">
+		<struct name="" type="type_less">
+			<simple type="path" name="path">
+				<arg>cameraConfig</arg>
+				<value>resources/sensorparameters/MaxSonarParameters.xml</value>
+			</simple>
+		</struct>
+	</CallMethod>
+
+	<Connection
+		sourceTask="Config"
+		sourcePort="MaxSonarParameters"
+		targetTask="DisplayMaxSonar"
+		targetPort="MaxSonarParametersIn"/>
+	 -->
+
+</TaskGraph>

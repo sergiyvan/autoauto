@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+<If condition="typeof live_Guppy == 'undefined'">
+<Script>live_Guppy='pragma_once';</Script>
+<!-- Guppy -->
+		 <Activity type="SelectDrivenActivity">
+				<TaskContext    type="DC1394Camera"	    name="CameraSR">
+						<struct name="" type="type_less">
+								<simple type="int" name="BytesPerPacket"><value>768</value></simple>
+								<simple type="int" name="Mode"><value>0</value></simple>
+								<simple type="int" name="ColourCoding"><value>0</value></simple>
+								<simple type="int" name="Shutter"><value>20</value></simple>
+                                                                <simple type="int" name="Gain"><value>32</value></simple> <!-- 32 with sun in the image, 64 for cloudy days -->
+								<simple type="int" name="MaxTimeoutsInARow"><value>500</value></simple>
+						</struct>
+				</TaskContext>
+		</Activity>
+
+		<CallMethod task="CameraSR" name="selectCameraById">
+				<struct name="" type="type_less">
+						<simple type="int" name="unit"><value>0</value></simple>
+						<simple type="long" name="guid"><value>2892819639982668</value></simple>
+				</struct>
+		</CallMethod>
+
+		<CallMethod task="CameraSR" name="setGuppyHdrKneepoints">
+				<struct name="" type="type_less">
+					<simple type="int" name="v1"><value>31</value></simple>
+					<simple type="int" name="v2"><value>31</value></simple>
+					<simple type="int" name="v3"><value>21</value></simple>
+					<simple type="int" name="v4"><value>0</value></simple>
+				</struct>
+		</CallMethod>
+
+		<Activity type="SelectDrivenActivity">
+				<TaskContext    type="DC1394Camera"	    name="CameraSL">
+						<struct name="" type="type_less">
+								<simple type="int" name="BytesPerPacket"><value>768</value></simple>
+								<simple type="int" name="Mode"><value>0</value></simple>
+								<simple type="int" name="ColourCoding"><value>0</value></simple>
+								<simple type="int" name="Shutter"><value>20</value></simple>
+                                                                <simple type="int" name="Gain"><value>32</value></simple><!-- 32 with sun in the image, 64 for cloudy days -->
+								<simple type="int" name="MaxTimeoutsInARow"><value>500</value></simple>
+
+						</struct>
+				</TaskContext>
+		</Activity>
+
+		<CallMethod task="CameraSL" name="selectCameraById">
+				<struct name="" type="type_less">
+						<simple type="int" name="unit"><value>0</value></simple>
+						<simple type="long" name="guid"><value>2892819639990767</value></simple>
+				</struct>
+		</CallMethod>
+
+		<CallMethod task="CameraSL" name="setGuppyHdrKneepoints">
+				<struct name="" type="type_less">
+					<simple type="int" name="v1"><value>31</value></simple>
+					<simple type="int" name="v2"><value>31</value></simple>
+					<simple type="int" name="v3"><value>21</value></simple>
+					<simple type="int" name="v4"><value>0</value></simple>
+				</struct>
+		</CallMethod>
+</If>
+</TaskGraph>
+

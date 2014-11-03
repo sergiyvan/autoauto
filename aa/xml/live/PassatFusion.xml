@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="EgoState.xml"/>
+	<Include file="CanPassat.xml"/>
+	<Include file="../common/PassatFusion.xml"/>
+</TaskGraph>
+

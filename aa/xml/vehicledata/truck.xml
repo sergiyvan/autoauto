@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <!-- TimedMetainfo-->
+        <!-- <Include file="defaultLog.xml"/> -->
+
+        <Activity type="SequentialActivity">
+                <TaskContext    type="MetaInfoReader"    name="MetaInfoReader">
+                        <struct name="" type="type_less">
+                                <simple type="string" name="NodeName"><arg description="Nope">node-name,N</arg><value></value></simple>
+                                                                <struct name="theVehicleData">
+                                        <simple type="string" name="carName" description="name identifier of the car"><value>truck</value></simple>
+
+                                        <simple type="double" name="realCarLength" description="length of car in m"><value>4.774</value></simple><!--//4765–4774 mm, 4774 is from data sheet-->
+                                        <simple type="double" name="realCarWidth" description="width of car in m (including odometer and side mirror)"><value>1.820</value></simple><!--//TODO remeasure, 1820 from data sheet-->
+                                        <simple type="double" name="realCarHeight" description="height of car in m (including height of velodyne)"><value>1.517</value></simple><!--//TODO add height of velodyne, 1517 from data sheet-->
+                                        <simple type="double" name="mass" description="mass of car in kg (including sensors)"><value>2300.0</value></simple>
+                                        <simple type="double" name="torque" description="max torque of the car"><value>2709</value></simple><!--getProperty<flt>("shaftDistance")->value() * 1000.0-->
+
+                                        <simple type="double" name="frontShaftDistance" description="distance from IMU to front shaft (front axle, Achse) in m"><value>0</value></simple>
+                                        <simple type="double" name="rearShaftDistance" description="distance from IMU to rear shaft (rear axle, Achse) in m"><value>-2.709</value></simple>
+                                        <simple type="double" name="medialAxisDistance" description="distance from IMU to medial axis (Mittelachse) in m, negative=imu is to the right, positive=imu is to the left"><value>0</value></simple>
+                                        <simple type="double" name="shaftDistance" description="distance between front and rear shaft (Achse)"><value>2.709</value></simple><!--getProperty<flt>("frontShaftDistance")->value() - getProperty<flt>("rearShaftDistance")->value()-->
+
+                                        <simple type="double" name="frontDistance" description="distance from front shaft to real front of car in m"><value>0.965</value></simple>
+                                        <simple type="double" name="rearDistance" description="distance from rear shaft to real back of car in m"><value>1.090</value></simple>
+                                        <simple type="double" name="groundDistance" description="distance of IMU to ground in m"><value>10000</value></simple><!--//IMU reference system on front shaft--><!--in order to not show the extra tires-->
+                                        <simple type="double" name="imuPitch" description="pitch of IMU in radian"><value>0</value></simple>
+
+                                        <simple type="double" name="tireDistance" description="distance between left and right tire in m"><value> 1.551</value></simple><!--// angepasst an den wert von trackrear; 1.553 front, 1.566 rear-->
+                                        <simple type="double" name="tireStiffness" description=""><value> 200000.0</value></simple>
+                                        <simple type="double" name="tireRadius" description="radius of tire in m"><value> 0.315</value></simple><!--//TODO read real size, assumption: 16"-->
+
+                                        <simple type="double" name="maxSpeed" description="maximal safe speed for autonomous drive in m/s"><value>44.444444444</value></simple>
+                                        <simple type="double" name="maxReverseSpeed" description="maximal safe reverse speed for autonomous drive in m/s"><value>8.333333333</value></simple>
+                                        <simple type="double" name="maxSpeedChange" description="fastest possible acceleration in m/s/s"><value>1.984126984</value></simple><!--//TODO find real value -->
+                                        <simple type="double" name="maxBrakeChange" description="fastest possible brake acceleration in m/s/s"><value>9.259259259</value></simple><!--//TODO find real value -->
+
+                                        <simple type="double" name="maxSteer" description="in Rad"><value>0.591666616</value></simple><!-- math::D2R * 33.9-->
+                                        <simple type="double" name="maxSteerChange" description="fastest possible steer change in radian/s"><value><!-- 2 * mig.getProperty<flt>("maxSteer")->value() / 2.0-->0.591666616</value></simple>
+                                        <simple type="double" name="maxSteerAngleAcceleration" description="highest possible steer angle acceleration in radian/s/s"><value>2.233</value></simple>
+
+                                        <simple type="double" name="turningCircleRadius" description="radius of turning circle in m"><value>5.0</value></simple>
+
+                                        <!--//from VW - Datasheet, added by Daniel:-->
+                                        <simple type="double" name="wheelBase" description=""><value>2.709</value></simple>
+                                        <simple type="double" name="trackrear" description=""><value>1.551</value></simple>
+                                        <simple type="double" name="trackfront" description=""><value>1.552</value></simple>
+
+                                        <simple type="double" name="maxSteeringAngleInnerWheel" description="in Rad"><value>0.694641042</value></simple><!-- math::D2R * 39.8-->
+                                        <simple type="double" name="maxSteeringAngleOuterWheel" description="in Rad"><value>0.5131268</value></simple><!-- math::D2R * 29.4-->
+                                        <simple type="double" name="maxSteeringWheelAngle" description="in Rad"><value>9.250245036</value></simple><!-- math::D2R * 530.0-->
+
+                                        <!--TODO: insert correct odometry-value to enable module MrptActionRobotMovement2D-->
+                                        <simple type="double" name="odometryTickLengthLeft" description="in meter per tick"><value>0.02165</value></simple>
+                                        <simple type="double" name="odometryTickLengthRight" description="in meter per tick"><value>0.02182</value></simple>
+
+										<simple type="double" name="odometryTickLength" description="in meter per tick"><value>0.00562</value></simple>
+<!--                                                                                <simple type="double" name="modelScale" description="modelScale"><value>0.0255</value></simple> -->
+                                                                                <simple type="double" name="modelScale" description="modelScale"><value>0.009</value></simple> <!-- Micha change for his use: 0.06 --><!--old:0.03-->
+
+                                                                                 <simple type="double" name="yaw" description="yaw"><value>-90</value></simple> <!-- Ras: 103 -->
+										<simple type="double" name="roll" description="roll"><value>0</value></simple> <!-- Ras: 0.0 -->
+										<simple type="double" name="pitch" description="pitch"><value>0</value></simple> <!-- Ras: 0.0 -->
+
+                                                                                <!--Tobias ?-->
+                                                                                <!--<simple type="double" name="x" description="x"><value>-10.0</value></simple>
+                                                                                <simple type="double" name="y" description="y"><value>0.6</value></simple>
+                                                                                <simple type="double" name="z" description="z"><value>0.0</value></simple> -->
+
+                                                                                <!--wsy::truck simulation-->
+
+                                                                                <!--<simple type="double" name="x" description="x"><value>-1</value></simple>
+                                                                                <simple type="double" name="y" description="y"><value>0.5</value></simple>
+                                                                                <simple type="double" name="z" description="z"><value>0.0</value></simple>-->
+                                                                                <simple type="double" name="x" description="x"><value>0</value></simple>
+                                                                                <simple type="double" name="y" description="y"><value>0</value></simple>
+                                                                                <simple type="double" name="z" description="z"><value>0.0</value></simple>
+
+                                                                                <!--for sensor optimization-->
+                                                                                <simple type="double" name="RectCenterX" description="RectCenterX"><value>0</value></simple>
+                                                                                <simple type="double" name="RectCenterY" description="RectCenterY"><value>0</value></simple>
+
+                                                                               <!--for liebherr mining truck-->
+                                                                               <!--<simple type="double" name="RectLength" description="RectLength"><value>15.690</value></simple>
+                                                                                <simple type="double" name="RectWidth" description="RectWidth"><value>9.679</value></simple>
+                                                                                <simple type="double" name="RectCenterZ" description="RectCenterZ"><value>8.294</value></simple>
+                                                                                <simple type="double" name="TruckViewOffset" description="TruckViewOffset"><value>10</value></simple>--> <!--for liebherr mining truck-->
+
+                                                                                <!--for dump truck-->
+                                                                                <simple type="double" name="RectLength" description="RectLength"><value>8</value></simple>
+                                                                                <simple type="double" name="RectWidth" description="RectWidth"><value>2.5</value></simple>
+                                                                                <simple type="double" name="RectCenterZ" description="RectCenterZ"><value>0</value></simple>
+                                                                                <simple type="double" name="TruckViewOffset" description="TruckViewOffset"><value>5</value></simple>
+
+
+
+
+                                </struct>
+                        </struct>
+                </TaskContext>
+        </Activity>
+</TaskGraph>
+

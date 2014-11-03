@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="EgoState.xml"/>
+	<Include file="CanDodge.xml"/>
+	<Include file="../common/CarStateDodge.xml"/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.05</value></simple>
+		</struct>
+
+		<TaskContext type="EMCSerial" name="EMCSerial"/>
+	</Activity>
+
+	<!-- requirements for dodge carstate-->
+	<Connection
+		sourceTask="CanBus"
+		sourcePort="CanMessage0Out"
+		targetTask="CarStateGenerator"
+		targetPort="CanMessageIn"/>
+
+	<!-- incoming EMCSerial connections-->
+
+	<Connection
+		sourceTask="CarStateGenerator"
+		sourcePort="CarStateOut"
+		targetTask="EMCSerial"
+		targetPort="CarState"/>
+
+	<!--<Connection
+		sourceTask="EMCSerial"
+		sourcePort="ActualHeadlights"
+		targetTask="CarStateGenerator"
+		targetPort="ActualHeadlightsIn"/>-->
+
+	<!--<Connection
+		sourceTask="EMCSerial"
+		sourcePort="ActualWipers"
+		targetTask="CarStateGenerator"
+		targetPort="ActualWipersIn"/>	-->
+
+	<Connection
+		sourceTask="EMCSerial"
+		sourcePort="ActualSiren"
+		targetTask="CarStateGenerator"
+		targetPort="ActualSirenIn"/>
+
+	<Connection
+		sourceTask="EMCSerial"
+		sourcePort="ActualTurnSignal"
+		targetTask="CarStateGenerator"
+		targetPort="ActualTurnSignalIn"/>
+
+	<Connection
+		sourceTask="EMCSerial"
+		sourcePort="ActualShiftPos"
+		targetTask="CarStateGenerator"
+		targetPort="ActualShiftPosIn"/>
+
+</TaskGraph>

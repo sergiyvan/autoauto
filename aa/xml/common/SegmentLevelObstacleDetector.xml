@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="SegmentLevelObstacleDetector" name="SegmentLevelObstacleDetector">
+		<struct name="" type="type_less">
+			<simple type="double" name="SegmentationDistanceThreshold"><value>0.2</value></simple>
+			<simple type="int" name="SegmentationLookahead"><value>2</value></simple>
+			<simple type="double" name="SegmentMergeDistanceThreshold"><value>0.2</value></simple>
+			<simple type="int" name="SegmentMergeConnectivityThreshold"><value>1</value></simple>
+			<simple type="double" name="LineDetectionDistanceThreshold"><value>0.25</value></simple>
+		</struct>
+		</TaskContext>
+	</Activity>
+
+</TaskGraph>

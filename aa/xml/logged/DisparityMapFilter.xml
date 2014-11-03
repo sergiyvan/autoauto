@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+
+        <Include file="../common/DisparityMapFilter.xml"/>
+
+
+        <!--Input - Use as:
+       <Connection
+                  sourceTask=""
+                  sourcePort=""
+                  targetTask="DisparityMapFilter"
+                  targetPort="StereoDataIn"/>-->
+
+        <!--Output - Use as:
+       <Connection
+                  sourceTask="DisparityMapFilter"
+                  sourcePort="StereoDataOut"
+                  targetTask=""
+                  targetPort=""/>-->
+
+</TaskGraph>

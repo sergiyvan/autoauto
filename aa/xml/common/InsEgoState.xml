@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<!-- ======================= egostate generator ======================== -->
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="InsEgoStateGenerator" name="EgoStateGenerator">
+                    <struct name="" type="type_less">
+                            <simple type="bool" name="ignoreZ"><value>0</value></simple>
+                    </struct>
+                    <struct name="" type="type_less">
+                            <simple type="bool" name="zFromArnd"><value>0</value></simple>
+                    </struct>
+                </TaskContext>
+	</Activity>
+</TaskGraph>

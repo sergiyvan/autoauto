@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayIbeoObstacles" name="DisplayIbeoObstacleDetector">
+		</TaskContext>
+	</Activity>
+	<Connection
+		sourceTask="IbeoObstacleDetector"
+		sourcePort="ObstaclesOut"
+		targetTask="DisplayIbeoObstacleDetector"
+		targetPort="ObstaclesIn"/>
+
+
+	<!--<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.05</value></simple>
+		</struct>
+		<TaskContext type="DisplayIbeoObstacleDetector" name="DisplayIbeoObstacleDetector">
+			<struct type="type_less">
+				<simple type="bool" name="DrawRoi"><value>false</value></simple>
+				<simple type="bool" name="MarkFilteredObstacles"><value>false</value></simple>
+				<simple type="bool" name="MarkPotentialPhantomObstacles"><value>false</value></simple>
+				<simple type="bool" name="DrawScanner"><value>false</value></simple>
+				<simple type="bool" name="DrawSightField"><value>true</value></simple>
+				<simple type="bool" name="DrawGroundPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawDirtPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawClutterPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawInvalidPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawTransparentPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawNonRoiPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawProcessedPoints"><value>false</value></simple>
+				<simple type="bool" name="DrawFeedbackObstacles"><value>false</value></simple>
+				<simple type="bool" name="DrawContour"><value>false</value></simple>
+				<simple type="bool" name="DrawBoxes"><value>true</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplayIbeoObstacleDetector"
+		targetPort="EgoState"/>
+
+	<Connection
+		sourceTask="IbeoObstacleDetector"
+		sourcePort="LuxScanPointObstacleBundle"
+		targetTask="DisplayIbeoObstacleDetector"
+		targetPort="LuxScanPointObstacleBundle"/>-->
+
+
+</TaskGraph>

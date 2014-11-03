@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="../logged/StereoBM.xml"/>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="CartesianOccupancyMap" name="CartesianOccupancyMap">
+			<struct name="" type="type_less">
+				<simple type="int" name="GridSizeX"><value>100</value></simple>
+				<simple type="int" name="GridSizeY"><value>100</value></simple>
+				<simple type="double" name="CellSizeX"><value>0.08</value></simple>
+				<simple type="double" name="CellSizeY"><value>0.08</value></simple>
+				<simple type="double" name="GroundHeight"><value>-0.56</value></simple>
+				<simple type="int" name="CellThreshold"><value>4</value></simple>
+			</struct>
+		</TaskContext>
+		<TaskContext type="DisplayOccupancyMap" name="DisplayStereoOccupancyMap">
+			<struct name="" type="type_less">
+				<simple type="bool" name="ShowHeightMap"><value>1</value></simple>
+				<simple type="bool" name="ShowPointCloud"><value>0</value></simple>
+				<simple type="bool" name="ShowGrid"><value>0</value></simple>
+				<simple type="double" name="FreeThreshold"><value>-0.56</value></simple>
+				<simple type="double" name="OccupiedThreshold"><value>-0.15</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="StereoMatcher"
+                sourcePort="StereoDataOut"
+		targetTask="CartesianOccupancyMap"
+                targetPort="StereoDataIn"/>
+
+	<Connection
+		sourceTask="CartesianOccupancyMap"
+                sourcePort="StereoDataOut"
+		targetTask="DisplayStereoOccupancyMap"
+                targetPort="StereoDataIn"/>
+
+	<Connection
+	   sourceTask="CartesianOccupancyMap"
+	   sourcePort="OccupancyGridOut"
+	   targetTask="DisplayStereoOccupancyMap"
+	   targetPort="OccupancyGridIn"/>
+
+</TaskGraph>

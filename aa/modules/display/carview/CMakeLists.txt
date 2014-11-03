@@ -1,0 +1,9 @@
+add_module(DisplayCarData
+	DisplayCarData.cpp
+UI
+LINK_LIBRARIES
+	BaseCarState
+	glut
+	Gui
+	Rndf
+)

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="Default.xml"/>
+
+	<Include file="../common/CanPassat.xml"/>
+<!-- ControllerCanDecoder -->
+	
+	<Connection
+		sourceTask="Log"
+		sourcePort="CanMessageAOut"
+		targetTask="ControllerCanDecoder"
+		targetPort="CanMessageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="CanMessageBOut"
+		targetTask="SensorCanDecoder"
+		targetPort="CanMessageIn"/>
+		
+	<Connection
+		sourceTask="Log"
+		sourcePort="CanMessageCOut"
+		targetTask="RadarCanDecoder"
+		targetPort="CanMessageIn"/>
+
+	<Include file="../common/CarStatePassat.xml"/>
+
+</TaskGraph>

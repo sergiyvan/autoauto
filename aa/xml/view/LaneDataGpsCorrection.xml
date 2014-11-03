@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<!-- displays corrected EgoState-->
+	<Include file="../view/Car.xml"/>
+
+        <!-- displays original EgoState-->
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.1</value></simple>
+                </struct>
+                <TaskContext type="DisplayCarData" name="DisplayCarDataOriginal">
+                        <struct name="" type="type_less">
+                                <simple type="string" name="CarModelFileName"><value>3dmodels/redpassat.3ds</value></simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="EgoStateSnapshotGeneratorOriginal"
+                sourcePort="EgoState"
+                targetTask="DisplayCarDataOriginal"
+                targetPort="EgoState"/>
+
+        <Connection
+                sourceTask="Applanix"
+                sourcePort="VehicleNavigationPerformanceMetrics"
+                targetTask="DisplayCarDataOriginal"
+                targetPort="VehicleNavigationPerformanceMetricsIn" />
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="VehicleNavigationPerformanceMetrics"
+		targetTask="DisplayCarDataOriginal"
+		targetPort="VehicleNavigationPerformanceMetricsIn" />
+
+
+        <!--displays lanedetection-->
+	<Include file="../view/HellaLaneDetectionUdp.xml"/>
+        <Include file="../view/ContiLaneDetection.xml"/>
+
+        <!--  display gps corrector ==========================================================   -->
+
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.1</value></simple>
+                </struct>
+                <TaskContext type="DisplayLaneDataGpsCorrector" name="DisplayLaneDataGpsCorrector">
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="EgoStateSnapshotGeneratorOriginal"
+                sourcePort="EgoState"
+                targetTask="DisplayLaneDataGpsCorrector"
+                targetPort="EgoStateIn"/>
+
+        <Connection
+                sourceTask="EgoStateSnapshotGenerator"
+                sourcePort="DebugData"
+                targetTask="DisplayLaneDataGpsCorrector"
+                targetPort="DebugData"/>
+
+
+</TaskGraph>
+

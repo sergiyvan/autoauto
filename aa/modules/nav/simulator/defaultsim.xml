@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation>
+	<rndf>sitevisit.rndf</rndf>
+	<simobject>
+		<name>Boden</name>
+		<model></model>
+		<position>0,0,-1</position>
+		<size>10000,10000,2</size>
+	</simobject>	
+	<simobject>
+		<name>Gebäude1</name>
+		<model></model>
+		<position>16,0,15</position>
+		<size>12,12,30</size>
+	</simobject>	
+	<simobject>
+		<name>Gebäude3</name>
+		<model></model>
+		<position>14,18,10</position> 
+		<size>16,16,20</size>
+	</simobject>	
+	<simobject>
+		<name>Gebäude4</name>
+		<model></model>
+		<position>-8,20,15</position> 
+		<size>14,14,30</size>
+	</simobject>	
+	<simobject>
+		<name>Gebäude5</name>
+		<model></model>
+		<position>8,-30,10</position> 
+		<size>30,10,20</size>
+	</simobject>	
+	
+	
+	<simobject>
+		<name>Person1</name>
+		<model>person.ac</model>
+		<size>0.3,0.3,0.3</size>
+		<path>
+			<waypoint speed="0.4">15,-9,0</waypoint>
+			<waypoint speed="0.4">-20,-9,0</waypoint>
+		</path>
+	</simobject>
+	<simobject>
+		<name>Person2</name>
+		<model>person.ac</model>
+		<size>0.3,0.3,0.3</size>
+		<path>
+			<waypoint speed="0.4">23,-9,0</waypoint>
+			<waypoint speed="0.4">23,15,0</waypoint>
+		</path>
+	</simobject>
+	<simobject>
+		<name>Person3</name>
+		<model>person.ac</model>
+		<size>0.3,0.3,0.3</size>
+		<path>
+			<waypoint speed="0.45">23.2,-9.5,0</waypoint>
+			<waypoint speed="0.45">23,15,0</waypoint>
+		</path>
+	</simobject>
+	<simobject instances="2">
+		<name>Auto1</name>
+		<model>car.ac</model>
+		<size>1.0,1.0,1.0</size>
+		<path>
+			<randomrndf speed="10.0" />
+		</path>
+	</simobject>
+	<simobject instances="2">
+		<name>Auto2</name>
+		<model>car.ac</model>
+		<size>1.0,1.0,1.0</size>
+		<path>
+			<randomrndf speed="7.9" />
+		</path>
+	</simobject>
+	<simobject instances="2">
+		<name>Auto3</name>
+		<model>car.ac</model>
+		<size>1.0,1.0,1.0</size>
+		<path>
+			<randomrndf speed="12.1" />
+		</path>
+	</simobject>
+	<simobject instances="2">
+		<name>Auto4</name>
+		<model>car.ac</model>
+		<size>1.0,1.0,1.0</size>
+		<path>
+			<randomrndf speed="8.8" />
+		</path>
+	</simobject>	
+</simulation>

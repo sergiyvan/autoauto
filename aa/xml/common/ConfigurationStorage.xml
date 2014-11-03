@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+This file just creates the configurationStorage taskcontext, and that's it
+configurationStorage behaves like a singleton, so you only want 1 instance
+to be created. Include this file for any configurationStorage use.
+-->
+
+<TaskGraph>
+
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+            <simple type="double" name="Period"><value>1</value></simple>
+        </struct>
+        <TaskContext
+            type="ConfigurationStorage"
+            name="Config">
+        </TaskContext>
+    </Activity>
+
+</TaskGraph>

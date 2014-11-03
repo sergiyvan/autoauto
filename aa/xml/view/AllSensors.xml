@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="IbeoEcu.xml"/>
+	<Include file="IbeoLux.xml"/>
+        <Include file="Car.xml"/>
+        <Include file="Trajectory.xml"/>
+        <Include file="Velodyne.xml"/>
+	<Include file="ImageData.xml"/>
+	<Include file="HellaLaneDetectionUdp.xml"/>
+	<Include file="Sick.xml"/>
+	<Include file="SatelliteData.xml"/>
+        <Include file="Arnd.xml"/>
+        <Include file="ArndEditor.xml"/>
+	<Include file="AerialImage.xml"/>
+	<Include file="ControllerData.xml"/>
+	<Include file="ContiLaneDetection.xml"/>
+	<Include file="OsgEarth.xml"/>
+	<Include file="CityGml.xml"/>
+	<Include file="Checkpoints.xml"/>
+	<Include file="InCarCamera.xml"/>
+	<Include file="Radar.xml" />
+	<Include file="FpgaCamera.xml" />
+</TaskGraph>

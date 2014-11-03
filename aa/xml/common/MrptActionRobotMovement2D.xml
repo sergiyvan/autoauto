@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+common meta-include for MrptActionRobotMovement2D
+-->
+<TaskGraph>
+
+        <!--<Include file="Odometry.xml"/>-->
+
+        <Include if="node_name=='vw'" file="PassatMrptActionRobotMovement2D.xml"/>
+        <!-- <Include if="node_name=='dodge'" file="OdometryDodge.xml"/> -->
+        <Include if="node_name=='xeno'" file="XenoMrptActionRobotMovement2D.xml"/>
+        <Include if="node_name=='imiev'" file="IMievMrptActionRobotMovement2D.xml"/>
+
+
+        <Connection
+                sourceTask="Odometry"
+                sourcePort="OdometryOut"
+                targetTask="MrptActionRobotMovement2D"
+                targetPort="AccumulatedEncoderIn"/>
+</TaskGraph>

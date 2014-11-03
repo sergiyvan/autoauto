@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="ConfigurationStorage.xml" />	
+	<Include file="ImageData.xml"/>
+	<Include file="EgoState.xml" />
+
+	<!-- ==== traffic signal mapper ======================================== -->
+
+	<Activity type="SequentialActivity">
+	  <TaskContext type="TrafficSignalMapperTask" name="TrafficSignalMapper">
+		<struct name="" type="type_less">
+		  <simple type="bool" name="verbose"><value>1</value></simple>
+
+		  <!-- camera orientation -->
+	      <simple type="double" name="roll">  <value>5.83922</value></simple>
+	      <simple type="double" name="pitch"> <value>-14.0</value></simple>
+	      <simple type="double" name="yaw">   <value>-28.0</value></simple>
+
+          <!-- operation mode -->
+		  <simple type="bool" name="estimate"><value>1</value></simple>
+
+		</struct>
+	  </TaskContext>
+	</Activity>
+
+	<Connection
+	   sourceTask="EgoStateSnapshotGenerator"
+	   sourcePort="EgoState"
+       targetTask="TrafficSignalMapper"
+       targetPort="EgoStateIn"/>
+
+	<Connection
+       sourceTask="Config"
+	   sourcePort="CameraParameter"
+	   targetTask="TrafficSignalMapper"
+	   targetPort="CameraParameterIn"/>
+
+    <!-- camera parameter configuration -->
+	<!-- CallMethod task="Config" name="loadFile" >
+		<struct name="" type="type_less">
+			<simple type="path" name="path">
+				<value>resources/vision/CameraParameterMig.xml</value>
+			</simple>
+		</struct>
+	</CallMethod -->
+
+	<!-- ==== traffic signal detector ====================================== -->
+
+	<Activity type="SequentialActivity">
+	  <TaskContext type="TrafficSignalDetectorTask" name="TrafficSignalDetector">
+		<struct name="" type="type_less">
+		  <simple type="double" name="intensityGradThr"> <value>0.5</value></simple>
+		  <simple type="bool" name="verbose"><value>0</value></simple>
+          <simple type="bool" name="showGrid"><value>0</value></simple>
+		</struct>
+	  </TaskContext>
+	</Activity>
+
+	<Connection
+       sourceTask="Log"
+	   sourcePort="TypedImageSR"
+	   targetTask="TrafficSignalDetector"
+	   targetPort="TypedImageIn"/>
+
+	<Connection
+       sourceTask="TrafficSignalMapper"
+	   sourcePort="SignalsRoiOut"
+	   targetTask="TrafficSignalDetector"
+	   targetPort="SignalsRoiIn"/>
+
+	<Connection
+       sourceTask="TrafficSignalDetector"
+	   sourcePort="SignalsOut"
+	   targetTask="TrafficSignalMapper"
+	   targetPort="SignalsIn"/>
+
+	<!-- =================================================================== -->
+
+	<TaskBrowser task="Log"/>
+
+</TaskGraph>

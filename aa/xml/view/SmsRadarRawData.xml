@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+		<TaskContext
+			type="DisplaySmsRadarRawData"
+			name="DisplaySmsRadarRawData"/>
+	</Activity>
+
+	<Connection
+		sourceTask="RadarCanDecoder"
+		sourcePort="SmsRadar24GhzObjectBundleOut"
+		targetTask="DisplaySmsRadarRawData"
+		targetPort="ObjectsIn"/>
+
+	<Connection
+		sourceTask="Config"
+		sourcePort="SmsRadarParameter"
+		targetTask="DisplaySmsRadarRawData"
+		targetPort="RadarParameterIn"/>
+
+</TaskGraph>

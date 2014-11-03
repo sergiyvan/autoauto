@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <!-- for DisplayXenoMicroController-->
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.01</value></simple>
+                </struct>
+                <TaskContext
+                            type="DisplayXenoMicroController"
+                            name="DisplayXenoMicroController">
+
+                        <struct name="" type="type_less">
+                                <simple type="double" name="ScaleX">
+                                        <value>10</value>
+                                </simple>
+                                <simple type="double" name="ScaleY">
+                                        <value>0.1</value>
+                                </simple>
+
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <!-- for playing live-->
+-   	<Connection
+                   sourceTask="XenoMicroController"
+                   sourcePort="ControllerDataOut"
+                   targetTask="DisplayXenoMicroController"
+                   targetPort="XenoMicroControllerDataIn"/>
+        <!-- for playing logged-->
+        <Connection
+                   sourceTask="Log"
+                   sourcePort="ControllerDataOut"
+                   targetTask="DisplayXenoMicroController"
+                   targetPort="XenoMicroControllerDataIn"/>
+
+
+</TaskGraph>

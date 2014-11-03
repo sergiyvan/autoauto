@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext	type="DisplayImage"	name="ImageViewL">
+			<struct name="" type="type_less">
+				<struct type="vec3" name="Position">
+					<simple type="double" name="0"><value>-390</value></simple>
+					<simple type="double" name="1"><value>0</value></simple>
+					<simple type="double" name="2"><value>0</value></simple>
+				</struct>
+				<simple type="bool" name="Demosaice"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+		<TaskContext	type="DisplayImage"	name="ImageViewR">
+			<struct name="" type="type_less">
+				<struct type="vec3" name="Position">
+					<simple type="double" name="0"><value>390</value></simple>
+					<simple type="double" name="1"><value>0</value></simple>
+					<simple type="double" name="2"><value>0</value></simple>
+				</struct>
+				<simple type="bool" name="Demosaice"><value>1</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<Connection
+                sourceTask="CameraL"
+                sourcePort="TypedImage"
+		targetTask="ImageViewL"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+                sourceTask="CameraR"
+                sourcePort="TypedImage"
+		targetTask="ImageViewR"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+			sourceTask="Log"
+			sourcePort="TypedImageL"
+			targetTask="ImageViewL"
+			targetPort="TypedImageIn"/>
+
+	<Connection
+			sourceTask="Log"
+			sourcePort="TypedImageR"
+			targetTask="ImageViewR"
+			targetPort="TypedImageIn"/>
+
+</TaskGraph>

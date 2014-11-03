@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="Default.xml"/>
+	<Include file="../common/EgoState.xml"/>
+
+        <Activity type="SequentialActivity">
+                <TaskContext	type="ApplanixEgoStateGenerator" name="EgoStateGenerator"/>
+	</Activity>
+
+	<Connection
+                sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="InterpolationModelSetter"
+		targetPort="EgoStateIn"
+		/>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoStateSetter"
+		targetTask="EgoStateGenerator"
+		targetPort="EgoStateSetter"/>
+
+	<!-- instead of getting data from real device, get it from log -->
+	<Connection
+			   sourceTask="Log"
+			   sourcePort="VehicleNavigationSolution"
+			   targetTask="EgoStateGenerator"
+			   targetPort="VehicleNavigationSolution"/>
+
+	<Connection
+			   sourceTask="Log"
+			   sourcePort="VehicleNavigationPerformanceMetrics"
+			   targetTask="EgoStateGenerator"
+			   targetPort="VehicleNavigationPerformanceMetrics"/>
+
+	<Connection
+			   sourceTask="Log"
+			   sourcePort="PrimaryGpsStatus"
+			   targetTask="EgoStateGenerator"
+			   targetPort="PrimaryGpsStatus"/>
+
+	<Connection
+			   sourceTask="Log"
+			   sourcePort="CalibratedInstallationParameters"
+			   targetTask="EgoStateGenerator"
+			   targetPort="CalibratedInstallationParameters"/>
+
+	<ConnectPeer task="Log" peer="EgoStateGenerator"/>
+
+
+</TaskGraph>

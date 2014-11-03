@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="CityGml" name="DisplayCityGml">
+			<struct name="" type="type_less">
+			<simple type="string" name="ModelPath">
+<!-- englerallee -->
+<!--					<value>/mnt/fulda/autonomos/data/virtualcitysystems/02_City_GML_Lod2_Gebaeude/1800016000/1800016000.gml</value>-->
+<!-- tempelhof -->
+<!-- 				<value>/mnt/fulda/autonomos/data/virtualcitysystems/02_City_GML_Lod2_Gebaeude/2300017000/2300017000.gml</value> -->
+<!-- takustr -->
+<!--                                <value>/mnt/fulda/autonomos/data/virtualcitysystems/02_City_GML_Lod2_Gebaeude/1700015000/1700015000.gml</value>-->
+
+<!--dahlem-->
+									<value>/mnt/cocktail/autonomos/data/virtualcitysystems/02_City_GML_Lod2_Gebaeude/1800016000/1800016000.gml</value>
+<!--kaiserdam-->
+<!--                                    <value>/mnt/fulda/autonomos/data/virtualcitysystems/02_City_GML_Lod2_Gebaeude/1100011000/1100011000.gml</value>-->
+				</simple>
+
+                        <simple type="float" name="AltOffset"><value>0</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+</TaskGraph>
+

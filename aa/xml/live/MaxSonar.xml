@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SelectDrivenActivity">
+		<TaskContext type="MaxSonar" name="MaxSonar1">
+			<struct name="" type="type_less">
+				<simple type="int" name="Port"><value>6000</value></simple>
+				<simple type="string" name="BoundAddress"><value>192.168.0.10</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<Activity type="SelectDrivenActivity">
+		<TaskContext type="MaxSonar" name="MaxSonar2">
+			<struct name="" type="type_less">
+				<simple type="int" name="Port"><value>6001</value></simple>
+				<simple type="string" name="BoundAddress"><value>192.168.0.10</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+</TaskGraph>

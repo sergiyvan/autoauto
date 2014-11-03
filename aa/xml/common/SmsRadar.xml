@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Include if="node_name=='vw'" file="CanPassat.xml" />
+    <Include if="node_name=='imiev'" file="CanIMiev.xml" />
+
+<!--    <Include file="IbeoObstacleDetector.xml"/>-->
+    <Include file="EgoState.xml"/>
+
+
+    <!-- =============== sms radar =============== -->
+
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+            <simple type="double" name="Period"><value>0.01</value></simple>
+        </struct>
+        <TaskContext type="SmsRadarTracker" name="SmsRadarTracker">
+            <struct name="" type="type_less">
+                    <simple type="double" name="FilterAngle"><value>2</value></simple>
+            </struct>
+        </TaskContext>
+    </Activity>
+
+    <Connection
+        sourceTask="RadarCanDecoder"
+        sourcePort="SmsRadar24GhzObjectBundleOut"
+        targetTask="SmsRadarTracker"
+        targetPort="ObjectPortIn"/>
+
+    <Connection
+        sourceTask="RadarCanDecoder"
+        sourcePort="SmsSensorTrackedBundleOut"
+        targetTask="SmsRadarTracker"
+        targetPort="SensorTrackedObjectsIn"/>
+
+    <Connection
+        sourceTask="EgoStateSnapshotGenerator"
+        sourcePort="EgoState"
+        targetTask="SmsRadarTracker"
+        targetPort="EgoStateIn"/>
+
+<!--    <Connection
+        sourceTask="IbeoObstacleDetector"
+        sourcePort="ObstaclesOut"
+        targetTask="SmsRadarTracker"
+        targetPort="ObstacleBundleIn"/>-->
+
+
+    <!-- ================= parameters ===================== -->
+
+    <Include file="../common/LoadSmsRadarConfig.xml" />
+
+    <Connection
+        sourceTask="Config"
+        sourcePort="SmsRadarParameter"
+        targetTask="SmsRadarTracker"
+        targetPort="RadarParameterIn"/>
+
+
+
+</TaskGraph>

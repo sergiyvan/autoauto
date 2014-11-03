@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayImage" name="DisplayRightImage">
+                        <struct name="" type="type_less">
+                         <struct type="vec3" name="Position">
+                           <simple type="double" name="0"><value>384</value></simple>
+                           <simple type="double" name="1"><value>0</value></simple>
+                           <simple type="double" name="2"><value>0</value></simple>
+                         </struct>
+                        </struct>
+                </TaskContext>
+                <TaskContext type="DisplayImage" name="DisplayLeftImage">
+                        <struct name="" type="type_less">
+                         <struct type="vec3" name="Position">
+                           <simple type="double" name="0"><value>-384</value></simple>
+                           <simple type="double" name="1"><value>0</value></simple>
+                           <simple type="double" name="2"><value>0</value></simple>
+                         </struct>
+                        </struct>
+                </TaskContext>
+                <TaskContext type="DisplayBoundingBoxes" name="DisplayStereoObstacle"/>
+        </Activity>
+
+        <Connection
+           sourceTask="StereoMatcher"
+           sourcePort="LeftImageOut"
+           targetTask="DisplayLeftImage"
+           targetPort="TypedImageIn"/>
+
+        <Connection
+           sourceTask="StereoMatcher"
+           sourcePort="RightImageOut"
+           targetTask="DisplayRightImage"
+           targetPort="TypedImageIn"/>
+
+        <Connection
+           sourceTask="StereoMatcher"
+           sourcePort="BaseObstacleBundleOut"
+           targetTask="DisplayStereoObstacle"
+           targetPort="BaseObstacleBundleIn"/>
+
+</TaskGraph>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="Default.xml"/>
+	<Include file="../common/VehicleData.xml"/>
+	<Connection
+		sourceTask="Log"
+		sourcePort="MetaInfo"
+		targetTask="MetaInfoReader"
+		targetPort="MetaInfo"/>
+</TaskGraph>
+

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="CanPassat.xml"/>
+	<Include file="../common/CarStatePassat.xml"/>
+</TaskGraph>

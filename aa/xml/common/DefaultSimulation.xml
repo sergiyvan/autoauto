@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Simulation/>
+	
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.05</value></simple>
+		</struct>
+		<TaskContext
+			    type="SleepTask"
+			    name="Sleep">
+			<struct name="" type="type_less">
+				<simple type="double" name="SleepTime"><value>1.0</value></simple>
+			</struct>
+			
+		</TaskContext>
+	</Activity>
+
+</TaskGraph>

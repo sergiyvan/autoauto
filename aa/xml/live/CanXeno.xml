@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <Script>if (mode=='') mode = 'live';</Script>
+        <!-- Periodic, as we also need to send some data -->
+        <!-- CarGate -->
+        <Activity type="SelectDrivenActivity">
+
+                <TaskContext type="AnagateCanbus" name="AnagateCanbus">
+                        <struct name="" type="type_less">
+                                <simple type="int" name="Port"><value>12346</value></simple>
+                                <!-- CarGate -->
+                                <simple type="bool" name="ConnectHandshake"><value>false</value></simple>
+                                <simple type="string" name="HostAddress"><value>10.0.0.1</value></simple> -->
+
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.001</value></simple>
+                        <simple type="int" name="Priority"><value>-20</value></simple>
+                </struct>
+                <TaskContext type="CanMessageDuplicator" name="CanBusA"/>
+                <TaskContext type="XenoCanDecoder" name="XenoCanDecoder"/>
+        </Activity>
+
+
+        <Connection
+                sourceTask="AnagateCanbus"
+                sourcePort="canMsgPort"
+                targetTask="CanBusA"
+                targetPort="CanMessageIn"/>
+
+        <Connection
+                sourceTask="CanBusA"
+                sourcePort="CanMessage0Out"
+                targetTask="XenoCanDecoder"
+                targetPort="CanMessageIn"/>
+
+
+</TaskGraph>

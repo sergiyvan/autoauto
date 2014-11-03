@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+common for Velodyne2DMrpt
+
+Expects VelodyneImageProcessing (from live or logged VelodyneImage)
+-->
+<TaskGraph>
+
+    <Activity type="SequentialActivity">
+            <!--<TaskContext type="Velodyne2DMrpt"	name="Velodyne2DMrpt"></TaskContext>-->
+            <TaskContext type="MrptVelodyneImage"	name="Velodyne2DMrpt"></TaskContext>
+
+    </Activity>
+    <Connection
+            sourceTask="VelodyneImageProcessing"
+            sourcePort="ImageOut"
+            targetTask="Velodyne2DMrpt"
+            targetPort="VelodyneImageIn"/>
+
+</TaskGraph>

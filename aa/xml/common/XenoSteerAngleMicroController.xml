@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+
+        <Activity type="SelectDrivenActivity">
+            <TaskContext type="XenoSteerAngleMicroController" name="XenoSteerAngleMicroController">
+            <struct name="" type="type_less">
+                    <simple type="string" name="DeviceName"><value>/dev/sensors/ftdi_A700fmaT</value></simple>
+                    <simple type="int" name="Baudrate"><value>38400</value></simple>
+                    <simple type="bool" name="Verbose"><value>false</value></simple>
+            </struct>
+            </TaskContext>
+        </Activity>
+
+
+
+</TaskGraph>

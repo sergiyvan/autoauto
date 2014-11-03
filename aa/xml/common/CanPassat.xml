@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+<!-- 	<Activity type="SequentialActivity">  -->
+		<TaskContext type="ControllerCanDecoder" name="ControllerCanDecoder"/>
+	</Activity>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+<!--  	<Activity type="SequentialActivity">  -->
+		<TaskContext type="SensorCanDecoder" name="SensorCanDecoder"/>
+	</Activity>
+
+<!-- RadarCanDecoder -->
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.005</value></simple>
+		</struct>
+		<TaskContext type="RadarCanDecoder" name="RadarCanDecoder"/>
+	</Activity>
+</TaskGraph>

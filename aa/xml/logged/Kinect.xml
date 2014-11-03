@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <Include file="Default.xml"/>
+        <Include file="../common/Kinect.xml"/>
+
+        <Connection
+                sourceTask="Log"
+                sourcePort="DepthImageOut"
+                targetTask="DepthImageConverter"
+                targetPort="DepthImageIn"/>
+
+</TaskGraph>

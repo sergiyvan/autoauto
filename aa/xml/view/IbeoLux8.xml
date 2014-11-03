@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayIbeoLux8" name="DisplayIbeoLux8">
+		<struct type="type_less">
+			<simple type="bool" name="DrawScanPoints"><value>true</value></simple>
+			<simple type="bool" name="DrawFlawPoints"><value>false</value></simple>
+		</struct>
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplayIbeoLux8"
+		targetPort="EgoStateIn"/>
+
+</TaskGraph>

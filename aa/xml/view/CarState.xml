@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.04</value></simple>
+		</struct>
+		
+		<TaskContext type="DisplayCarState" name="DisplayCarState" />
+	</Activity>	
+
+	<Connection
+		sourceTask="CarStateGenerator"
+		sourcePort="CarStateOut"
+		targetTask="DisplayCarState"
+		targetPort="CarStateIn"/>
+	
+	<Connection
+		sourceTask="CarStateGenerator"
+		sourcePort="AevitCarStateOut"
+		targetTask="DisplayCarState"
+		targetPort="AevitCarStateIn"/>
+		
+	<Connection
+		sourceTask="CarStateGenerator"
+		sourcePort="PassatCarStateOut"
+		targetTask="DisplayCarState"
+		targetPort="PassatCarStateIn"/>
+		
+	
+	
+</TaskGraph>

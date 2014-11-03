@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <!-- for DisplayXenoSteerDetection-->
+        <Activity type="SequentialActivity">
+               <TaskContext
+                            type="DisplayXenoSteerDetection"
+                            name="DisplayXenoSteerDetection">
+
+                </TaskContext>
+        </Activity>
+
+-   	<Connection
+                   sourceTask="XenoSteerDetection"
+                   sourcePort="SteerAnglePairOut"
+                   targetTask="DisplayXenoSteerDetection"
+                   targetPort="SteerAnglePairIn"/>
+-   	<Connection
+                  sourceTask="XenoSteerDetection"
+                  sourcePort="ScanPointsLeftOut"
+                  targetTask="DisplayXenoSteerDetection"
+                  targetPort="ScanPointsLeftIn"/>
+  -   	<Connection
+                     sourceTask="XenoSteerDetection"
+                     sourcePort="ScanPointsRightOut"
+                     targetTask="DisplayXenoSteerDetection"
+                     targetPort="ScanPointsRightIn"/>
+
+
+
+</TaskGraph>

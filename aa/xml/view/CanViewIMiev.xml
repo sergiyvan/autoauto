@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <Include file="../common/VehicleData.xml"/>
+
+        <!-- Live data -->
+        <If condition="mode=='live'">
+
+                <Include file="../live/SteerControllerIMiev.xml"/>
+                <Include file="../live/ConsoleIMiev.xml"/>
+
+        </If>
+
+        <Activity type="SequentialActivity">
+				<TaskContext type="CanViewIMiev" name="CanViewIMiev"/>
+	</Activity>
+
+<!-- 		ControllerCan ===> CanView 			-->
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="BrakeStatusOut"
+		targetTask="CanViewIMiev"
+		targetPort="BrakeStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="ThrottleStatusOut"
+		targetTask="CanViewIMiev"
+		targetPort="ThrottleStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="GearStatusOut"
+		targetTask="CanViewIMiev"
+		targetPort="GearStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="SteerAngleStatusOut"
+		targetTask="CanViewIMiev"
+		targetPort="SteerAngleStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="LightStatusOut"
+		targetTask="CanViewIMiev"
+		targetPort="LightStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="VelocityStatusOut"
+		targetTask="CanViewIMiev"
+		targetPort="VelocityStatusIn"/>
+
+	<Connection
+		sourceTask="IMievCanDecoder"
+		sourcePort="HandBrakeStatusOut"
+		targetTask="CanViewIMiev"
+		targetPort="HandBrakeStatusIn"/>
+
+	<!-- CarGate -->
+
+	<Connection
+		sourceTask="CanViewIMiev"
+		sourcePort="ActivationRequestOut"
+		targetTask="CarGate"
+		targetPort="ActivationRequestIn"/>
+
+	<Connection
+		sourceTask="CanViewIMiev"
+		sourcePort="DesiredThrottleVoltageOut"
+		targetTask="CarGate"
+		targetPort="DesiredThrottleVoltageIn"/>
+
+	<Connection
+		sourceTask="CanViewIMiev"
+		sourcePort="DesiredBrakePressureOut"
+		targetTask="CarGate"
+		targetPort="DesiredBrakePressureIn"/>
+
+        <Connection
+                sourceTask="CanViewIMiev"
+                sourcePort="WantedSteeringAngleOut"
+                targetTask="SteerControllerIMiev"
+                targetPort="SteerIn"/>
+
+        <Connection
+		sourceTask="CanViewIMiev"
+		sourcePort="DesiredTurnSignalOut"
+		targetTask="CarGate"
+		targetPort="DesiredTurnSignalIn"/>
+
+	<Connection
+		sourceTask="CanViewIMiev"
+		sourcePort="DesiredWiperOut"
+		targetTask="CarGate"
+		targetPort="DesiredWiperIn"/>
+
+	<Connection
+		sourceTask="CanViewIMiev"
+		sourcePort="DesiredSirenOut"
+		targetTask="CarGate"
+		targetPort="DesiredSirenIn"/>
+
+	<Connection
+		sourceTask="CanViewIMiev"
+		sourcePort="DesiredHeadlightOut"
+		targetTask="CarGate"
+		targetPort="DesiredHeadlightIn"/>
+
+	<Connection
+		sourceTask="CanViewIMiev"
+		sourcePort="DesiredGearPositionOut"
+		targetTask="CarGate"
+		targetPort="DesiredGearPositionIn"/>
+
+
+</TaskGraph>

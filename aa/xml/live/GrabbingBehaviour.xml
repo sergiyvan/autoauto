@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+    <!--Activity type="SelectDrivenActivity">
+    <struct name="" type="type_less">
+        <simple type="int" name="BytesPerPacket"><value>768</value></simple>
+        <simple type="int" name="Mode"><value>0</value></simple>
+        <simple type="int" name="ColourCoding"><value>0</value></simple>
+        <simple type="int" name="Shutter"><value>20</value></simple>
+        <simple type="int" name="Gain"><value>48</value></simple>--> <!-- 32 with sun in the image, 64 for cloudy days -->
+        <!--simple type="int" name="MaxTimeoutsInARow"><value>500</value></simple>
+    </struct-->
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+            <simple type="double" name="Period"><value>0.01</value></simple>
+        </struct>
+        <TaskContext type="GrabbingBehaviour" name="GrabbingBehaviour"/>
+    </Activity>
+</TaskGraph>

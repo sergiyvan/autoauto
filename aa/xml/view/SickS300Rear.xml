@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <!-- SickToGlobal -->
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.01</value></simple>
+                </struct>
+                <TaskContext type="SickToGlobal" name="SickS300RearToGlobal">
+                        <struct name="" type="type_less">
+                                <simple type="double" name="scannerRoll">
+                                        <value>0.0</value>
+                                </simple>
+                                <simple type="double" name="scannerPitch">
+                                        <value>0.0</value>
+                                </simple>
+                                <simple type="double" name="scannerYaw">
+                                        <value>180.0</value>
+                                </simple>
+                                <simple type="double" name="scannerX">
+                                        <value>0.69</value>
+                                </simple>
+                                <simple type="double" name="scannerY">
+                                        <value>0.0</value><!--links von IMU -->
+                                </simple>
+                                <simple type="double" name="scannerZ">
+                                        <value>0.0</value><!--runter zu IMU-->
+                                </simple>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+
+        <Connection
+                   sourceTask="SickS300RearPolar"
+                   sourcePort="ScanPoints"
+                   targetTask="SickS300RearToGlobal"
+                   targetPort="ScanPoints"/>
+
+        <!-- for playing live-->
+        <Connection
+                   sourceTask="SickS300Rear"
+                   sourcePort="laserDataRear"
+                   targetTask="SickS300RearToGlobal"
+                   targetPort="laserData"/>
+        <!-- for playing logged-->
+        <Connection
+                   sourceTask="Log"
+                   sourcePort="laserDataRear"
+                   targetTask="SickS300RearToGlobal"
+                   targetPort="laserData"/>
+
+        <!-- for DisplaySick-->
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.01</value></simple>
+                </struct>
+                <TaskContext
+                            type="DisplaySick"
+                            name="DisplaySickS300Rear">
+
+                        <struct name="" type="type_less">
+                                <simple type="bool" name="showBuffer">
+                                        <value>false</value>
+                                </simple>
+
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+
+        <Connection
+                   sourceTask="SickS300RearToGlobal"
+                   sourcePort="GlobalPoints"
+                   targetTask="DisplaySickS300Rear"
+                   targetPort="GlobalPoints"/>
+        <!-- for playing live-->
+-   	<Connection
+                   sourceTask="SickS300Rear"
+                   sourcePort="laserDataRear"
+                   targetTask="DisplaySickS300Rear"
+                   targetPort="LaserData"/>
+        <!-- for playing logged-->
+        <Connection
+                   sourceTask="Log"
+                   sourcePort="laserDataRear"
+                   targetTask="DisplaySickS300Rear"
+                   targetPort="LaserData"/>
+
+
+</TaskGraph>

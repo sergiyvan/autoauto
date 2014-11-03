@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Script>if (mode=='') mode = 'live';</Script>
+	<!-- Periodic, as we also need to send some data -->
+	<Include file="../common/CanPassat.xml"/>
+
+	<!-- CarGate -->
+	<Activity type="SelectDrivenActivity">
+	<!-- Anagate
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.001</value></simple>
+			<simple type="int" name="Priority"><value>-20</value></simple>
+		</struct>-->
+		<TaskContext type="AnagateCanbus"	name="AnagateCanbusA">
+			<struct name="" type="type_less">
+				<simple type="int" name="Port"><value>5001</value></simple>
+				<!-- CarGate -->
+				<simple type="bool" name="ConnectHandshake"><value>false</value></simple>
+				<simple type="string" name="HostAddress"><value>192.168.1.20</value></simple> -->
+				<!-- Anagate
+				<simple type="bool" name="Quattro"><value>true</value></simple>
+				<simple type="string" name="HostAddress"><value>192.168.1.253</value></simple>
+				-->
+			</struct>
+		</TaskContext>
+	</Activity>
+
+	<Activity type="SelectDrivenActivity">
+		<TaskContext type="AnagateCanbus"	name="AnagateCanbusB">
+			<struct name="" type="type_less">
+				<simple type="int" name="Port"><value>5001</value></simple>
+				<simple type="bool" name="Quattro"><value>true</value></simple>
+				<!-- <simple type="bool" name="ListenOnly"><value>true</value></simple> --> <!-- for SensorCanEncoder -->
+                                <simple type="uint" name="Baudrate"><value>1000000</value></simple>
+				<simple type="string" name="HostAddress"><value>192.168.1.254</value></simple>
+			</struct>
+		</TaskContext>
+
+
+		<TaskContext type="AnagateCanbus"	name="AnagateCanbusC">
+			<struct name="" type="type_less">
+				<simple type="int" name="Port"><value>5001</value></simple>
+				<simple type="bool" name="Quattro"><value>false</value></simple>
+<!--				<simple type="bool" name="ListenOnly"><value>true</value></simple>-->
+<!--				<simple type="uint" name="Baudrate"><value>500000</value></simple>-->
+				<simple type="string" name="HostAddress"><value>192.168.1.253</value></simple>
+			</struct>
+	   </TaskContext>
+
+	</Activity>
+
+
+        <Connection
+                sourceTask="AnagateCanbusA"
+                sourcePort="canMsgPort"
+                targetTask="ControllerCanDecoder"
+                targetPort="CanMessageIn"/>
+
+        <Connection
+                sourceTask="AnagateCanbusB"
+                sourcePort="canMsgPort"
+                targetTask="SensorCanDecoder"
+                targetPort="CanMessageIn"/>
+
+         <Connection
+                sourceTask="AnagateCanbusC"
+                sourcePort="canMsgPort"
+                targetTask="RadarCanDecoder"
+                targetPort="CanMessageIn"/>
+
+</TaskGraph>

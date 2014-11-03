@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="../../build/PluginPath.xml"/>
+
+<!-- gui -->
+	<CreateView id="0"/>
+	<CreateTaskStatusMonitor/>
+
+        <Include file="view/Rndf.xml"/>
+
+
+<!-- logging service -->
+        <Include file="common/LoggingService.xml"/>
+
+<!-- vehicle data -->
+	<Include file="common/VehicleData.xml"/>
+
+<!-- simulator -->
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.02</value></simple>
+		</struct>
+                <TaskContext type="Simulator" name="Simulator"/>
+	</Activity>
+
+<!-- behaviour and controller -->
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.04</value></simple>
+                </struct>
+
+                <TaskContext type="CarFollowingBehaviour" name="CarFollowingBehaviour">
+                </TaskContext>
+
+                <TaskContext type="StateMachine" name="StateMachine"/>
+                <TaskContext type="ControllerGateway" name="ControllerGateway"/>
+        </Activity>
+
+<!-- display tasks -->
+
+        <Include file="view/Car.xml"/>
+
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.08</value></simple>
+                </struct>
+
+                <TaskContext type="DisplayRNDF" name="DisplayRNDF"/>
+<!--                <TaskContext type="DisplayRNDFEditor" name="DisplayRNDFEditor"/>-->
+
+                <TaskContext type="DisplayInterferingObstacles" name="DisplayInterferingObstacles">
+                        <struct name="" type="type_less">
+                        <simple type="bool" name="AlwaysShowInterferingObstacleInfoTitles"><value>1</value></simple>
+                        <simple type="bool" name="DisplayInterferingObstaclePoints"><value>1</value></simple>
+                        </struct>
+                </TaskContext>
+
+                <TaskContext type="DisplayControllerData" name="DisplayControllerData"/>
+                <TaskContext type="DisplayStateMachine" name="DisplayStateMachine"/>
+                <TaskContext type="DisplayMicroPlan" name="DisplayMicroPlan"/>
+
+                <TaskContext type="DisplaySimulator" name="DisplaySimulator"/>
+                <TaskContext type="DisplaySimulatorCtrl" name="DisplaySimulatorCtrl"/>
+
+        </Activity>
+
+
+<!-- Passat controller -->
+	<If condition="node_name=='vw'">
+		<Activity type="PeriodicActivity">
+			<struct name="" type="type_less">
+				<simple type="double" name="Period"><value>0.01</value></simple>
+			</struct>
+
+			<TaskContext type="ControllerPassat" name="Controller">
+				<struct name="" type="type_less">
+                                        <!-- avoids multiple carstate check, important, otherwise controller terminates -->
+                                        <simple type="bool" name="SimulationMode"><value>1</value></simple>
+                                        <simple type="bool" name="UseMissionSpeedLimits"><value>1</value></simple>
+<!--					<simple type="double" name="ConstantSpeed"><value>14</value></simple>-->
+<!--					<simple type="bool" name="StopAtTrafficLight"><value>0</value></simple>-->
+				</struct>
+			</TaskContext>
+		</Activity>
+	</If>
+
+
+
+
+<!-- Outgoing Simulator connections -->
+	<Connection
+		sourceTask="Simulator"
+		sourcePort="CarStateOut"
+		targetTask="Controller"
+		targetPort="CarStateIn"/>
+
+	<Connection
+		sourceTask="Simulator"
+		sourcePort="PassatCarStateOut"
+		targetTask="Controller"
+		targetPort="PassatCarStateIn"/>
+
+	<Connection
+		sourceTask="Simulator"
+		sourcePort="CarStateOut"
+		targetTask="ControllerGateway"
+		targetPort="CarStateIn"/>
+
+	<Connection
+		sourceTask="Simulator"
+		sourcePort="PassatCarStateOut"
+		targetTask="ControllerGateway"
+		targetPort="PassatCarStateIn"/>
+
+
+	<Connection
+		sourceTask="Simulator"
+		sourcePort="CarStateOut"
+		targetTask="CarView"
+		targetPort="CarState"/>
+
+	<Connection
+		sourceTask="Simulator"
+		sourcePort="ObstaclesOut"
+		targetTask="Controller"
+		targetPort="ObstaclesIn"/>
+
+<!-- Outgoing EgoStateSnapshotGenerator connections -->
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoStateSetter"
+		targetTask="Simulator"
+		targetPort="EgoStateSetter"/>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+                targetTask="CarFollowingBehaviour"
+		targetPort="EgoStateIn"/>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="Controller"
+		targetPort="EgoStateIn"/>
+
+	<Connection
+                sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="ControllerGateway"
+		targetPort="EgoStateIn"/>
+
+
+<!-- Outgoing Behaviour connections -->
+        <Connection
+                sourceTask="CarFollowingBehaviour"
+                sourcePort="PlanOut"
+                targetTask="Controller"
+                targetPort="PlanIn"/>
+
+        <Connection
+                sourceTask="CarFollowingBehaviour"
+                sourcePort="PlanOut"
+                targetTask="DisplayMicroPlan"
+                targetPort="PlanIn"/>
+
+        <Connection
+                sourceTask="CarFollowingBehaviour"
+                sourcePort="PlanOut"
+                targetTask="DisplayInterferingObstacles"
+                targetPort="PlanIn"/>
+
+
+<!-- Outgoing Controller connections -->
+	<Connection
+		sourceTask="Controller"
+		sourcePort="ActivationRequestOut"
+		targetTask="ControllerGateway"
+		targetPort="ControllerActivationRequestIn"/>
+
+	<Connection
+		sourceTask="Controller"
+		sourcePort="SpeedOut"
+		targetTask="ControllerGateway"
+		targetPort="ControllerSpeedIn"/>
+
+	<Connection
+		sourceTask="Controller"
+		sourcePort="SteerOut"
+		targetTask="ControllerGateway"
+		targetPort="ControllerSteerIn"/>
+
+	<Connection
+		sourceTask="Controller"
+		sourcePort="GearOut"
+		targetTask="ControllerGateway"
+		targetPort="ControllerGearIn"/>
+
+	<Connection
+		sourceTask="Controller"
+		sourcePort="AuxDevicesOut"
+		targetTask="ControllerGateway"
+		targetPort="ControllerAuxDevicesIn"/>
+
+	<Connection
+		sourceTask="Controller"
+		sourcePort="ControllerDataOut"
+		targetTask="ControllerGateway"
+		targetPort="ControllerDataIn"/>
+
+	<Connection
+		sourceTask="Controller"
+		sourcePort="InterferingObstaclesOut"
+		targetTask="DisplayInterferingObstacles"
+		targetPort="InterferingObstaclesIn"/>
+
+
+
+<!-- Outgoing ControllerGateway and ReactiveBrake connections -->
+	<Connection
+		sourceTask="ControllerGateway"
+		sourcePort="SpeedOut"
+		targetTask="Simulator"
+		targetPort="SpeedIn"/>
+
+	<Connection
+		sourceTask="ControllerGateway"
+		sourcePort="SteerOut"
+		targetTask="Simulator"
+		targetPort="SteerIn"/>
+
+	<Connection
+		sourceTask="ControllerGateway"
+		sourcePort="GearOut"
+		targetTask="Simulator"
+		targetPort="GearIn"/>
+
+	<Connection
+		sourceTask="ControllerGateway"
+		sourcePort="AuxDevicesOut"
+		targetTask="Simulator"
+		targetPort="AuxDevicesIn"/>
+
+	<Connection
+		sourceTask="ControllerGateway"
+		sourcePort="AuxDevicesOut"
+		targetTask="CarView"
+		targetPort="AuxDevices"/>
+
+	<Connection
+		sourceTask="ControllerGateway"
+		sourcePort="ControllerDataOut"
+		targetTask="DisplayControllerData"
+		targetPort="ControllerDataIn"/>
+
+	<Connection
+		sourceTask="ControllerGateway"
+		sourcePort="ModelPredictionDataSetOut"
+		targetTask="DisplayControllerData"
+		targetPort="ModelPredictionDataSetIn"/>
+
+
+
+	<ConnectPeer task="StateMachine">
+                <Peer>CarFollowingBehaviour</Peer>
+		<Peer>Controller</Peer>
+		<Peer>ControllerGateway</Peer>
+		<Peer>DisplayStateMachine</Peer>
+	</ConnectPeer>
+
+	<ConnectPeer task="ControllerGateway">
+                <Peer>CarFollowingBehaviour</Peer>
+		<Peer>DisplayStateMachine</Peer>
+		<Peer>DisplaySimulator</Peer>
+		<Peer>DisplayInterferingObstacles</Peer>
+		<Peer>DisplayRNDF</Peer>
+	</ConnectPeer>
+
+
+	<Include file="common/KeyBindings.xml"/>
+
+
+<!-- register views -->
+	<CallMethod name="registerView">
+		<Task>CarView</Task>
+                <Task>DisplayRNDF</Task>
+                <!--<Task>DisplayRNDFEditor</Task>-->
+                <Task>DisplayMicroPlan</Task>
+		<Task>DisplayInterferingObstacles</Task>
+		<Task>DisplayControllerData</Task>
+                <Task>DisplayStateMachine</Task>
+		<Task>DisplaySimulator</Task>
+		<Task>DisplaySimulatorCtrl</Task>
+	</CallMethod>
+
+<!-- load rndf -->
+        <CallMethod task="DisplayRNDF" name="loadRNDF">
+                <struct name="" type="type_less">
+                        <simple type="string" name="fileName">
+                                <arg description="The name of the rndf file">rndf</arg>
+                                <value>resources/berlin.arnd</value>
+                        </simple>
+                </struct>
+        </CallMethod>
+
+<!-- set starting position -->
+        <CallMethod task="Simulator" name="setPosDir">
+                <struct name="" type="type_less">
+                        <simple type="string" name="v"><value>6083.0, 5000.0, 0, 0, 0, -1.4</value></simple>
+                </struct>
+        </CallMethod>
+
+        <TaskBrowser task="CarFollowingBehaviour"/>
+
+
+</TaskGraph>
+

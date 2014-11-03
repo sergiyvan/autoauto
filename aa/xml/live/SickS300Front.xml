@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <Include file="../common/SickS300Front.xml"/>
+
+        <Activity type="SelectDrivenActivity">
+            <TaskContext type="SickS300" name="SickS300Front">
+                <struct name="" type="type_less">
+                        <simple type="string" name="DeviceName"><value>/dev/sensors/ftdi_A8007xt7</value></simple>
+                </struct>
+            </TaskContext>
+        </Activity>
+
+
+        <Connection
+                   sourceTask="SickS300Front"
+                   sourcePort="laserData"
+                   targetTask="SickS300FrontPolar"
+                   targetPort="laserData"/>
+
+</TaskGraph>

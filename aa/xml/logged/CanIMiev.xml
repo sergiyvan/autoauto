@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="Default.xml"/>	
+
+<!-- IMievCanDecoder -->
+	<Include file="../common/CanIMiev.xml"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="CanMessageAOut"
+		targetTask="IMievCanDecoder"
+		targetPort="CanMessageIn"/>
+
+<!-- RadarCanDecoder -->
+        <Connection
+                sourceTask="Log"
+                sourcePort="SmsCanMessageOut"
+                targetTask="RadarCanDecoder"
+                targetPort="CanMessageIn"/>
+
+</TaskGraph>

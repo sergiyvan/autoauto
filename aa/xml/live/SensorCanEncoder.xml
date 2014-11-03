@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+        <!--    we want to write so SensorCan-->
+        <Include file="CanPassat.xml"/>
+        <!--    we need the velocity from CarStatePassat, dont use that for other vehicle!-->
+        <Include file="CarStatePassat.xml"/>
+
+
+        <!-- necessary to set vehiclevelocity to hellaradar -->
+        <!--    this module is only needed in live use -->
+
+        <Activity type="PeriodicActivity">
+                        <struct name="" type="type_less">
+                                        <simple type="double" name="Period"><value>0.001</value></simple>
+                                        <simple type="int" name="Priority"><value>-15</value></simple>
+                        </struct>
+                        <TaskContext type="SensorCanEncoder" name="SensorCanEncoder"/>
+        </Activity>
+
+
+        <Connection
+                sourceTask="SensorCanEncoder"
+                sourcePort="CanMessageOut"
+                targetTask="AnagateCanbusB"
+                targetPort="canMsgReadPort"/>
+
+        <Connection
+                sourceTask="CarStateGenerator"
+                sourcePort="PassatCarStateOut"
+                targetTask="SensorCanEncoder"
+                targetPort="PassatCarStateIn"/>
+</TaskGraph>

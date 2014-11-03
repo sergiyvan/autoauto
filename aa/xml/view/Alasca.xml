@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<Include file="../live/EgoState.xml"/>
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.05</value></simple>
+		</struct>
+		<TaskContext type="DisplayAlascaObjectData" name="DisplayAlasca">
+			<struct name="" type="type_less">		
+				<simple type="bool" name="rotateAndTranslateData"><value>true</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+	
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplayAlasca"
+		targetPort="EgoState"/>
+	
+	<!-- Live data -->
+	<Connection
+		sourceTask="Alasca"
+		sourcePort="AlascaScanData"
+		targetTask="DisplayAlasca"
+		targetPort="AlascaScanData"/>
+	<Connection
+		sourceTask="Alasca"
+		sourcePort="AlascaObjectData"
+		targetTask="DisplayAlasca"
+		targetPort="AlascaObjectData"/>
+
+	<!-- Logged data -->
+	<Connection
+		sourceTask="Log"
+		sourcePort="AlascaScanData"
+		targetTask="DisplayAlasca"
+		targetPort="AlascaScanData"/>
+	<Connection
+		sourceTask="Log"
+		sourcePort="AlascaObjectData"
+		targetTask="DisplayAlasca"
+		targetPort="AlascaObjectData"/>
+	
+</TaskGraph>

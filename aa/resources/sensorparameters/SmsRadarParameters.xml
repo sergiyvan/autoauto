@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="5">
+<sensorTypes class_id="0" tracking_level="0" version="0">
+	<count>1</count>
+	<item_version>0</item_version>
+	<item>SmsRadarParameter</item>
+</sensorTypes>
+<sensorType class_id="1" tracking_level="0" version="1">
+	<px class_id="2" class_name="SmsRadarParameterList" tracking_level="1" version="0" object_id="_0">
+		<sensors class_id="3" tracking_level="0" version="0">
+			<count>1</count>
+			<item_version>0</item_version>
+			<item class_id="4" tracking_level="1" version="0" object_id="_1">
+				<abstractSensor class_id="5" tracking_level="1" version="0" object_id="_2">
+					<position class_id="6" tracking_level="0" version="0">
+						<vnl_float class_id="7" tracking_level="0" version="0">
+							<data>
+								<item>0.791</item>
+								<item>0</item>
+								<item>0</item>
+							</data>
+						</vnl_float>
+					</position>
+					<rotation>
+						<vnl_float>
+							<data>
+								<item>0</item>
+								<item>0</item>
+                                                                <item>1.5707963267949</item>
+							</data>
+						</vnl_float>
+					</rotation>
+					<delay>0</delay>
+				</abstractSensor>
+			</item>
+		</sensors>
+	</px>
+</sensorType>
+</boost_serialization>
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <!-- Radar Module init -->
+        <Include file="FrontTrwRadar.xml"/>
+        <Include file="RearTrwRadar.xml"/>
+        <Include file="LeftTrwRadar.xml"/>
+        <Include file="RightTrwRadar.xml"/>
+
+</TaskGraph>

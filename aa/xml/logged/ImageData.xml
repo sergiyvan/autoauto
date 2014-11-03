@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="Default.xml"/>
+	<Include file="VehicleData.xml"/>
+	<Include file="ConfigurationStorage.xml"/>
+	
+
+    <Activity type="SequentialActivity">
+<!--        <struct name="" type="type_less">
+            <simple type="double" name="Period"><value>0.04</value></simple>
+        </struct>-->
+		<TaskContext type="PortMapper" name="PortMapper"/>
+		<TaskContext type="StereoBundle" name="StereoBundle">
+			<struct name="" type="type_less">
+                                <simple type="bool" name="synchronize"><value>1</value></simple>
+                                <simple type="int" name="MaxFrameDiffMs"><value>10</value></simple>
+                                <simple type="bool" name="DropBrokenFrames"><value>0</value></simple>
+			</struct>
+		</TaskContext>
+		<TaskContext type="ShiftInka" name="ShiftInkaL"/>
+		<TaskContext type="ShiftInka" name="ShiftInkaR"/>
+		<TaskContext type="ConvertImage" name="ConvertImage"/>
+        <TaskContext type="ConvertImage" name="ConvertImageL"/> 
+        <TaskContext type="ConvertImage" name="ConvertImageR"/> 
+	    <TaskContext type="ConvertImage" name="ConvertImageSR"/>
+	</Activity>
+
+	<Connection
+		sourceTask="Config"
+		sourcePort="CameraParameter"
+		targetTask="PortMapper"
+		targetPort="CameraParameterIn"/>
+		
+	<Connection
+		sourceTask="Config"
+		sourcePort="CameraParameter"
+		targetTask="StereoBundle"
+		targetPort="CameraParameterIn"/>		
+
+	<!-- connect Log to PortMapper -->
+	<!-- single camera -->
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImage"
+		targetTask="PortMapper"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImageSL"
+		targetTask="PortMapper"
+		targetPort="TypedImageSLIn"/>
+		
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImageSR"
+		targetTask="PortMapper"
+		targetPort="TypedImageSRIn"/>		
+
+	<!-- new stereo -->
+	<Connection
+		sourceTask="Log"
+        sourcePort="TypedImageL"
+		targetTask="ShiftInkaL"
+		targetPort="TypedImageIn"/>
+	<Connection
+		sourceTask="Log"
+        sourcePort="TypedImageR"
+		targetTask="ShiftInkaR"
+		targetPort="TypedImageIn"/>
+
+	<Connection
+		sourceTask="ShiftInkaL"
+        sourcePort="TypedImageOut"
+		targetTask="PortMapper"
+		targetPort="TypedImageLIn"/>
+	<Connection
+		sourceTask="ShiftInkaR"
+        sourcePort="TypedImageOut"
+		targetTask="PortMapper"
+		targetPort="TypedImageRIn"/>
+	<Connection
+		sourceTask="Log"
+        sourcePort="TypedImageM"
+		targetTask="PortMapper"
+		targetPort="TypedImageMIn"/>
+
+    <!-- fpga stereo -->
+    <Connection
+        sourceTask="Log"
+        sourcePort="ImageCam0L0"
+        targetTask="PortMapper"
+        targetPort="TypedImageLIn"/>
+    <Connection
+        sourceTask="Log"
+        sourcePort="ImageCam1L0"
+        targetTask="PortMapper"
+        targetPort="TypedImageRIn"/>
+
+	<!-- old stereo -->
+	<Connection
+		sourceTask="Log"
+		sourcePort="TypedImage1"
+		targetTask="PortMapper"
+		targetPort="TypedImage1In"/>
+		
+    <!-- convert mapped ports, if the out port is not connected, the task will not run anyway -->
+	<Connection 
+		sourceTask="PortMapper" 
+		sourcePort="TypedImageOut" 
+		targetTask="ConvertImage" 
+		targetPort="TypedImageIn"/> 
+
+	<Connection 
+		sourceTask="PortMapper" 
+		sourcePort="TypedImageLOut" 
+		targetTask="ConvertImageL" 
+		targetPort="TypedImageIn"/> 
+
+	<Connection 
+		sourceTask="PortMapper" 
+		sourcePort="TypedImageROut" 
+		targetTask="ConvertImageR" 
+		targetPort="TypedImageIn"/>
+
+	<!-- bundle stereo images -->
+
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageLOut"
+		targetTask="StereoBundle"
+		targetPort="TypedImageL"/>
+	
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageROut"
+		targetTask="StereoBundle"
+		targetPort="TypedImageR"/>
+		
+	<!-- sideview camera -->
+	<Connection
+		sourceTask="PortMapper"
+		sourcePort="TypedImageSROut"
+		targetTask="ConvertImageSR"
+		targetPort="TypedImageIn"/>
+			
+</TaskGraph>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <Activity type="SelectDrivenActivity">
+                    <TaskContext type="XenoMicroController" name="XenoMicroController">
+                    <struct name="" type="type_less">
+                            <simple type="string" name="DeviceName"><value>/dev/sensors/ftdi_A4001Jps</value></simple>
+        <!--                <simple type="string" name="Verbose"><value>true</value></simple>   -->
+                    </struct>
+                    </TaskContext>
+                </Activity>
+</TaskGraph>

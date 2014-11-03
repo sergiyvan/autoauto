@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <Activity type="SequentialActivity">
+        <TaskContext type="ImageRectification"  name="ImageRectification"/>
+        <TaskContext type="InterpolationModelSetter"  name="InterpolationModelSetter"/>
+        <TaskContext type="EgoStateFilter"  name="EgoStateFilter"/>
+        <TaskContext type="StereoBM" name="StereoMatcher">
+            <struct name="" type="type_less">
+                <simple type="int" name="Scale"><value>1</value></simple>
+                <simple type="int" name="MinDisparity"><value>0</value></simple>
+                <simple type="int" name="NumDisparities"><value>64</value></simple>
+				<simple type="int" name="PreFilterType"><value>1</value></simple>
+				<simple type="int" name="PreFilterSize"><value>9</value></simple>
+				<simple type="int" name="PreFilterCap"><value>31</value></simple>
+				<simple type="int" name="SadWindowSize"><value>21</value></simple>
+				<simple type="int" name="TextureThreshold"><value>0</value></simple>
+				<simple type="int" name="UniquenessRatio"><value>15</value></simple>
+				<simple type="int" name="SpeckleRange"><value>-1</value></simple>
+				<simple type="int" name="SpeckleWindowSize"><value>64</value></simple>
+				<simple type="bool" name="SetInvalidDisparity"><value>true</value></simple>
+            </struct>
+        </TaskContext>
+    </Activity>
+
+    <Connection
+            sourceTask="StereoBundle"
+            sourcePort="TypedStereoImage"
+            targetTask="ImageRectification"
+            targetPort="StereoImageIn"/>
+
+    <Connection
+           sourceTask="Config"
+           sourcePort="CameraParameter"
+           targetTask="ImageRectification"
+           targetPort="CameraParameterIn"/>
+
+    <Connection
+            sourceTask="EgoStateSnapshotGenerator"
+            sourcePort="EgoState"
+            targetTask="InterpolationModelSetter"
+            targetPort="EgoStateIn"/>
+
+    <Connection
+            sourceTask="EgoStateSnapshotGenerator"
+            sourcePort="EgoState"
+            targetTask="EgoStateFilter"
+            targetPort="EgoStateIn"/>
+
+    <Connection
+            sourceTask="EgoStateFilter"
+            sourcePort="EgoStateOut"
+            targetTask="ImageRectification"
+            targetPort="FilteredEgoStateIn"/>
+
+    <Connection
+            sourceTask="ImageRectification"
+            sourcePort="StereoDataOut"
+            targetTask="StereoMatcher"
+            targetPort="StereoDataIn"/>
+
+</TaskGraph>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<!-- get data from INS sensors -->
+	<Activity type="SelectDrivenActivity">
+		<TaskContext type="InsDataAcquisition" name="InsDataTask">
+			<struct name="" type="type_less">
+			  <simple type="string" name="HostAddress"><value>192.168.1.84</value></simple>
+			  <simple type="int"    name="Port"><value>4242</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+
+</TaskGraph>

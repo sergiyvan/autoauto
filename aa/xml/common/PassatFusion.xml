@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="EgoState.xml"/>
+
+	<Activity type="SequentialActivity">
+		<TaskContext type="PassatFusion" name="Odometry"/>
+	</Activity>
+
+	<Connection sourceTask="EgoStateGenerator" sourcePort="EgoStateOut" targetTask="Odometry" targetPort="EgoStateIn"/>
+	<Connection sourceTask="Log" sourcePort="VehicleNavigationPerformanceMetrics" targetTask="Odometry" targetPort="VehicleNavigationPerformanceMetricsIn"/>
+
+	<Connection sourceTask="ControllerCanDecoder" sourcePort="SteerAssist3StatusOut" targetTask="Odometry" targetPort="SteerAssist3StatusIn"/>
+	<Connection sourceTask="ControllerCanDecoder" sourcePort="PathPulseOut" targetTask="Odometry" targetPort="PathPulseIn"/>
+	<Connection sourceTask="ControllerCanDecoder" sourcePort="WheelSpeedsOut" targetTask="Odometry" targetPort="WheelSpeedsIn"/>
+	<Connection sourceTask="ControllerCanDecoder" sourcePort="SteeringWheelSpeedOut" targetTask="Odometry" targetPort="SteeringWheelSpeedIn"/>
+	<Connection sourceTask="SensorCanDecoder" sourcePort="AccelerationOut" targetTask="Odometry" targetPort="AccelerationIn"/>
+	<Connection sourceTask="SensorCanDecoder" sourcePort="YawAndBrakePressureOut" targetTask="Odometry" targetPort="YawAndBrakePressureIn"/>
+	<Connection sourceTask="SensorCanDecoder" sourcePort="AccelerationAndTeethOut" targetTask="Odometry" targetPort="AccelerationAndTeethIn"/>
+
+</TaskGraph>

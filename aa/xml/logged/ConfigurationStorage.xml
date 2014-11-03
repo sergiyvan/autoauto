@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="Default.xml"/>
+	
+        <Include file="../common/ConfigurationStorage.xml"/>
+
+        <If condition="node_name=='spob'">
+        <CallMethod
+                           task="Config"
+                           name="loadFile"
+                           >
+                <struct name="" type="type_less">
+                        <simple type="path"
+                                        name="path">
+                                        <value>../resources/vision/CameraParameterSpob.xml</value>
+                        </simple>
+                </struct>
+        </CallMethod>
+        <CallMethod
+                           task="Config"
+                           name="loadFile"
+                           >
+                <struct name="" type="type_less">
+                        <simple type="path"
+                                        name="path">
+                                    <value>../resources/sensorparameters/VelodyneParameterSpob2009.xml</value>
+                        </simple>
+                </struct>
+        </CallMethod>
+
+        </If>
+
+        <If condition="node_name=='vw'">
+        <CallMethod
+                           task="Config"
+                           name="loadFile"
+                           >
+                <struct name="" type="type_less">
+                        <simple type="path"
+                                        name="path">
+<!--                                    <arg>cameraConfig</arg>-->
+                                    <value>../resources/vision/CameraParameterMig.xml</value>
+                        </simple>
+                </struct>
+        </CallMethod>
+        <CallMethod
+                           task="Config"
+                           name="loadFile"
+                           >
+                <struct name="" type="type_less">
+                        <simple type="path"
+                                        name="path">
+                                    <value>../resources/sensorparameters/VelodyneParameterMig2010.xml</value>
+                        </simple>
+                </struct>
+        </CallMethod>
+        <CallMethod task="Config" name="loadFile">
+                <struct name="" type="type_less">
+                        <simple type="path" name="path">
+                                <value>../resources/sensorparameters/HellaRadarParameters.xml</value>
+                        </simple>
+                </struct>
+        </CallMethod>
+        <CallMethod task="Config" name="loadFile">
+                    <struct name="" type="type_less">
+                            <simple type="path" name="path">
+                                    <value>../resources/sensorparameters/TrwRadarParameters.xml</value>
+                            </simple>
+                    </struct>
+        </CallMethod>
+        <CallMethod task="Config" name="loadFile">
+                <struct name="" type="type_less">
+                        <simple type="path" name="path">
+                                <value>../resources/sensorparameters/SmsRadarParameters.xml</value>
+                        </simple>
+                </struct>
+        </CallMethod>
+        </If>
+
+        <If condition="node_name=='imiev'">
+        <CallMethod
+                           task="Config"
+                           name="loadFile"
+                           >
+                <struct name="" type="type_less">
+                        <simple type="path"
+                                        name="path">
+                                    <value>../resources/sensorparameters/VelodyneParameterImiev2011.xml</value>
+                        </simple>
+                </struct>
+        </CallMethod>
+        </If>
+
+
+
+
+
+	<Script>if (typeof cameraConfig === 'undefined') { cameraConfig = ''; }</Script>
+
+        <arg>cameraConfig</arg>
+	<If condition="cameraConfig==''">
+	<Connection
+		sourceTask="Log"
+		sourcePort="CameraParameter"
+		targetTask="Config"
+		targetPort="UpdateCameraParameter"/>
+	</If>
+
+        <Connection
+                sourceTask="Log"
+                sourcePort="VelodyneParameter"
+                targetTask="Config"
+                targetPort="UpdateVelodyneParameter"/>
+
+
+</TaskGraph>
+

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+    <!-- =============== radar bundler =============== -->
+
+    <Activity type="PeriodicActivity">
+        <struct name="" type="type_less">
+            <simple type="double" name="Period"><value>0.01</value></simple>
+        </struct>
+        <TaskContext
+            type="RadarBundler"
+            name="RadarBundler"/>
+    </Activity>
+
+    <Connection
+        sourceTask="SmsRadarTracker"
+        sourcePort="ObjectsOut"
+        targetTask="RadarBundler"
+        targetPort="SmsBundleIn"/>
+
+    <Connection
+        sourceTask="HellaRadarTracker"
+        sourcePort="BaseObjectsOut"
+        targetTask="RadarBundler"
+        targetPort="HellaBundleIn"/>
+
+    <Connection
+        sourceTask="FrontTrwRadarTracker"
+        sourcePort="BaseObjectsOut"
+        targetTask="RadarBundler"
+        targetPort="FrontTrwBundleIn"/>
+
+    <Connection
+        sourceTask="RightTrwRadarTracker"
+        sourcePort="BaseObjectsOut"
+        targetTask="RadarBundler"
+        targetPort="RightTrwBundleIn"/>
+
+    <Connection
+        sourceTask="LeftTrwRadarTracker"
+        sourcePort="BaseObjectsOut"
+        targetTask="RadarBundler"
+        targetPort="LeftTrwBundleIn"/>
+
+    <Connection
+        sourceTask="RearTrwRadarTracker"
+        sourcePort="BaseObjectsOut"
+        targetTask="RadarBundler"
+        targetPort="RearTrwBundleIn"/>
+
+</TaskGraph>

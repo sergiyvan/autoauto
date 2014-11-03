@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+        <Activity type="Activity">
+            <struct name="" type="type_less">
+                    <simple type="double" name="Period"><value>0.0</value></simple>
+            </struct>
+
+            <TaskContext type="DisplayImage" name="DisplayImageDepth"  >
+                <struct name="" type="type_less">
+                    <struct type="vec3" name="Position">
+                      <simple type="double" name="0"><value>-320</value></simple>
+                      <simple type="double" name="1"><value>0</value></simple>
+                      <simple type="double" name="2"><value>0</value></simple>
+                    </struct>
+                    <simple type="bool" name="Demosaice"><value>0</value></simple>
+                </struct>
+            </TaskContext>
+
+            <TaskContext type="DisplayImage" name="DisplayImageColor"  >
+                <struct name="" type="type_less">
+                    <struct type="vec3" name="Position">
+                      <simple type="double" name="0"><value>320</value></simple>
+                      <simple type="double" name="1"><value>0</value></simple>
+                      <simple type="double" name="2"><value>0</value></simple>
+                    </struct>
+                    <simple type="bool" name="Demosaice"><value>0</value></simple>
+                </struct>
+             </TaskContext>
+
+        </Activity>
+
+
+        <Connection
+            sourceTask="DepthImageConverter"
+            sourcePort="ConvertedDepthImageOut"
+            targetTask="DisplayImageDepth"
+            targetPort="TypedImageIn"/>
+
+        <!-- for playing live-->
+        <Connection
+            sourceTask="KinectGrabber"
+            sourcePort="RgbImageOut"
+            targetTask="DisplayImageColor"
+            targetPort="TypedImageIn"/>
+
+        <!-- for playing logged-->
+        <Connection
+            sourceTask="Log"
+            sourcePort="RgbImageOut"
+            targetTask="DisplayImageColor"
+            targetPort="TypedImageIn"/>
+
+
+
+
+</TaskGraph>

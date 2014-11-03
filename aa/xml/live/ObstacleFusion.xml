@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<!-- Interpolation Model Setter -->
+	<Include file="InterpolationModelSetter.xml"/>
+
+
+	<!-- Ibeo Point Set -->
+	<Include file="LuxEcu.xml"/>
+	<Activity type="SequentialActivity">
+		<TaskContext type="IbeoEcuToPointSet" name="IbeoEcuToPointSet">
+		</TaskContext>
+	</Activity>
+	<Connection
+		sourceTask="IbeoLuxEcu"
+		sourcePort="IbeoLuxEcuScanData"
+		targetTask="IbeoEcuToPointSet"
+		targetPort="IbeoEcuScanDataIn"/>
+
+
+	<!-- Velodyne Point Set -->
+        <Include file="VelodyneObstacles.xml"/>
+	<CallMethod task="OccupancyMap" name="setROI">
+		<struct name="" type="type_less">
+                        <simple type="string" name="name"><value>circle 20</value></simple>
+		</struct>
+        </CallMethod>
+
+
+	<!-- Point Set Fusion -->
+	<Activity type="SequentialActivity">
+		<TaskContext type="PointSetFusion" name="PointSetFusion">
+			<struct name="" type="type_less">
+				<simple type="double" name="StartScanAngleDeg"><value>-180.0</value></simple>
+				<simple type="double" name="EndScanAngleDeg"><value>180.0</value></simple>
+				<simple type="uint" name="NumSectors"><value>720</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+	
+<!--
+	<Include file="FpgaImageData.xml"/>
+	<Connection
+		sourceTask="FreeSpaceAnalysis"
+		sourcePort="PointSetOut"
+		targetTask="PointSetFusion"
+		targetPort="MasterPointSetIn"/>	 
+-->
+	
+	<Connection
+		sourceTask="IbeoEcuToPointSet"
+		sourcePort="PointSetOut"
+		targetTask="PointSetFusion"
+		targetPort="MasterPointSetIn"/>
+        <Connection
+		sourceTask="OccupancyMap"
+		sourcePort="PointSetOut"
+		targetTask="PointSetFusion"
+                targetPort="SlavePointSetIn"/>
+
+
+	<!-- Lidar Obstacles -->
+	<Activity type="SequentialActivity">
+		<TaskContext type="VirtualScanObstacleDetector" name="LidarObstacleDetector">
+			<struct name="" type="type_less">
+				<simple type="double" name="StartScanAngleDeg"><value>-180.0</value></simple>
+				<simple type="double" name="EndScanAngleDeg"><value>180.0</value></simple>
+				<simple type="uint" name="NumSectors"><value>720</value></simple>
+			</struct>
+		</TaskContext>
+	</Activity>
+	<Connection
+		sourceTask="PointSetFusion"
+		sourcePort="VirtualRangeScanOut"
+		targetTask="LidarObstacleDetector"
+		targetPort="VirtualRangeScanIn"/>
+
+
+	<!-- Radar Obstacles -->
+<!--        <Include file="RadarBundler.xml"/>-->
+<!--        hella radar is the only radar which gives sensible information for fusion (without further filtering/tracking)-->
+        <Include file="HellaRadar.xml"/>
+
+
+	<!-- Obstacle Fusion -->
+	<Activity type="SequentialActivity">
+		<TaskContext type="LidarRadarObstacleFusion" name="ObstacleFusion">
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="LidarObstacleDetector"
+		sourcePort="BaseObjectsOut"
+		targetTask="ObstacleFusion"
+		targetPort="LidarObstaclesIn"/>
+
+<!--        <Connection
+                sourceTask="RadarBundler"
+                sourcePort="ObjectBundleOut"
+                targetTask="ObstacleFusion"
+                targetPort="RadarObstaclesIn"/>-->
+
+        <Connection
+                sourceTask="HellaRadarTracker"
+                sourcePort="BaseObjectsOut"
+                targetTask="ObstacleFusion"
+                targetPort="RadarObstaclesIn"/>
+
+
+<!-- Road Sign Detector: START -->
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="IbeoRoadSignDetector" name="IbeoRoadSignDetector">
+                </TaskContext>
+        </Activity>
+        <Connection
+                sourceTask="IbeoEcuToPointSet"
+                sourcePort="PointSetOut"
+                targetTask="IbeoRoadSignDetector"
+                targetPort="PointSetIn"/>
+
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayIbeoRoadSignDetector" name="DisplayIbeoRoadSignDetector">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Size"><value>10.0</value></simple>
+                </struct>
+                </TaskContext>
+        </Activity>
+        <Connection
+                sourceTask="IbeoRoadSignDetector"
+                sourcePort="RoadSignPointSetOut"
+                targetTask="DisplayIbeoRoadSignDetector"
+                targetPort="PointSetIn"/>
+
+
+<!-- Road Sign Detector: END -->
+
+
+</TaskGraph>
+

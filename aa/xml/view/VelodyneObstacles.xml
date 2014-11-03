@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Activity type="SequentialActivity">
+		<TaskContext type="DisplayObstacles" name="DisplayVelodyneObstacles">
+		</TaskContext>
+	</Activity>
+
+	<Connection
+		sourceTask="OccupancyMap"
+		sourcePort="ObstacleBundle"
+		targetTask="DisplayVelodyneObstacles"
+		targetPort="ObstacleBundle"/>
+
+</TaskGraph>

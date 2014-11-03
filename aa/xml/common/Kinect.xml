@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+    <Activity type="Activity">
+        <struct name="" type="type_less">
+            <simple type="double" name="Period"><value>0.0</value></simple>
+        </struct>
+        <TaskContext type="DepthImageConverter" name="DepthImageConverter" />
+    </Activity>
+</TaskGraph>
+
+

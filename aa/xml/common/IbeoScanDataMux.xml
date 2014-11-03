@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Include file="EgoState.xml"/>
+
+	<Activity type="SequentialActivity">
+            <TaskContext type="InterpolationModelSetter" name="InterpolationModelSetter">
+            </TaskContext>
+	</Activity>
+
+	<Connection
+            sourceTask="EgoStateSnapshotGenerator"
+            sourcePort="EgoState"
+            targetTask="InterpolationModelSetter"
+            targetPort="EgoStateIn"/>
+
+        <Activity type="SequentialActivity">
+            <TaskContext type="IbeoScanDataMux" name="IbeoScanDataMux">
+                <struct name="" type="type_less">
+                    <!-- Region of interest -->
+                    <simple type="bool" name="UseRegionOfInterest"><value>false</value></simple>
+                    <simple type="int"  name="LuxRoiX"><value>200</value></simple>
+                    <simple type="int"  name="LuxRoiY"><value>30</value></simple>
+                    <simple type="int"  name="LuxEcuRoiRadius"><value>150</value></simple>
+                    <simple type="int"  name="AlascaRoiX"><value>100</value></simple>
+                    <simple type="int"  name="AlascaRoiY"><value>100</value></simple>
+                    <!-- Scanner activation -->
+                    <simple type="bool" name="UseFL"><value>1</value></simple>
+                    <simple type="bool" name="UseFC"><value>1</value></simple>
+                    <simple type="bool" name="UseFR"><value>1</value></simple>
+                    <simple type="bool" name="UseRR"><value>1</value></simple>
+                    <simple type="bool" name="UseRC"><value>1</value></simple>
+                    <simple type="bool" name="UseRL"><value>1</value></simple>
+
+					<simple type="bool" name="FilterClutterBehindVehicle"><value>1</value></simple>
+                </struct>
+            </TaskContext>
+        </Activity>
+</TaskGraph>

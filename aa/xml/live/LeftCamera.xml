@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<If condition="node_name=='vw'">
+
+				<Activity type="SelectDrivenActivity">
+						<TaskContext    type="DC1394Camera"	    name="CameraL">
+								<struct name="" type="type_less">
+                                        <simple type="int" name="BytesPerPacket">
+                                                <value>2368</value>
+                                        </simple>
+                                        <simple type="int" name="Mode">
+                                                <value>5</value>
+                                        </simple>
+                                        <simple type="int" name="ColourCoding">
+                                                <value>5</value>
+                                        </simple>
+                                        <simple type="int" name="Shutter">
+                                                <value>55</value>
+                                        </simple>
+                                        <simple type="int" name="InkaHDRFrameDelay">
+                                                <value>22</value>
+                                        </simple>
+                                        <simple type="bool" name="PassiveMode">
+												<value>false</value>
+                                        </simple>
+                                </struct>
+                        </TaskContext>
+                </Activity>
+
+                <CallMethod task="CameraL" name="selectCameraById">
+                        <struct name="" type="type_less">
+                                <simple type="int" name="unit"><value>0</value></simple>
+                                <simple type="long" name="guid"><value>3255654282690602</value></simple>
+
+
+                        </struct>
+                </CallMethod>
+
+
+        <CallMethod
+                   task="CameraL"
+                   name="renamePort">
+                <struct name="" type="type_less">
+                        <simple type="string" name="name"><value>TypedImageL</value></simple>
+                </struct>
+        </CallMethod>
+
+        </If>
+        
+ 		<Activity type="SequentialActivity">
+				<TaskContext	type="PortMapper"	name="PortMapper"/>
+        </Activity>
+        
+        <Connection
+	            sourceTask="CameraL"
+	            sourcePort="TypedImageL"
+	            targetTask="PortMapper"
+	            targetPort="TypedImageLIn"/>
+	                            
+</TaskGraph>

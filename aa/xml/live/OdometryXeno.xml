@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TaskGraph>
+        <Include file="XenoMicroController.xml"/>
+
+        <Activity type="SequentialActivity">
+            <TaskContext type="XenoOdometry" name="Odometry"></TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="XenoMicroController"
+                sourcePort="ControllerDataOut"
+                targetTask="Odometry"
+                targetPort="ControllerDataIn"/>
+
+
+</TaskGraph>

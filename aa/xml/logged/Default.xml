@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+	<Script>if (mode == '') mode='play';</Script>
+
+	<If condition="typeof logged_Default == 'undefined'">
+        <Script>logged_Default='pragma_once';</Script>
+        <Activity type="PeriodicActivity">
+            <struct name="" type="type_less">
+                            <simple type="double" name="Period"><value>0.00005</value></simple>
+            </struct>
+            <TaskContext
+                        type="LogPlayer"
+                        name="Log">
+                <struct name="" type="type_less">
+                    <simple type="bool" name="Loop"><value>false</value></simple> 
+                    <simple type="bool" name="FastForward"><value>false</value></simple> 
+                                    <simple type="bool" name="TerminateOnEof">
+                                        <arg>TerminateOnEof</arg>
+                                        <value>false</value>
+                                    </simple>
+                </struct>
+            </TaskContext>
+        </Activity>
+        <CallMethod
+                task="Log"
+                name="loadFile"
+                fatal="true">
+            <struct name="" type="type_less">
+                <simple type="path"
+                        name="path">
+                    <arg>0</arg>
+                    <value>No logfile given to LogPlayer in defaultLog.xml</value>
+                </simple>
+            </struct>
+        </CallMethod>
+
+        <!-- <CreateLogPlayerCtrl
+            task="Log"/> -->
+	</If>
+
+</TaskGraph>

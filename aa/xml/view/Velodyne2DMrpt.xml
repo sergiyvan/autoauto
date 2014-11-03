@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+view Velodyne2DMrpt.
+-->
+<TaskGraph>
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayMrptPlanarLaserScan" name="DisplayVelodyneMrpt"/>
+        </Activity>
+        <Connection
+                sourceTask="Velodyne2DMrpt"
+                sourcePort="ObservationOut"
+                targetTask="DisplayVelodyneMrpt"
+                targetPort="ObservationIn"/>
+
+        <Connection
+                sourceTask="EgoStateSnapshotGenerator"
+                sourcePort="EgoState"
+                targetTask="DisplayVelodyneMrpt"
+                targetPort="EgoStateIn"/>
+</TaskGraph>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+common for Velodyne2DMrpt
+
+Expects VelodyneImageProcessing (from live or logged VelodyneImage)
+-->
+<TaskGraph>
+
+    <Activity type="SequentialActivity">
+            <!--<TaskContext type="Velodyne2DMrpt"	name="Velodyne2DMrpt"></TaskContext>-->
+            <TaskContext type="MrptVelodyneImage"	name="Velodyne2DMrpt">
+
+                    <struct name="" type="type_less">
+                            <simple type="int" name="LaserBegin"><value>61</value></simple>
+                            <simple type="int" name="LaserEnd"><value>62</value></simple>
+                            <simple type="double" name="MaxRange"><value>70.0</value></simple>
+                    </struct>
+
+            </TaskContext>
+
+    </Activity>
+    <Connection
+            sourceTask="VelodyneImageProcessing"
+            sourcePort="ImageOut"
+            targetTask="Velodyne2DMrpt"
+            targetPort="VelodyneImageIn"/>
+
+</TaskGraph>

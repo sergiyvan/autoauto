@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+
+	<!-- =============== sms radar =============== -->
+
+	<Activity type="PeriodicActivity">
+		<struct name="" type="type_less">
+			<simple type="double" name="Period"><value>0.01</value></simple>
+		</struct>
+		<TaskContext
+			type="DisplaySmsRadar"
+			name="DisplaySmsRadar"/>
+	</Activity>
+
+	<Connection
+		sourceTask="EgoStateSnapshotGenerator"
+		sourcePort="EgoState"
+		targetTask="DisplaySmsRadar"
+		targetPort="EgoStateIn"/>
+
+	<Connection
+		sourceTask="SmsRadarTracker"
+		sourcePort="TrackedObjectsOut"
+		targetTask="DisplaySmsRadar"
+		targetPort="TrackedObjectsIn"/>
+
+	<Connection
+		sourceTask="SmsRadarTracker"
+		sourcePort="ContourMatcherOut"
+		targetTask="DisplaySmsRadar"
+		targetPort="ContourMatchersIn"/>
+	<Connection
+		sourceTask="SmsRadarTracker"
+		sourcePort="RawObjectsOut"
+		targetTask="DisplaySmsRadar"
+		targetPort="RawSmsObjectsIn"/>
+
+	<Connection
+		sourceTask="SmsRadarTracker"
+		sourcePort="SensorTrackedObjectsOut"
+		targetTask="DisplaySmsRadar"
+		targetPort="SensorTrackedObjectsIn"/>
+
+</TaskGraph>
