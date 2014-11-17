@@ -2009,7 +2009,7 @@ flt AbstractController::getSpeedProposalByCentrifugalForce(flt curSpeed, flt wan
 	//std::cout<<"PreviewDist before: " << previewDist << " | After: " << (int)(min((flt)previewDist, curPlan.domain().second - mClosestParamOnTrajectory));
 
 	//limit Preview distance by plan length
-	previewDist = (int)(curPlan.domain().second - mClosestParamOnTrajectory);
+    previewDist = min((int)(curPlan.domain().second - mClosestParamOnTrajectory),previewDist);
 
 	for (int i = 0; i < (previewDist/* ////- 0.01*/) / sampleStepSize; i++) {
 

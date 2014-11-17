@@ -11,3 +11,10 @@ LINK_LIBRARIES
 	Controller
 	EgoState
 )
+
+add_module(SimplePlanGenerator
+        SimplePlanGenerator.cpp
+LINK_LIBRARIES
+        AAData
+        Controller
+)

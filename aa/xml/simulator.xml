@@ -29,7 +29,7 @@
                         <simple type="double" name="Period"><value>0.04</value></simple>
                 </struct>
 
-                <TaskContext type="CarFollowingBehaviour" name="CarFollowingBehaviour">
+                <TaskContext type="SimplePlanGenerator" name="Behaviour">
                 </TaskContext>
 
                 <TaskContext type="StateMachine" name="StateMachine"/>
@@ -135,12 +135,6 @@
 	<Connection
 		sourceTask="EgoStateSnapshotGenerator"
 		sourcePort="EgoState"
-                targetTask="CarFollowingBehaviour"
-		targetPort="EgoStateIn"/>
-
-	<Connection
-		sourceTask="EgoStateSnapshotGenerator"
-		sourcePort="EgoState"
 		targetTask="Controller"
 		targetPort="EgoStateIn"/>
 
@@ -153,19 +147,19 @@
 
 <!-- Outgoing Behaviour connections -->
         <Connection
-                sourceTask="CarFollowingBehaviour"
+                sourceTask="Behaviour"
                 sourcePort="PlanOut"
                 targetTask="Controller"
                 targetPort="PlanIn"/>
 
         <Connection
-                sourceTask="CarFollowingBehaviour"
+                sourceTask="Behaviour"
                 sourcePort="PlanOut"
                 targetTask="DisplayMicroPlan"
                 targetPort="PlanIn"/>
 
         <Connection
-                sourceTask="CarFollowingBehaviour"
+                sourceTask="Behaviour"
                 sourcePort="PlanOut"
                 targetTask="DisplayInterferingObstacles"
                 targetPort="PlanIn"/>
@@ -262,14 +256,14 @@
 
 
 	<ConnectPeer task="StateMachine">
-                <Peer>CarFollowingBehaviour</Peer>
+                <Peer>Behaviour</Peer>
 		<Peer>Controller</Peer>
 		<Peer>ControllerGateway</Peer>
 		<Peer>DisplayStateMachine</Peer>
 	</ConnectPeer>
 
 	<ConnectPeer task="ControllerGateway">
-                <Peer>CarFollowingBehaviour</Peer>
+                <Peer>Behaviour</Peer>
 		<Peer>DisplayStateMachine</Peer>
 		<Peer>DisplaySimulator</Peer>
 		<Peer>DisplayInterferingObstacles</Peer>
@@ -304,13 +298,13 @@
         </CallMethod>
 
 <!-- set starting position -->
-        <CallMethod task="Simulator" name="setPosDir">
+<!--        <CallMethod task="Simulator" name="setPosDir">
                 <struct name="" type="type_less">
                         <simple type="string" name="v"><value>6083.0, 5000.0, 0, 0, 0, -1.4</value></simple>
                 </struct>
-        </CallMethod>
+        </CallMethod>-->
 
-        <TaskBrowser task="CarFollowingBehaviour"/>
+        <TaskBrowser task="Behaviour"/>
 
 
 </TaskGraph>
