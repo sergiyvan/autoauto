@@ -39,10 +39,14 @@
                 </struct>
                 <TaskContext type="Controller" name="Controller">
                         <struct name="" type="type_less">
-                                <simple type="double" name="WantedSpeed">
-                                        <arg description="wanted speed">wanted</arg>
-                                        <value>27.77777777</value>
-                                </simple>
+                        <simple type="double" name="WantedSpeed">
+                                <arg description="wanted speed">wantedspeed</arg>
+                                <value>27.77777777</value>
+                        </simple>
+                        <simple type="double" name="ConstantThrottle">
+                                <arg description="constant throttle">constantthrottle</arg>
+                                <value>0.25</value>
+                        </simple>
                         </struct>
 
                 </TaskContext>

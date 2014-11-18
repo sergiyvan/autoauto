@@ -212,7 +212,7 @@ public:
 				flt time0 = pow(_currSpeed / coefficient, flt(1.25));
 				flt vel2 = coefficient * pow((time0 + 1.0), 0.8);
 
-				flt a = vel2 - _currSpeed;
+                flt a = (vel2 - _currSpeed) - _currSpeed*_currSpeed*0.0005;
 
 				//std::cout << "<A speedControl " << speedCtrl << " Acc " << a << " time " << time0 << " currSpeed " << _currSpeed << std::endl;
 
