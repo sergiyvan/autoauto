@@ -6,9 +6,6 @@
 	<CreateView id="0"/>
 	<CreateTaskStatusMonitor/>
 
-        <Include file="view/Rndf.xml"/>
-
-
 <!-- logging service -->
         <Include file="common/LoggingService.xml"/>
 
@@ -36,24 +33,33 @@
                 <TaskContext type="ControllerGateway" name="ControllerGateway"/>
         </Activity>
 
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.01</value></simple>
+                </struct>
+                <TaskContext type="Controller" name="Controller">
+                        <struct name="" type="type_less">
+                                <simple type="double" name="WantedSpeed">
+                                        <arg description="wanted speed">wanted</arg>
+                                        <value>27.77777777</value>
+                                </simple>
+                        </struct>
+
+                </TaskContext>
+        </Activity>
+
+
+
+
 <!-- display tasks -->
 
         <Include file="view/Car.xml"/>
+        <Include file="view/Trajectory.xml"/>
 
         <Activity type="PeriodicActivity">
                 <struct name="" type="type_less">
                         <simple type="double" name="Period"><value>0.08</value></simple>
                 </struct>
-
-                <TaskContext type="DisplayRNDF" name="DisplayRNDF"/>
-<!--                <TaskContext type="DisplayRNDFEditor" name="DisplayRNDFEditor"/>-->
-
-                <TaskContext type="DisplayInterferingObstacles" name="DisplayInterferingObstacles">
-                        <struct name="" type="type_less">
-                        <simple type="bool" name="AlwaysShowInterferingObstacleInfoTitles"><value>1</value></simple>
-                        <simple type="bool" name="DisplayInterferingObstaclePoints"><value>1</value></simple>
-                        </struct>
-                </TaskContext>
 
                 <TaskContext type="DisplayControllerData" name="DisplayControllerData"/>
                 <TaskContext type="DisplayStateMachine" name="DisplayStateMachine"/>
@@ -63,26 +69,6 @@
                 <TaskContext type="DisplaySimulatorCtrl" name="DisplaySimulatorCtrl"/>
 
         </Activity>
-
-
-<!-- Passat controller -->
-	<If condition="node_name=='vw'">
-		<Activity type="PeriodicActivity">
-			<struct name="" type="type_less">
-				<simple type="double" name="Period"><value>0.01</value></simple>
-			</struct>
-
-			<TaskContext type="ControllerPassat" name="Controller">
-				<struct name="" type="type_less">
-                                        <!-- avoids multiple carstate check, important, otherwise controller terminates -->
-                                        <simple type="bool" name="SimulationMode"><value>1</value></simple>
-                                        <simple type="bool" name="UseMissionSpeedLimits"><value>1</value></simple>
-<!--					<simple type="double" name="ConstantSpeed"><value>14</value></simple>-->
-<!--					<simple type="bool" name="StopAtTrafficLight"><value>0</value></simple>-->
-				</struct>
-			</TaskContext>
-		</Activity>
-	</If>
 
 
 
@@ -100,17 +86,17 @@
 		targetTask="Controller"
 		targetPort="PassatCarStateIn"/>
 
-	<Connection
+        <Connection
 		sourceTask="Simulator"
 		sourcePort="CarStateOut"
 		targetTask="ControllerGateway"
-		targetPort="CarStateIn"/>
+                targetPort="CarStateIn"/>
 
-	<Connection
+        <Connection
 		sourceTask="Simulator"
 		sourcePort="PassatCarStateOut"
 		targetTask="ControllerGateway"
-		targetPort="PassatCarStateIn"/>
+                targetPort="PassatCarStateIn"/>
 
 
 	<Connection
@@ -119,11 +105,6 @@
 		targetTask="CarView"
 		targetPort="CarState"/>
 
-	<Connection
-		sourceTask="Simulator"
-		sourcePort="ObstaclesOut"
-		targetTask="Controller"
-		targetPort="ObstaclesIn"/>
 
 <!-- Outgoing EgoStateSnapshotGenerator connections -->
 	<Connection
@@ -138,11 +119,11 @@
 		targetTask="Controller"
 		targetPort="EgoStateIn"/>
 
-	<Connection
+        <Connection
                 sourceTask="EgoStateSnapshotGenerator"
 		sourcePort="EgoState"
 		targetTask="ControllerGateway"
-		targetPort="EgoStateIn"/>
+                targetPort="EgoStateIn"/>
 
 
 <!-- Outgoing Behaviour connections -->
@@ -158,15 +139,9 @@
                 targetTask="DisplayMicroPlan"
                 targetPort="PlanIn"/>
 
-        <Connection
-                sourceTask="Behaviour"
-                sourcePort="PlanOut"
-                targetTask="DisplayInterferingObstacles"
-                targetPort="PlanIn"/>
-
 
 <!-- Outgoing Controller connections -->
-	<Connection
+        <Connection
 		sourceTask="Controller"
 		sourcePort="ActivationRequestOut"
 		targetTask="ControllerGateway"
@@ -192,83 +167,69 @@
 
 	<Connection
 		sourceTask="Controller"
-		sourcePort="AuxDevicesOut"
-		targetTask="ControllerGateway"
-		targetPort="ControllerAuxDevicesIn"/>
-
-	<Connection
-		sourceTask="Controller"
 		sourcePort="ControllerDataOut"
 		targetTask="ControllerGateway"
 		targetPort="ControllerDataIn"/>
-
-	<Connection
-		sourceTask="Controller"
-		sourcePort="InterferingObstaclesOut"
-		targetTask="DisplayInterferingObstacles"
-		targetPort="InterferingObstaclesIn"/>
 
 
 
 <!-- Outgoing ControllerGateway and ReactiveBrake connections -->
 	<Connection
-		sourceTask="ControllerGateway"
+                sourceTask="ControllerGateway"
 		sourcePort="SpeedOut"
 		targetTask="Simulator"
 		targetPort="SpeedIn"/>
 
 	<Connection
-		sourceTask="ControllerGateway"
+                sourceTask="ControllerGateway"
 		sourcePort="SteerOut"
 		targetTask="Simulator"
 		targetPort="SteerIn"/>
 
 	<Connection
-		sourceTask="ControllerGateway"
+                sourceTask="ControllerGateway"
 		sourcePort="GearOut"
 		targetTask="Simulator"
 		targetPort="GearIn"/>
 
-	<Connection
-		sourceTask="ControllerGateway"
-		sourcePort="AuxDevicesOut"
-		targetTask="Simulator"
-		targetPort="AuxDevicesIn"/>
+        <Connection
+                sourceTask="ControllerGateway"
+                sourcePort="AuxDevicesOut"
+                targetTask="Simulator"
+                targetPort="AuxDevicesIn"/>
+
+        <Connection
+                sourceTask="ControllerGateway"
+                sourcePort="AuxDevicesOut"
+                targetTask="CarView"
+                targetPort="AuxDevices"/>
 
 	<Connection
-		sourceTask="ControllerGateway"
-		sourcePort="AuxDevicesOut"
-		targetTask="CarView"
-		targetPort="AuxDevices"/>
-
-	<Connection
-		sourceTask="ControllerGateway"
+                sourceTask="ControllerGateway"
 		sourcePort="ControllerDataOut"
 		targetTask="DisplayControllerData"
 		targetPort="ControllerDataIn"/>
 
-	<Connection
-		sourceTask="ControllerGateway"
-		sourcePort="ModelPredictionDataSetOut"
-		targetTask="DisplayControllerData"
-		targetPort="ModelPredictionDataSetIn"/>
+        <Connection
+                sourceTask="ControllerGateway"
+                sourcePort="ModelPredictionDataSetOut"
+                targetTask="DisplayControllerData"
+                targetPort="ModelPredictionDataSetIn"/>
 
 
 
 	<ConnectPeer task="StateMachine">
                 <Peer>Behaviour</Peer>
 		<Peer>Controller</Peer>
-		<Peer>ControllerGateway</Peer>
-		<Peer>DisplayStateMachine</Peer>
+                <Peer>ControllerGateway</Peer>
+                <Peer>DisplayStateMachine</Peer>
 	</ConnectPeer>
 
-	<ConnectPeer task="ControllerGateway">
+        <ConnectPeer task="ControllerGateway">
                 <Peer>Behaviour</Peer>
-		<Peer>DisplayStateMachine</Peer>
-		<Peer>DisplaySimulator</Peer>
-		<Peer>DisplayInterferingObstacles</Peer>
-		<Peer>DisplayRNDF</Peer>
-	</ConnectPeer>
+                <Peer>DisplayStateMachine</Peer>
+                <Peer>DisplaySimulator</Peer>
+        </ConnectPeer>
 
 
 	<Include file="common/KeyBindings.xml"/>
@@ -277,25 +238,13 @@
 <!-- register views -->
 	<CallMethod name="registerView">
 		<Task>CarView</Task>
-                <Task>DisplayRNDF</Task>
-                <!--<Task>DisplayRNDFEditor</Task>-->
+                <Task>DisplayTrajectory</Task>
                 <Task>DisplayMicroPlan</Task>
-		<Task>DisplayInterferingObstacles</Task>
 		<Task>DisplayControllerData</Task>
-                <Task>DisplayStateMachine</Task>
 		<Task>DisplaySimulator</Task>
 		<Task>DisplaySimulatorCtrl</Task>
 	</CallMethod>
 
-<!-- load rndf -->
-        <CallMethod task="DisplayRNDF" name="loadRNDF">
-                <struct name="" type="type_less">
-                        <simple type="string" name="fileName">
-                                <arg description="The name of the rndf file">rndf</arg>
-                                <value>resources/berlin.arnd</value>
-                        </simple>
-                </struct>
-        </CallMethod>
 
 <!-- set starting position -->
 <!--        <CallMethod task="Simulator" name="setPosDir">
@@ -304,7 +253,7 @@
                 </struct>
         </CallMethod>-->
 
-        <TaskBrowser task="Behaviour"/>
+        <TaskBrowser task="Controller"/>
 
 
 </TaskGraph>

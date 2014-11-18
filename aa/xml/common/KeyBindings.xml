@@ -377,8 +377,9 @@
 	<BindMethod keys="Ctrl+N" task="DisplayARNDLogger" name="startNewLane"/>
 
 	<!-- Simulator -->
-	<BindMethod keys="Alt+M" task="DisplaySimulatorCtrl" name="chooseModel"/>
-	<BindMethod keys="Alt+P" task="DisplaySimulatorCtrl" name="previousObstacleInScenery"/>
+        <BindMethod keys="R" task="Simulator" name="reset"/>
+        <BindMethod keys="Alt+M" task="DisplaySimulatorCtrl" name="chooseModel"/>
+        <BindMethod keys="Alt+P" task="DisplaySimulatorCtrl" name="previousObstacleInScenery"/>
 	<BindMethod keys="Alt+N" task="DisplaySimulatorCtrl" name="nextObstacleInScenery"/>
 	<BindMethod keys="Alt+X" task="DisplaySimulatorCtrl" name="saveSimScene"/>
 	<BindMethod keys="Alt+Del" task="DisplaySimulatorCtrl" name="deleteSelectedObstacle"/>
