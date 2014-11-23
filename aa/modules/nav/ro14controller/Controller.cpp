@@ -192,10 +192,22 @@ void Controller::stopHook()
 flt Controller::getThrottleBrakePosition(flt curSpeed, flt wantedSpeed)
 {
 	Logger::In in("Controller");
-
+	flt result = 0.;
+	if(wantedSpeed > curSpeed){
+		result = 1.;
+	}else{
+		result = -0.01;
+	}
+	
+//	if(wantedSpeed != 0.){
+//		result =  ((wantedSpeed - curSpeed)/wantedSpeed);
+//		if(abs(result)>0.1){
+//			result = sgn(result)*1; 
+//		}
+//	}
     //insert your code here
-
-    return mConstantThrottle;
+	return result;
+   // return mConstantThrottle;
 }
 
 
