@@ -59,6 +59,7 @@ Controller::Controller(string const & name)
     addProperty("WantedSpeed", mWantedSpeed).doc("wanted speed in m/s");
     addProperty("ConstantThrottle", mConstantThrottle).doc("wanted constant throttle to be maintained");
     addProperty("ConstantSteer", mConstantSteer).doc("constant steer value");
+    //addProperty("OldDist", mOldDist).doc("old distance value");
 
     addAttribute("Counter", mCounter);
 
@@ -176,9 +177,6 @@ void Controller::updateHook()
 	mControllerDataOut.write(mCurControllerData);
 
 
-    ///write to file
-    mOutputStream << "time: " << timeSinceStart << std::endl;
-
 
 }
 
@@ -214,9 +212,40 @@ flt Controller::getThrottleBrakePosition(flt curSpeed, flt wantedSpeed)
 
 flt Controller::getSteeringPosition(aa::modules::nav::controller::Plan_ptr plan)
 {
-	Logger::In in("Controller");
+    flt closestSqrDistToPlan;
+    flt closestParamOnPlan;
+    std::pair<flt, flt> const dom((*mCurPlan).domain());
+    tie(closestSqrDistToPlan, closestParamOnPlan) = findClosestPoint(*plan, dom.first, dom.second, (dom.first + dom.second) / 2.0, mCurEgoState.position());
+    Vec3 closestPointOnPlan = (*plan)(closestParamOnPlan);
+    Vec3 curPosition = mCurEgoState.position();
+    float y = (float) curPosition[0];
+    float x = (float) curPosition[1]; //andere Achse
 
+    float py = closestPointOnPlan[0];
+    float px = closestPointOnPlan[1];
     //insert your code here
+    float diff = px - x;
+    float winkel = 0.;
+    winkel = (float) acos((x*px + y*py) / ( sqrt(x*x+y*y) * sqrt(px*px+py*py) )) * 180 / 3.14159265358979f;
+
+
+    if(x > px){
+        mConstantSteer = 0.1*(x-px);
+        Logger::log() << Logger::Debug << "px kleiner" << Logger::endl;
+    }else if(x < px){
+        mConstantSteer = -0.1*(px-x);
+        Logger::log() << Logger::Debug << "x kleiner" << Logger::endl;
+    }else {
+        mConstantSteer = 0;
+        Logger::log() << Logger::Debug << "car pos: " << x << " | " << y << Logger::endl;
+
+        Logger::log() << Logger::Debug << "nearest point: " << px << " | " << py << Logger::endl;
+    }
+
+    ///write to file
+    now.stamp();
+    flt timeSinceStart = 1E-9f * RTT::os::TimeService::ticks2nsecs(now - mStartTime);
+    mOutputStream << timeSinceStart << "," <<  diff << "," << winkel << std::endl;
 
     return mConstantSteer;
 }
