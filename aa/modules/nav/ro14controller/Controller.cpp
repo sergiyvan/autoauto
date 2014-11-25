@@ -5,6 +5,7 @@
 #include <math/AutoMath.h>
 #include <math/PathSpline.h>
 
+#include <aa/modules/nav/simulator/Simulator.h>
 
 namespace aa
 {
@@ -61,6 +62,9 @@ Controller::Controller(string const & name)
     addProperty("ConstantSteer", mConstantSteer).doc("constant steer value");
 
     addAttribute("Counter", mCounter);
+
+    addOperation("ResetSimulator", &Controller::resetSimulator, this, RTT::ClientThread).doc("call reset from simulator task");
+
 
 }
 
@@ -177,7 +181,7 @@ void Controller::updateHook()
 
 
     ///write to file
-    mOutputStream << "time: " << timeSinceStart << std::endl;
+    mOutputStream << timeSinceStart << "," << curSpeed << std::endl;
 
 
 }
@@ -202,11 +206,22 @@ flt Controller::getThrottleBrakePosition(flt curSpeed, flt wantedSpeed)
 
 flt Controller::getSteeringPosition(aa::modules::nav::controller::Plan_ptr plan)
 {
-	Logger::In in("Controller");
+    Logger::In in("Controller");
 
     //insert your code here
 
     return mConstantSteer;
+}
+
+void Controller::resetSimulator()
+{
+    Logger::In in("Controller");
+
+    RTT::TaskContext* simulator = findPeer(this, "Simulator");
+    OperationCaller<void(void)> reset(simulator->getOperation("reset"));
+
+    reset();
+
 }
 
 
