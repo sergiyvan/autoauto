@@ -6,4 +6,5 @@ LINK_LIBRARIES
 	glut
 	Gui
 	Rndf
+	EgoState
 )
