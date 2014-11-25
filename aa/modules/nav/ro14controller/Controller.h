@@ -77,14 +77,15 @@ private:
 	* @return a value between -1 and 1 indicating gas/brake pedal position
 	*/
 	flt getThrottleBrakePosition(flt curSpeed, flt wantedSpeed);
-    flt controlThrottleBrake(flt curSpeed, flt wantedSpeed);
 
 	/** calculate a steering position
 	* @return a value between -1 and 1 indicating steering position
 	*/
     flt getSteeringPosition(aa::modules::nav::controller::Plan_ptr plan);
-    flt controlSteering(aa::modules::nav::controller::Plan_ptr plan);
 
+    /** reset simulator
+    */
+    void resetSimulator();
 
 
 };
