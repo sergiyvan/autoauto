@@ -44,6 +44,7 @@ Controller::Controller(string const & name)
     , mWantedSpeed(100 * KMH_2_MS)
     , mConstantThrottle(0.25)
     , mConstantSteer(0.0)
+	, esum(0.0)
 
     //attributes
     , mCounter(0)
