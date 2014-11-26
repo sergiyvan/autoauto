@@ -30,7 +30,6 @@ using RTT::Logger;
 
 Controller::Controller(string const & name)
 	: ::util::RtTaskContext(name)
-
 	// read ports
 	, mPlanIn("PlanIn")
 	, mEgoStateIn("EgoStateIn")
@@ -136,7 +135,6 @@ void Controller::updateHook()
     Vec3 curOrientation = mCurEgoState.forwardDirection();
     Logger::log() << Logger::Debug << "car orientation:" << curOrientation.transpose() << Logger::endl;
 
-
     flt closestSqrDistToPlan;
     flt closestParamOnPlan;
     std::pair<flt, flt> const dom((*mCurPlan).domain());
@@ -196,10 +194,20 @@ void Controller::stopHook()
 flt Controller::getThrottleBrakePosition(flt curSpeed, flt wantedSpeed)
 {
 	Logger::In in("Controller");
-
-    //insert your code here
-
-    return mConstantThrottle;
+	flt K_p = 3.;
+	flt K_i = 1.;
+	flt result = 0.;
+	flt e = wantedSpeed - curSpeed;
+	esum = esum + e;
+   //insert your code here
+	result = K_p* e + K_i * esum;
+	if(result > 1.){
+		result= 1;
+	}
+	if(result< -1.){
+		result =-1.;
+	}
+    return result;
 }
 
 
