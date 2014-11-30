@@ -59,7 +59,7 @@ private:
     flt mWantedSpeed;
     flt mConstantThrottle;
     flt mConstantSteer;
-    flt esum;
+    flt mEsum;
 
 	/** members */
     aa::modules::nav::controller::data::TimedControllerData mCurControllerData;

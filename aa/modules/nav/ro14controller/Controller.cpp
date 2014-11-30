@@ -41,12 +41,13 @@ Controller::Controller(string const & name)
 	, mControllerDataOut("ControllerDataOut")
 
 	// general properties
-    , mWantedSpeed(100 * KMH_2_MS)
-    , mConstantThrottle(0.25)
+    , mWantedSpeed(36 * KMH_2_MS)
+    , mConstantThrottle(0.5)
     , mConstantSteer(0.0)
-	, esum(0.0)
+
 
     //attributes
+    , mEsum(0.1)
     , mCounter(0)
 {
 	ports()->addPort(mPlanIn);
@@ -60,8 +61,10 @@ Controller::Controller(string const & name)
     addProperty("WantedSpeed", mWantedSpeed).doc("wanted speed in m/s");
     addProperty("ConstantThrottle", mConstantThrottle).doc("wanted constant throttle to be maintained");
     addProperty("ConstantSteer", mConstantSteer).doc("constant steer value");
+    addProperty("Esum", mEsum).doc("Esum...");
 
     addAttribute("Counter", mCounter);
+    
 
     addOperation("ResetSimulator", &Controller::resetSimulator, this, RTT::ClientThread).doc("call reset from simulator task");
 
@@ -195,19 +198,24 @@ void Controller::stopHook()
 flt Controller::getThrottleBrakePosition(flt curSpeed, flt wantedSpeed)
 {
 	Logger::In in("Controller");
-	flt K_p = 3.;
-	flt K_i = 1.;
+	flt K_p = 1.;
+	flt K_i = 100.;
 	flt result = 0.;
 	flt e = wantedSpeed - curSpeed;
-	esum = esum + e;
+	mEsum = mEsum + e;
    //insert your code here
-	result = K_p* e + K_i * esum;
-	if(result > 1.){
-		result= 1;
+	result = K_p * e + K_i * mEsum;
+	if(result > 0.){
+		result = K_p*0.1;
 	}
-	if(result< -1.){
-		result =-1.;
+	if(result < 0.){
+		result = -K_p*0.1;//;K_p*-0.1;
 	}
+
+	Logger::log() << Logger::Debug << "result:" << result << Logger::endl;
+    Logger::log() << Logger::Debug << "e:" << e << Logger::endl;
+    Logger::log() << Logger::Debug << "esum:" << mEsum << Logger::endl;
+
     return result;
 }
 
