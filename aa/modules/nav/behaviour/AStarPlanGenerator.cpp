@@ -39,6 +39,7 @@ REGISTERTASKCONTEXT(AStarPlanGenerator);
 AStarPlanGenerator::AStarPlanGenerator(string const & name)
 	: RtTaskContext(name)
 	, mPlanOut("PlanOut")
+    , mWaypointsOut("WaypointsOut")
     , mTargetPosition(30,15,0)
     , mTargetOrientation(-1,0,0)
     , mDistToDrive(5.0*M_PI/4.0)
@@ -46,7 +47,8 @@ AStarPlanGenerator::AStarPlanGenerator(string const & name)
     , mMaxDiffPos(2.5)
     , mMaxDiffAngle(M_PI/180.0)
 {
-	ports()->addPort(mPlanOut);
+    ports()->addPort(mPlanOut);
+    ports()->addPort(mWaypointsOut);
 
     addProperty("TargetPosition", mTargetPosition);
     addProperty("TargetOrientation", mTargetOrientation);
@@ -81,6 +83,10 @@ void AStarPlanGenerator::updateHook()
 
     // write out plan
 	mPlanOut.write(mPlan);
+
+    //write out open list for display module
+    mWaypointsOut.write(mOpenList);
+
 }
 
 void AStarPlanGenerator::stopHook()

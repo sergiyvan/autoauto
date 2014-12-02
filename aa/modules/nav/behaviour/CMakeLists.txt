@@ -25,3 +25,9 @@ LINK_LIBRARIES
         AAData
         Controller
 )
+
+add_module(DisplayAStarWaypoints
+        DisplayAStarWaypoints.cpp
+LINK_LIBRARIES
+        Gui
+)

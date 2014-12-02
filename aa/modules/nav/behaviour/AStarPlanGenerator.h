@@ -56,7 +56,8 @@ public:
 private:
 
     /** OutputPorts: */
-	RTT::OutputPort< aa::modules::nav::controller::Plan_ptr > mPlanOut;							/** write out a selected plan */
+    RTT::OutputPort< aa::modules::nav::controller::Plan_ptr > mPlanOut;
+    RTT::OutputPort< std::vector<AStarWaypointPtr> > mWaypointsOut;
 
     /** Methods: */
     void generatePlanFromWaypoint(AStarWaypointPtr waypoint);

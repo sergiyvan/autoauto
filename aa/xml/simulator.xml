@@ -46,6 +46,19 @@
 
 <!-- display tasks -->
 
+        <Activity type="SequentialActivity">
+                <TaskContext type="DisplayAStarWaypoints" name="DisplayAStarWaypoints"/>
+        </Activity>
+
+        <Connection
+                sourceTask="Behaviour"
+                sourcePort="WaypointsOut"
+                targetTask="DisplayAStarWaypoints"
+                targetPort="WaypointsIn"/>
+
+
+
+
         <Include file="view/Car.xml"/>
         <Include file="view/Trajectory.xml"/>
 
@@ -235,8 +248,9 @@
                 <Task>DisplayMicroPlan</Task>
 		<Task>DisplayControllerData</Task>
 		<Task>DisplaySimulator</Task>
-		<Task>DisplaySimulatorCtrl</Task>
-	</CallMethod>
+                <Task>DisplaySimulatorCtrl</Task>
+                <Task>DisplayAStarWaypoints</Task>
+        </CallMethod>
 
 
 <!-- set starting position -->
