@@ -499,6 +499,7 @@
 	</BindMethod>
 -->
 
+        <BindMethod keys="T" task="DisplayTrajectory" name="ResetTrajectory"/>
 
 
 </TaskGraph>

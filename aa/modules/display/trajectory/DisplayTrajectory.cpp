@@ -37,6 +37,7 @@ DisplayTrajectory::DisplayTrajectory(std::string const & name)
 	, mTransparency("Transparency", "transparency of trajectory", 0.5f)
 	// Attributes:
 	, mVertices(new osg::Vec3Array)
+    , reset(false)
 {
 	// Read ports:
 
@@ -52,6 +53,8 @@ DisplayTrajectory::DisplayTrajectory(std::string const & name)
 	// Attributes:
 
 	// Methods:
+    addOperation("ResetTrajectory", &DisplayTrajectory::resetTrajectory, this, RTT::ClientThread).doc("reset trajectory");
+
 
 	// Commands:
 
@@ -111,6 +114,11 @@ void DisplayTrajectory::init3D(SceneNodePtr root)
 
 void DisplayTrajectory::operator()(osg::Node * node, osg::NodeVisitor * nv)
 {
+    if (reset) {
+        mVertices->clear();
+        reset=false;
+    }
+
 	if (mDrawArrayLines.valid()) {
 		TimedEgoState ego;
 		mEgoStateIn.read(ego);
@@ -129,6 +137,10 @@ void DisplayTrajectory::operator()(osg::Node * node, osg::NodeVisitor * nv)
 	traverse(node, nv);
 }
 
+void DisplayTrajectory::resetTrajectory()
+{
+    reset = true;
+}
 }
 }
 }

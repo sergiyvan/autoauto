@@ -59,9 +59,6 @@ protected:
 
 	virtual void updateHook();
 
-	void updateHook1();
-	void updateHook2();
-
 	virtual void stopHook();
 
 	void init3D(SceneNodePtr);
@@ -76,7 +73,9 @@ private:
 	osg::ref_ptr<osg::DrawArrays> mDrawArrayLines;
 	osg::ref_ptr<osg::Geometry> mGeometry;
 	osg::ref_ptr<osg::Vec3Array> mVertices;
+    bool reset;
 	// Functions:
+    void resetTrajectory();
 };
 
 }
