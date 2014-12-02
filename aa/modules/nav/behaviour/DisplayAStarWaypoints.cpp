@@ -120,8 +120,10 @@ void DisplayAStarWaypoints::operator()(osg::Node * node, osg::NodeVisitor * nv)
     mVertices->clear();
 
     for (int i=0;i<waypoints.size();i++) {
-        math::Vec3 pos = waypoints[i]->position;
-        mVertices->push_back(osg::Vec3(pos(0), pos(1), pos(2)));
+        if (waypoints[i]) {
+            math::Vec3 pos = waypoints[i]->position;
+            mVertices->push_back(osg::Vec3(pos(0), pos(1), pos(2)));
+        }
     }
 
     mDrawArrayLines->setFirst(0);
