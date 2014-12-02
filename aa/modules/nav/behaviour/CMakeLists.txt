@@ -18,3 +18,10 @@ LINK_LIBRARIES
         AAData
         Controller
 )
+
+add_module(AStarPlanGenerator
+        AStarPlanGenerator.cpp
+LINK_LIBRARIES
+        AAData
+        Controller
+)
