@@ -132,10 +132,11 @@ void DisplayAStarWaypoints::operator()(osg::Node * node, osg::NodeVisitor * nv)
     mWaypointsIn.read(waypoints);
 
 
+    mLineGeode->removeDrawables(0,mLineGeode->getNumDrawables());
+
 
     if (mDrawLines) {
 
-        mLineGeode->removeDrawables(0,mLineGeode->getNumDrawables());
 
         for (int i=0;i<waypoints.size();i++) {
             if (waypoints[i]) {
