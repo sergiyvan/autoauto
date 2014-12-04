@@ -190,41 +190,48 @@ bool AStarPlanGenerator::ReplanNow()
     //implement AStar here. The following code is just here to give you some examples how to use the data structures.
 
     mOpenList.clear();
-
     AStarWaypointPtr start(new AStarWaypoint(Vec3(0,0,0), Vec3(1,0,0), 0.0));
-    calculateCostToTarget(start);
-
     //insert waypoint in open list (which is a vector of waypoint pointers)
     mOpenList.push_back(start);
-
+    Logger::log() << Logger::Debug << "was ist los? " <<  std::endl;
+    //calculateCostToTarget(start);
     //delete waypoint in open list
-    int indexToDelete = 0;
-    mOpenList.erase(mOpenList.begin()+indexToDelete);
+//    int indexToDelete = 0;
 
-    //generate children of waypoint
-    std::vector<AStarWaypointPtr> children = generateChildren(start);
+    for ( int i=1; i<10000; ++i ) {
+        //A*
+        AStarWaypointPtr point = mOpenList.front();
+        
+        //generate children of waypoint
+        std::vector<AStarWaypointPtr> children = generateChildren(point);
+        //insert vector of waypoints to open list
+        mOpenList.insert(mOpenList.end(), children.begin(), children.end());
+        mOpenList.erase(mOpenList.begin());
+        //Log size of open list
+        Logger::log() << Logger::Debug << "open list size: " << mOpenList.size() << std::endl;
+        if (checkTargetReached(mOpenList.front())) {
+            generatePlanFromWaypoint(mOpenList[0]);
+            return true;
+        }
+    }
 
-    //insert vector of waypoints to open list
-    mOpenList.insert(mOpenList.end(), children.begin(), children.end());
 
-    //Log size of open list
-    Logger::log() << Logger::Debug << "open list size: " << mOpenList.size() << std::endl;
 
     //Log total cost of all waypoints in open list
-    for (int i=0;i<mOpenList.size();i++) {
-        Logger::log() << Logger::Debug << "total cost of waypoint " << i << ": " << mOpenList[i]->costToTarget << std::endl;
-    }
+    //for (int i=0;i<mOpenList.size();i++) {
+      //  Logger::log() << Logger::Debug << "total cost of waypoint " << i << ": " << mOpenList[i]->costToTarget << std::endl;
+    //}
 
     //check if first Waypoint in open list has reached target
-    if (checkTargetReached(mOpenList.front())) {
-        Logger::log() << Logger::Debug << "Reached Goal" << Logger::endl;
-    }
+    //if (checkTargetReached(mOpenList.front())) {
+      //  Logger::log() << Logger::Debug << "Reached Goal" << Logger::endl;
+    //}
 
 
     //generate a plan for the controller from a waypoint
     //insert only your final waypoint (the one which has reached the target) here.
     //(Previous waypoints are added recursively with the prevWaypoint pointer. You dont have to care about that)
-    generatePlanFromWaypoint(mOpenList[2]);
+    //generatePlanFromWaypoint(mOpenList[0]);
 
     return true;
 }
