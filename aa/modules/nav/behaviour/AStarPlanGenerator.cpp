@@ -182,7 +182,11 @@ void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
 {
     //insert your code/heuristic here
 	//costToTarget is currently distance to Target; angle is not considered
-    waypoint->costToTarget = (waypoint->position - mTargetPosition).norm();
+    flt waypointAngle = atan2(waypoint->orientation[1],waypoint->orientation[0]);
+    flt targetAngle = atan2(mTargetOrientation[1],mTargetOrientation[0]);
+
+    flt orientationDiffAngle = waypointAngle-targetAngle;
+    waypoint->costToTarget = (waypoint->position - mTargetPosition).norm() + orientationDiffAngle;
     waypoint->costTotal = waypoint->costFromStart+waypoint->costToTarget;
 }
 
@@ -199,7 +203,7 @@ bool AStarPlanGenerator::ReplanNow()
     //delete waypoint in open list
 //    int indexToDelete = 0;
 
-    for ( int i=1; i<100; ++i ) {
+    for ( int i=1; i<3000; ++i ) {
         //A*
     	//AStarWaypointPtr point = mOpenList.front();
     	AStarWaypointPtr tmpPoint;
