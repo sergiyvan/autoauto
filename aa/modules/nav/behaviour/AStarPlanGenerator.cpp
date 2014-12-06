@@ -180,8 +180,15 @@ bool AStarPlanGenerator::checkTargetReached(AStarWaypointPtr waypoint)
 
 void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
 {
+
+    flt waypointAngle = atan2(waypoint->orientation[1],waypoint->orientation[0]);
+    flt targetAngle = atan2(mTargetOrientation[1],mTargetOrientation[0]);
+
+    flt orientationDiffAngle = waypointAngle-targetAngle;
+
     //insert your code/heuristic here
-    waypoint->costToTarget = 0;
+//	Vec3 diff = mTargetPosition - waypoint->position;
+    waypoint->costToTarget = (waypoint->position - mTargetPosition).norm()+orientationDiffAngle;
     waypoint->costTotal = waypoint->costFromStart+waypoint->costToTarget;
 }
 
@@ -191,28 +198,37 @@ bool AStarPlanGenerator::ReplanNow()
 
     mOpenList.clear();
     AStarWaypointPtr start(new AStarWaypoint(Vec3(0,0,0), Vec3(1,0,0), 0.0));
+    calculateCostToTarget(start);
     //insert waypoint in open list (which is a vector of waypoint pointers)
     mOpenList.push_back(start);
-    Logger::log() << Logger::Debug << "was ist los? " <<  std::endl;
-    //calculateCostToTarget(start);
     //delete waypoint in open list
 //    int indexToDelete = 0;
 
-    for ( int i=1; i<10000; ++i ) {
+
+    for ( int i=1; i<3000; ++i ) {
         //A*
-        AStarWaypointPtr point = mOpenList.front();
-        
+    	unsigned j=0;
+    	AStarWaypointPtr point = mOpenList.front();
+        for (unsigned i=0; i<mOpenList.size()-1; i++){
+        	if (mOpenList.at(i)->costTotal <= point->costTotal){
+        		point = mOpenList.at(i);
+        		j=i;
+        	}
+    	}
+        mOpenList.erase (mOpenList.begin()+j);
+
+        Logger::log() << Logger::Debug << "point cost: " <<  point->costTotal << std::endl;
+        Logger::log() << Logger::Debug << "point position : " <<  point->position  << "cost to target: " << point->costToTarget << std::endl;
+        Logger::log() << Logger::Debug << "point orientation: " <<  point->orientation << std::endl;
+        Logger::log() << Logger::Debug << "=====================" << std::endl;
+        if (checkTargetReached(point)) {
+            generatePlanFromWaypoint(point);
+            return true;
+        }
         //generate children of waypoint
         std::vector<AStarWaypointPtr> children = generateChildren(point);
         //insert vector of waypoints to open list
         mOpenList.insert(mOpenList.end(), children.begin(), children.end());
-        mOpenList.erase(mOpenList.begin());
-        //Log size of open list
-        Logger::log() << Logger::Debug << "open list size: " << mOpenList.size() << std::endl;
-        if (checkTargetReached(mOpenList.front())) {
-            generatePlanFromWaypoint(mOpenList[0]);
-            return true;
-        }
     }
 
 
