@@ -174,6 +174,8 @@ bool AStarPlanGenerator::checkTargetReached(AStarWaypointPtr waypoint)
     }
 
     flt distToTarget = (waypoint->position - mTargetPosition).norm();
+    Logger::log() << Logger::Debug << "dist to target: " << distToTarget << std::endl;
+    Logger::log() << Logger::Debug << "orientationDiff: " << orientationDiffAngle << std::endl;
 
     return (distToTarget < mMaxDiffPos && abs(orientationDiffAngle)<mMaxDiffAngle);
 }
@@ -186,6 +188,15 @@ void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
     flt targetAngle = atan2(mTargetOrientation[1],mTargetOrientation[0]);
 
     flt orientationDiffAngle = waypointAngle-targetAngle;
+
+    //normalize angle
+       if (orientationDiffAngle >= M_PI) {
+           orientationDiffAngle -= 2*M_PI;
+       }
+       if (orientationDiffAngle < -M_PI) {
+           orientationDiffAngle += 2*M_PI;
+       }
+
     waypoint->costToTarget = (waypoint->position - mTargetPosition).norm() + orientationDiffAngle;
     waypoint->costTotal = waypoint->costFromStart+waypoint->costToTarget;
 }
@@ -203,34 +214,41 @@ bool AStarPlanGenerator::ReplanNow()
     //delete waypoint in open list
 //    int indexToDelete = 0;
 
-    for ( int i=1; i<3000; ++i ) {
+    for ( int i=1; i<2000; i++ ) {
+    //while(true){
         //A*
     	//AStarWaypointPtr point = mOpenList.front();
     	AStarWaypointPtr tmpPoint;
-    	AStarWaypointPtr point;
-    	flt curCost = 1000.;
+    	AStarWaypointPtr point = mOpenList[0];
     	int k=0;
     	//find waypoint with smallest costToTarget
         for(int j =0; j<mOpenList.size();j++){
         	tmpPoint = mOpenList[j];
-        	if(curCost > tmpPoint->costToTarget){
-        		point =tmpPoint;
-        		curCost = tmpPoint->costToTarget;
+        	if(point->costToTarget > tmpPoint->costToTarget){
+        		point =mOpenList[j];
         		k=j;
         	}
+//        	else{
+//        		if((point->costToTarget = tmpPoint->costToTarget) &&(point->costFromStart > tmpPoint->costFromStart)){
+//            		point =mOpenList[j];
+//            		k=j;
+//        		}
+//        	}
         }
-        
+        mOpenList.erase(mOpenList.begin()+k);
+         Logger::log() << Logger::Debug << "total cost of waypoint " << k << ": " << mOpenList[k]->costToTarget << std::endl;
+         if (checkTargetReached(point)) {
+            generatePlanFromWaypoint(point);
+            return true;
+        }
         //generate children of waypoint
         std::vector<AStarWaypointPtr> children = generateChildren(point);
         //insert vector of waypoints to open list
         mOpenList.insert(mOpenList.end(), children.begin(), children.end());
-        mOpenList.erase(mOpenList.begin());
+        //mOpenList.erase(mOpenList.begin());
         //Log size of open list
         Logger::log() << Logger::Debug << "open list size: " << mOpenList.size() << std::endl;
-        if (checkTargetReached(mOpenList[k])) {
-            generatePlanFromWaypoint(point);
-            return true;
-        }
+       
     }
 
 
