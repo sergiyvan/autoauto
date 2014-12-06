@@ -181,7 +181,8 @@ bool AStarPlanGenerator::checkTargetReached(AStarWaypointPtr waypoint)
 void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
 {
     //insert your code/heuristic here
-    waypoint->costToTarget = 0;
+	//costToTarget is currently distance to Target; angle is not considered
+    waypoint->costToTarget = (waypoint->position - mTargetPosition).norm();
     waypoint->costTotal = waypoint->costFromStart+waypoint->costToTarget;
 }
 
@@ -198,9 +199,22 @@ bool AStarPlanGenerator::ReplanNow()
     //delete waypoint in open list
 //    int indexToDelete = 0;
 
-    for ( int i=1; i<10000; ++i ) {
+    for ( int i=1; i<100; ++i ) {
         //A*
-        AStarWaypointPtr point = mOpenList.front();
+    	//AStarWaypointPtr point = mOpenList.front();
+    	AStarWaypointPtr tmpPoint;
+    	AStarWaypointPtr point;
+    	flt curCost = 1000.;
+    	int k=0;
+    	//find waypoint with smallest costToTarget
+        for(int j =0; j<mOpenList.size();j++){
+        	tmpPoint = mOpenList[j];
+        	if(curCost > tmpPoint->costToTarget){
+        		point =tmpPoint;
+        		curCost = tmpPoint->costToTarget;
+        		k=j;
+        	}
+        }
         
         //generate children of waypoint
         std::vector<AStarWaypointPtr> children = generateChildren(point);
@@ -209,8 +223,8 @@ bool AStarPlanGenerator::ReplanNow()
         mOpenList.erase(mOpenList.begin());
         //Log size of open list
         Logger::log() << Logger::Debug << "open list size: " << mOpenList.size() << std::endl;
-        if (checkTargetReached(mOpenList.front())) {
-            generatePlanFromWaypoint(mOpenList[0]);
+        if (checkTargetReached(mOpenList[k])) {
+            generatePlanFromWaypoint(point);
             return true;
         }
     }
@@ -231,7 +245,7 @@ bool AStarPlanGenerator::ReplanNow()
     //generate a plan for the controller from a waypoint
     //insert only your final waypoint (the one which has reached the target) here.
     //(Previous waypoints are added recursively with the prevWaypoint pointer. You dont have to care about that)
-    //generatePlanFromWaypoint(mOpenList[0]);
+    generatePlanFromWaypoint(mOpenList[mOpenList.size()-1]);
 
     return true;
 }
@@ -245,5 +259,6 @@ bool AStarPlanGenerator::ReplanNow()
 }
 
 }
+
 
 
