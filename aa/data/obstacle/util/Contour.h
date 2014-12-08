@@ -91,18 +91,24 @@ public:
 	}
 
 
-	/**
-	* Computes the contour based on the given bounding box. It uses the scanner to eliminate
-	* hidden points.
-	*/
-	void compute(::data::geometry::BoundingBox3D const & boundingBox, ScannerSystem const & scanner);
+    /**
+    * Computes the contour based on the given bounding box. It uses the scanner to eliminate
+    * hidden points.
+    */
+    void compute(::data::geometry::BoundingBox3D const & boundingBox, ScannerSystem const & scanner);
 
 
-	/**
-	*	Computes a contour from a list of points that is a convex hull and the position
-	*	that mean the point of view.
-	*/
+    /**
+    *	Computes a contour from a list of points that is a convex hull and the position
+    *	that mean the point of view.
+    */
     void compute(std::vector< Vec2> const & convexhull, Vec2 const & referencePoint);
+
+
+    /**
+    *	Computes a contour from a list of points and does *not* eliminate hidden points
+    */
+    void compute(std::vector< Vec2> const & convexhull);
 
 
 	/**

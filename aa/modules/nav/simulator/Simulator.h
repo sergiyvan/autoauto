@@ -69,7 +69,8 @@ protected:
 	RTT::InputPort<std::string> mSetToWayPointIn;
 
 
-	RTT::Property<bool> mPause;
+    RTT::Property<bool> mPause;
+    RTT::Property<bool> mGenerateHiddenObstaclePoints;
 
 	void tokenize(const std::string & str, std::vector<std::string>& tokens, const std::string & delimiters);
 	void setPosAndDirAtWaypoint(std::string const & wp);

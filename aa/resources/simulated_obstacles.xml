@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation>
+        <simobject instances="1">
+		<name>AutoStatic1</name>
+                <model>redcar.ac</model>
+		<modelscale>1.0,1.0,1.0</modelscale>
+                <position>0,0,0</position>
+		<orientation>0,0,1,0</orientation>
+		<size>2.5,1.25,2.0</size>
+                <path option="jump">
+                        <waypoint speed="1">10,5,0</waypoint>
+                        <waypoint speed="1">10,-5,0</waypoint>
+                        <waypoint speed="1">10,5,0</waypoint>
+                </path>
+	</simobject>
+        <simobject instances="1">
+		<name>AutoStatic2</name>
+                <model>passat.3ds</model>
+		<modelscale>1.0,1.0,1.0</modelscale>
+                <position>-0,0,0</position>
+		<orientation>0,0,1,0</orientation>
+		<size>2.5,1.25,2.0</size>
+                <path option="jump">
+                        <waypoint speed="5">20,-10,0</waypoint>
+                        <waypoint speed="5">20,10,0</waypoint>
+                        <waypoint speed="5">20,-10,0</waypoint>
+                </path>
+	</simobject>
+	<simobject instances="1">
+		<name>AutoStatic3</name>
+                <model>imiev.3ds</model>
+		<modelscale>1.0,1.0,1.0</modelscale>
+                <position>0,0,0</position>
+		<orientation>0,0,1,0</orientation>
+		<size>2.5,1.25,2.0</size>
+                <path option="jump">
+                        <waypoint speed="10">30,20,0</waypoint>
+                        <waypoint speed="10">30,-20,0</waypoint>
+                        <waypoint speed="10">30,20,0</waypoint>
+                </path>
+        </simobject>
+        <simobject instances="1">
+                <name>AutoStatic1</name>
+                <model>greencar.ac</model>
+                <modelscale>1.0,1.0,1.0</modelscale>
+                <position>0,0,0</position>
+                <orientation>0,0,1,0</orientation>
+                <size>2.5,1.25,2.0</size>
+                <path option="jump">
+                        <waypoint speed="1">10,5,0</waypoint>
+                        <waypoint speed="1">30,5,0</waypoint>
+                        <waypoint speed="1">10,5,0</waypoint>
+                </path>
+        </simobject>
+        <simobject instances="1">
+                <name>AutoStatic1</name>
+                <model>dodge.3ds</model>
+                <modelscale>1.0,1.0,1.0</modelscale>
+                <position>0,0,0</position>
+                <orientation>0,0,1,0</orientation>
+                <size>2.5,1.25,2.0</size>
+                <path option="jump">
+                        <waypoint speed="5">10,-5,0</waypoint>
+                        <waypoint speed="5">30,-5,0</waypoint>
+                        <waypoint speed="5">10,-5,0</waypoint>
+                </path>
+        </simobject>
+        <simobject instances="1">
+                <name>AutoStatic1</name>
+                <model>yellowcar.ac</model>
+                <modelscale>1.0,1.0,1.0</modelscale>
+                <position>0,0,0</position>
+                <orientation>0,0,1,0</orientation>
+                <size>2.5,1.25,2.0</size>
+                <path option="jump">
+                        <waypoint speed="10">10,10,0</waypoint>
+                        <waypoint speed="10">30,10,0</waypoint>
+                        <waypoint speed="10">10,10,0</waypoint>
+                </path>
+        </simobject>
+        <simobject instances="1">
+                <name>AutoStatic1</name>
+                <model>car.ac</model>
+                <modelscale>1.0,1.0,1.0</modelscale>
+                <position>0,0,0</position>
+                <orientation>0,0,1,0</orientation>
+                <size>2.5,1.25,2.0</size>
+                <path option="jump">
+                        <waypoint speed="10">30,-10,0</waypoint>
+                        <waypoint speed="10">10,-10,0</waypoint>
+                        <waypoint speed="10">30,-10,0</waypoint>
+                </path>
+        </simobject>
+
+<!--	<simobject instances="20">
+                <name>AutoDynamic</name>
+                <model>yellowcar.ac</model>
+                <modelscale>1.0,1.0,1.0</modelscale>
+                <position>0,0,0</position>
+                <orientation>0,0,1,0</orientation>
+                <size>2.5,1.25,2.0</size>
+                <path>
+                        <randomrndf speed="1.5"/>
+                </path>
+        </simobject>
+        <simobject instances="20">
+                <name>AutoDynamic</name>
+                <model>yellowcar.ac</model>
+                <modelscale>1.0,1.0,1.0</modelscale>
+                <position>0,10,0</position>
+                <orientation>0,0,1,0</orientation>
+                <size>2.5,1.25,2.0</size>
+                <path>
+                        <randomrndf speed="3"/>
+                </path>
+        </simobject> -->
+<!--        <simobject instances="3">
+                <name>AutoDynamic</name>
+                <model>redcar.ac</model>
+                <modelscale>1.0,1.0,1.0</modelscale>
+                <position>0,-10,0</position>
+                <orientation>0,0,1,0</orientation>
+                <size>2.5,1.25,2.0</size>
+                <path>
+                        <randomrndf speed="5"/>
+                </path>
+        </simobject>-->
+
+	<!--<simobject>
+		<name></name>
+		<model>M_TREE3.3DS</model>
+		<position>731.706 -58.9097 0</position>
+		<size>1.5 1.5 1.5</size>
+		<material>0.5 0.5 0.5 0.2</material>
+		<orientation>0 0 1 0</orientation>
+	</simobject>-->
+	
+</simulation>
+

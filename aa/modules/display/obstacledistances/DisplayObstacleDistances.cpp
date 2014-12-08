@@ -22,8 +22,8 @@ DisplayObstacleDistances::DisplayObstacleDistances(std::string const & name)
 	, mObstacleColor(1.0f, 0.0f, 0.0f)
 	, mBoundaryColor(1.0f, 0.0f, 0.0f)
 	, mBorderColor(0.0f, 0.0f, 1.0f)
-	, mEgoStateIn("EgoState")
-	, mObstaclesIn("Obstacles")
+    , mEgoStateIn("EgoStateIn")
+    , mObstaclesIn("ObstaclesIn")
 	, mUseObstacleHeight(
 		"useObstacleHeight",
 		"use height of obstacles as ground for margin?",

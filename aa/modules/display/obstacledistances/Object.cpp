@@ -106,9 +106,10 @@ void ObstacleObject::simpleSafetyArea(const math::flt safetyDistance)
 	else {
 		for (size_t i = 0; i < size - 1; ++i) {
 			const math::Vec3 & a = twoToThree(mContour[i]);
-			const math::Vec3 & b = twoToThree(mContour[i + 1]);
-			const math::Vec3 dir = (b - a).normalized();
-			const math::Vec3 ortho = math::Vec3(-dir[1], dir[0], 0);
+            const math::Vec3 & b = twoToThree(mContour[i + 1]);
+            if ((b - a) == math::Vec3(0,0,0)) continue;
+            const math::Vec3 dir = (b - a).normalized();
+            const math::Vec3 ortho = math::Vec3(-dir[1], dir[0], 0);
 			const math::Vec3 side = ortho * safetyDistance;
 
 			//create box on the left side
@@ -121,9 +122,10 @@ void ObstacleObject::simpleSafetyArea(const math::flt safetyDistance)
 
 			if (i < size - 2) {
 				const math::Vec3 & c = twoToThree(mContour[i + 2]);
-				const math::Vec3 dir2 = (c - b).normalized();
+                if ((c - b) == math::Vec3(0,0,0)) continue;
+                const math::Vec3 dir2 = (c - b).normalized();
 
-				const math::flt cosBeta = ortho[0] * dir2[0] + ortho[1] * dir2[1];
+                const math::flt cosBeta = ortho[0] * dir2[0] + ortho[1] * dir2[1];
 				const math::flt cosAlpha = dir[0] * dir2[0] + dir[1] * dir2[1];
 
 				if (cosBeta < 0) {
@@ -132,7 +134,7 @@ void ObstacleObject::simpleSafetyArea(const math::flt safetyDistance)
 									  ? acos(cosAlpha)
 									  : 2 * M_PI - acos(cosBeta) - M_PI / 2;
 
-					segment(b,
+                    segment(b,
 							dir, ortho,
 							angle, safetyDistance, Triangle::SEGMENT);
 				}
@@ -142,7 +144,7 @@ void ObstacleObject::simpleSafetyArea(const math::flt safetyDistance)
 									  ? acos(cosAlpha)
 									  : 2 * M_PI - acos(-cosBeta) - M_PI / 2;
 
-					segment(b,
+                    segment(b,
 							dir, -ortho,
 							angle, safetyDistance, Triangle::SEGMENT);
 				}

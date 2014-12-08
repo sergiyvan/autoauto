@@ -62,7 +62,8 @@ Simulator::Simulator(string const & name)
 	, mResetNewScenarioIn("ResetNewScenarioIn")
 	, mSetToWayPointIn("SetToWayPointIn")
 
-	, mPause("Pause", "Pause the simulator", false)
+    , mPause("Pause", "Pause the simulator", false)
+    , mGenerateHiddenObstaclePoints("GenerateHiddenObstaclePoints", "if true the simulator generates full obstacles contours", false)
 
 	, mSimulationObjectId(theSimulator::instance().registerAuto(Vec3(0, 0, 0),
 #if defined(USE_EIGEN)
@@ -92,7 +93,8 @@ Simulator::Simulator(string const & name)
 	addPort(mSetToWayPointIn);
 
 
-	addProperty(mPause);
+    addProperty(mPause);
+    addProperty(mGenerateHiddenObstaclePoints);
 
 	// Method Factory Interface.
 	addOperation("initTrafficLights", &Simulator::initTrafficLights, this, RTT::ClientThread).doc("Search for all Trafficlights on the RNDF");
@@ -367,14 +369,16 @@ void Simulator::updateHook()
 		//setPosAndDirAtWaypoint()
 	}
 
-	if (mPause.get()) {
-		theSimulator::instance().pause();
+    if (mPause.get()) {
+        theSimulator::instance().pause();
+        return;
+    }
+
+    if (mSimulationObjectId < 0) {
 		return;
 	}
 
-	if (mSimulationObjectId < 0) {
-		return;
-	}
+    theSimulator::instance().mGenerateHiddenObstaclePoints=mGenerateHiddenObstaclePoints.get();
 
 	TimeStamp now;
 	now.stamp();

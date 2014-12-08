@@ -100,6 +100,8 @@ public:
 	typedef std::vector<Simulant *> objects_collection_type;
 	objects_collection_type objects;
 
+    bool mGenerateHiddenObstaclePoints;
+
 protected:
 // 	RTT::OutputPort<std::vector<boost::tuple<Mat4x4, std::string, Vec4> > > mObjects;
 

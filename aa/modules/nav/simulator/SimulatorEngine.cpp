@@ -116,7 +116,8 @@ SimulatorEngine::SimulatorEngine()
 #if defined(PHYSX)
 	:  backend(new PhysXBackend())
 #else
-	:  backend(new SimpleBackend())
+    :  backend(new SimpleBackend())
+    , mGenerateHiddenObstaclePoints(false)
 #endif
 {
 }
@@ -374,9 +375,15 @@ void SimulatorEngine::generateObstacles(unsigned int id)
 		setForConvexhull.push_back(pos - size(0) * o - size(1) * p);
 		setForConvexhull.push_back(pos + size(0) * o - size(1) * p);
 
-		// compute contour points based on a convex hull and
-		// the current position of the car
-		points.compute(setForConvexhull, head(objects[id]->pos()));
+        if (mGenerateHiddenObstaclePoints) {
+            // compute contour points based only on a convex hull
+            points.compute(setForConvexhull);
+
+        } else {
+            // compute contour points based on a convex hull and
+            // the current position of the car
+            points.compute(setForConvexhull, head(objects[id]->pos()));
+        }
 
 		// TODO do not set classification to CAR, use obstacles type of model
 //		if (objects[i]->immovable)  // isStatic
@@ -418,8 +425,28 @@ TimedBaseObstacleBundle_ptr SimulatorEngine::getObstacles(unsigned int id) const
 
 Mat4x4 genDrawData(std::string const & model, Vec3 const & position, Quaternion const & q,  Vec3 const & scale)
 {
+
 	Mat4x4 Rt(Mat4x4::Zero());
 	Mat3x3 R = q.toRotationMatrix().transpose();
+
+    //HACKs for various 3d models
+    Vec3 hackedPos = position;
+    if (model == "dodge.3ds" || model == "car.ac" || model == "redcar.ac" || model == "greencar.ac") {
+        hackedPos = position + R*Vec3(-1.5,0,0);
+    }
+    if (model == "passat.3ds") {
+        hackedPos = position + R*Vec3(1.2,0,0);
+    }
+    if (model == "imiev.3ds") {
+        hackedPos = position + R*Vec3(1.2,0,0);
+    }
+    if (model == "car.ac" || model == "redcar.ac" || model == "greencar.ac" ) {
+        hackedPos = position + R*Vec3(-1.5,0,0);
+    }
+    if (model == "yellowcar.ac" ) {
+        hackedPos = position + R*Vec3(-0.2,0,0);
+    }
+
 
 // 	for (uint i = 0; i < 3; ++i) {
 // 		Rt(i, 0) = R(i, 0) * scale(i);
@@ -428,9 +455,9 @@ Mat4x4 genDrawData(std::string const & model, Vec3 const & position, Quaternion 
 // 	}
 	Rt.block<3, 3>(0, 0) = R;
 
-	Rt(0, 3) = position(0);
-	Rt(1, 3) = position(1);
-	Rt(2, 3) = position(2);
+    Rt(0, 3) = hackedPos(0);
+    Rt(1, 3) = hackedPos(1);
+    Rt(2, 3) = hackedPos(2);
 	Rt(3, 3) = flt(1);
 	return Rt;
 }

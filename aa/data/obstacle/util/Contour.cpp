@@ -176,6 +176,18 @@ void Contour::compute(std::vector<Vec2> const & convexhull, Vec2 const & referen
 	sample();
 }
 
+void Contour::compute(std::vector<Vec2> const & convexhull)
+{
+    clear();
+
+    int n = convexhull.size();
+    for (unsigned int i = 0; i < n; i++) {
+        push_back(convexhull.at(i));
+    }
+
+    sample();
+}
+
 
 void Contour::computeFromUnsortedList(
     std::vector<Vec2> list,

@@ -181,9 +181,9 @@ public:
 				break;
 			}
 
-			AutoSimulant * sim = (AutoSimulant *) theSimulator::instance().objects.at(id);
+            Simulant * sim = theSimulator::instance().objects.at(id);
 // 			Mat4x4 mat = genDrawData("", sim->pos, sim->orientation, sim->size);
-			Mat4x4 mat = genDrawData("", sim->pos(), sim->orientation(), sim->modelscale);
+            Mat4x4 mat = genDrawData(sim->model, sim->pos(), sim->orientation(), sim->modelscale);
 			osg::Matrixf matrix((flt *)&(mat));
 			globalNodes->getChild(i)->asTransform()->asMatrixTransform()->setMatrix(matrix);
 		}
@@ -249,8 +249,10 @@ void DisplaySimulator::init3D(SceneNodePtr sceneNode)
 	osg::setNotifyLevel(osg::ALWAYS);
 
 	// init 3d models
-	pimpl->meshes["dodge.3ds"]    = osgDB::readNodeFile("3dmodels/dodge.3ds");
-	pimpl->meshes["car.ac"]       = osgDB::readNodeFile("3dmodels/car.ac");
+    pimpl->meshes["dodge.3ds"]    = osgDB::readNodeFile("3dmodels/dodge.3ds");
+    pimpl->meshes["passat.3ds"]    = osgDB::readNodeFile("3dmodels/passat.3ds");
+    pimpl->meshes["imiev.3ds"]    = osgDB::readNodeFile("3dmodels/imiev.3ds");
+    pimpl->meshes["car.ac"]       = osgDB::readNodeFile("3dmodels/car.ac");
 	pimpl->meshes["redcar.ac"]    = osgDB::readNodeFile("3dmodels/redcar.ac");
 	pimpl->meshes["greencar.ac"]  = osgDB::readNodeFile("3dmodels/greencar.ac");
 	pimpl->meshes["yellowcar.ac"] = osgDB::readNodeFile("3dmodels/yellowcar.ac");

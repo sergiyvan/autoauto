@@ -117,11 +117,11 @@ void SimObject::update(DummyController * sim)
 
 	if (!started) {
 		if (path.begin()->oldPos != "") {
-			// We need a random point
-			std::string neu = "";
-			neu = sim->getNewRNDFPointFrom(neu);
-			position = sim->rndfToCoord(neu);
-			path.begin()->position = position;
+            // We need a random point
+            std::string neu = "";
+            neu = sim->getNewRNDFPointFrom(neu);
+            position = sim->rndfToCoord(neu);
+            path.begin()->position = position;
 			path.begin()->oldPos = neu;
 		}
 		else {
@@ -148,18 +148,18 @@ void SimObject::update(DummyController * sim)
 	if (dist < 0.2) {
 		if (path.begin()->oldPos == "") {
 			path.pop_front();
-		}
-		else {
-			// We need a random point
+        }
+        else {
+            // We need a random point
 			flt curSpeed = path.begin()->speed;
-			// get new spline edge data
-			std::pair<const EdgeData *, std::string> edgeData = sim->getNewRNDFEdge(path.begin()->oldPos);
+            // get new spline edge data
+            std::pair<const EdgeData *, std::string> edgeData = sim->getNewRNDFEdge(path.begin()->oldPos);
 
-			//remove the old one
-			path.pop_front();
+            //remove the old one
+            path.pop_front();
 
-			if (edgeData.first == NULL) {
-				return;
+            if (edgeData.first == NULL) {
+                return;
 			}
 
 			if (edgeData.first->laneSpline()) {
