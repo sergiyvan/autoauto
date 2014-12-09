@@ -184,8 +184,9 @@ void Contour::compute(std::vector<Vec2> const & convexhull)
     for (unsigned int i = 0; i < n; i++) {
         push_back(convexhull.at(i));
     }
+    push_back(convexhull.at(0));
 
-    sample();
+//    sample();
 }
 
 

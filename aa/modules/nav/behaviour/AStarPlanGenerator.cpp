@@ -37,16 +37,22 @@ using aa::modules::nav::controller::Plan_ptr;
 REGISTERTASKCONTEXT(AStarPlanGenerator);
 
 AStarPlanGenerator::AStarPlanGenerator(string const & name)
-	: RtTaskContext(name)
-	, mPlanOut("PlanOut")
+    : RtTaskContext(name)
+    , mEgoStateIn("EgoStateIn")
+    , mObstaclesIn("ObstaclesIn")
+    , mPlanOut("PlanOut")
     , mWaypointsOut("WaypointsOut")
     , mTargetPosition(30,15,0)
     , mTargetOrientation(-1,0,0)
     , mDistToDrive(5.0*M_PI/4.0)
     , mMaxTurnRadius(5.0)
     , mMaxDiffPos(2.5)
-    , mMaxDiffAngle(M_PI/180.0)
+    , mMaxDiffAngle(M_PI/180)
+    , mEpsilon(2.5)
 {
+    ports()->addPort(mEgoStateIn);
+    ports()->addPort(mObstaclesIn);
+
     ports()->addPort(mPlanOut);
     ports()->addPort(mWaypointsOut);
 
@@ -56,8 +62,12 @@ AStarPlanGenerator::AStarPlanGenerator(string const & name)
     addProperty("MaxTurnRadius", mMaxTurnRadius).doc("max turning radius of the car (in m)");
     addProperty("MaxDiffPos", mMaxDiffPos).doc("max dist to target for target reached check (in m)");
     addProperty("MaxDiffAngle", mMaxDiffAngle).doc("max angle difference to target orientation for target reached check (in rad)");
+    addProperty("Epsilon", mEpsilon).doc("factor for greedyy heuristic");
 
     addOperation("ReplanNow", &AStarPlanGenerator::ReplanNow, this, RTT::ClientThread).doc("replan trajectories");
+
+    mObstacles = AutoBaseObstacleBundle();
+    mObstacles->clear();
 
 }
 
@@ -70,22 +80,30 @@ bool AStarPlanGenerator::startHook()
 {
     Logger::In in("AStarPlanGenerator");
 
-	OPTIONAL_PORT(mPlanOut);
+    REQUIRED_PORT(mObstaclesIn);
+
+    OPTIONAL_PORT(mEgoStateIn);
+    OPTIONAL_PORT(mPlanOut);
 
     ReplanNow();
 
-	return true;
+    return true;
 }
 
 void AStarPlanGenerator::updateHook()
 {
     Logger::In in("AStarPlanGenerator");
 
-    // write out plan
-	mPlanOut.write(mPlan);
+    //read from ports
+    mEgoStateIn.read(mEgoState);
+    mObstaclesIn.read(mObstacles);
 
-    //write out open list for display module
+    ReplanNow();
+
+    // write out plan and open list for display module
+    mPlanOut.write(mPlan);
     mWaypointsOut.write(mOpenList);
+
 
 }
 
@@ -113,6 +131,7 @@ void AStarPlanGenerator::generatePlanFromWaypoint(AStarWaypointPtr waypoint)
     Plan_ptr curPlanPtr = aa::modules::nav::controller::AutoPlan();
     curPlanPtr->clear();
 
+
     for(std::vector<AStarWaypoint>::reverse_iterator rit = waypoints.rbegin(); rit != waypoints.rend(); ++rit)
     {
         curPlanPtr->push_back((*rit).costFromStart, (*rit).position, (*rit).orientation);
@@ -137,12 +156,21 @@ std::vector<AStarWaypointPtr> AStarPlanGenerator::generateChildren(AStarWaypoint
     Eigen::AngleAxis<double> rotateLeft(angle, Vec3(0,0,1));
     Vec3 relativePosChangeLeft(sin(angle)*radius, (-cos(angle)+1.0)*radius, 0);
     Vec3 posChangeLeft = rotateToWaypointOrientation*relativePosChangeLeft;
-    AStarWaypointPtr left(new AStarWaypoint(waypoint->position+posChangeLeft, rotateLeft*waypoint->orientation, waypoint->costFromStart+distToDrive));
+
+    ///change this calculation for assignment 8 excercise 1
+    flt leftCostWithCurvature = waypoint->costWithCurvature+distToDrive;
+    ///
+
+    AStarWaypointPtr left(new AStarWaypoint(waypoint->position+posChangeLeft, rotateLeft*waypoint->orientation, waypoint->costFromStart+distToDrive, leftCostWithCurvature));
     calculateCostToTarget(left);
     left->prevWaypoint = waypoint;
     children.push_back(left);
 
-    AStarWaypointPtr center(new AStarWaypoint(waypoint->position+waypoint->orientation*distToDrive, waypoint->orientation, waypoint->costFromStart+distToDrive));
+    ///change this calculation for assignment 8 excercise 1
+    flt centerCostWithCurvature = waypoint->costWithCurvature+distToDrive;
+    ///
+
+    AStarWaypointPtr center(new AStarWaypoint(waypoint->position+waypoint->orientation*distToDrive, waypoint->orientation, waypoint->costFromStart+distToDrive,centerCostWithCurvature));
     calculateCostToTarget(center);
     center->prevWaypoint = waypoint;
     children.push_back(center);
@@ -150,7 +178,12 @@ std::vector<AStarWaypointPtr> AStarPlanGenerator::generateChildren(AStarWaypoint
     Eigen::AngleAxis<double> rotateRight(-angle, Vec3(0,0,1));
     Vec3 relativePosChangeRight(sin(angle)*radius, -(-cos(angle)+1.0)*radius, 0);
     Vec3 posChangeRight = rotateToWaypointOrientation*relativePosChangeRight;
-    AStarWaypointPtr right(new AStarWaypoint(waypoint->position+posChangeRight, rotateRight*waypoint->orientation, waypoint->costFromStart+distToDrive));
+
+    ///change this calculation for assignment 8 excercise 1
+    flt rightCostWithCurvature = waypoint->costWithCurvature+distToDrive;
+    ///
+
+    AStarWaypointPtr right(new AStarWaypoint(waypoint->position+posChangeRight, rotateRight*waypoint->orientation, waypoint->costFromStart+distToDrive, rightCostWithCurvature));
     calculateCostToTarget(right);
     right->prevWaypoint = waypoint;
     children.push_back(right);
@@ -178,53 +211,106 @@ bool AStarPlanGenerator::checkTargetReached(AStarWaypointPtr waypoint)
     return (distToTarget < mMaxDiffPos && abs(orientationDiffAngle)<mMaxDiffAngle);
 }
 
+bool AStarPlanGenerator::collisionWithObstacle(AStarWaypointPtr wp, TimedBaseObstacleBundle_ptr obstacles)
+{
+    ///This is dummy code! Insert your code here!
+
+    //2d position of the waypoint
+    Vec2 pos2d = head(wp->position);
+
+    //iterate through obstacles
+    for (TimedBaseObstacleBundle_ptr::element_type::const_iterator ito=obstacles->begin(); ito != obstacles->end(); ++ito) {
+        const aa::data::obstacle::BaseObstacle & obstacle = *ito;
+        aa::data::obstacle::util::Contour contour = obstacle.contour();
+        //iterate through contour points
+        for (int i = 1; i < contour.size(); i++){
+
+            Vec2 c = contour[i]; //2d point on the obstacle contour
+
+            if (false) {
+                //found collision
+                return true;
+            }
+
+
+        }
+    }
+    return false;
+}
+
+
 void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
 {
-    //insert your code/heuristic here
-    waypoint->costToTarget = 0;
-    waypoint->costTotal = waypoint->costFromStart+waypoint->costToTarget;
+    waypoint->costToTarget = (mTargetPosition-waypoint->position).norm()*mEpsilon;
+    waypoint->costTotal = waypoint->costWithCurvature+waypoint->costToTarget;
 }
 
 bool AStarPlanGenerator::ReplanNow()
 {
-    //implement AStar here. The following code is just here to give you some examples how to use the data structures.
+    //stamp mTimeStamp for time limit check
+    mTimeStamp.stamp();    
 
+    //init open list, reachedTarget and min
     mOpenList.clear();
+    bool reachedTarget= false;
+    AStarWaypointPtr min;
 
-    AStarWaypointPtr start(new AStarWaypoint(Vec3(0,0,0), Vec3(1,0,0), 0.0));
+    //insert start waypoint
+    AStarWaypointPtr start(new AStarWaypoint(Vec3(0,0,0), Vec3(1,0,0), 0.0,0.0));
     calculateCostToTarget(start);
-
-    //insert waypoint in open list (which is a vector of waypoint pointers)
     mOpenList.push_back(start);
 
-    //delete waypoint in open list
-    int indexToDelete = 0;
-    mOpenList.erase(mOpenList.begin()+indexToDelete);
 
-    //generate children of waypoint
-    std::vector<AStarWaypointPtr> children = generateChildren(start);
 
-    //insert vector of waypoints to open list
-    mOpenList.insert(mOpenList.end(), children.begin(), children.end());
+    //expand path while target not reached or no more options (or time limit reached)
+    while (!reachedTarget && !mOpenList.empty()) {
+        //check for time limit
+        TimeStamp now;
+        now.stamp();
+        if (1E-9f * RTT::os::TimeService::ticks2nsecs(now - mTimeStamp) > 0.9) {
+            //break if we took longer than 0.03 s
+            break;
+        }
 
-    //Log size of open list
-    Logger::log() << Logger::Debug << "open list size: " << mOpenList.size() << std::endl;
+        //search for waypoint with minimum total cost in open list
+        min = mOpenList[0];
+        int minIndex = 0;
+        for (int i=0; i < mOpenList.size(); i++) {
+            if (mOpenList[i]->costTotal < min->costTotal) {
+                min = mOpenList[i];
+                minIndex=i;
+            }
+        }
 
-    //Log total cost of all waypoints in open list
-    for (int i=0;i<mOpenList.size();i++) {
-        Logger::log() << Logger::Debug << "total cost of waypoint " << i << ": " << mOpenList[i]->costToTarget << std::endl;
+        //check if we reached the target
+        if (checkTargetReached(min)) {
+            reachedTarget=true;
+        }
+
+        //generate children of min
+        std::vector<AStarWaypointPtr> children = generateChildren(min);
+
+        //check children for collision (insert your code in collisionWithObstacle!)
+        std::vector<AStarWaypointPtr> collisionFreeChildren;
+        for (std::vector<AStarWaypointPtr>::iterator it = children.begin(); it != children.end(); it++) {
+            if (!collisionWithObstacle(*it,mObstacles)) {
+                collisionFreeChildren.push_back(*it);
+            }
+        }
+
+        //erase min from open list and insert (collision free) children
+        mOpenList.erase(mOpenList.begin()+minIndex);
+        mOpenList.insert(mOpenList.end(), collisionFreeChildren.begin(), collisionFreeChildren.end());
+
     }
 
-    //check if first Waypoint in open list has reached target
-    if (checkTargetReached(mOpenList.front())) {
-        Logger::log() << Logger::Debug << "Reached Goal" << Logger::endl;
+    //generate a plan from min (which has reached the target or is the closest if time limit was reached)
+    generatePlanFromWaypoint(min);
+
+    if (!reachedTarget) {
+        //at the moment it does not matter what ReplanNow returns but could be used to check if the plan reaches the target
+        return false;
     }
-
-
-    //generate a plan for the controller from a waypoint
-    //insert only your final waypoint (the one which has reached the target) here.
-    //(Previous waypoints are added recursively with the prevWaypoint pointer. You dont have to care about that)
-    generatePlanFromWaypoint(mOpenList[2]);
 
     return true;
 }
@@ -232,11 +318,8 @@ bool AStarPlanGenerator::ReplanNow()
 
 
 }
-
 }
-
 }
-
 }
 
 

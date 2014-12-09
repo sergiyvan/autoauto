@@ -29,12 +29,17 @@
 <!-- behaviour and controller -->
         <Activity type="PeriodicActivity">
                 <struct name="" type="type_less">
-                        <simple type="double" name="Period"><value>0.04</value></simple>
+                        <simple type="double" name="Period"><value>1</value></simple>
                 </struct>
 
                 <TaskContext type="AStarPlanGenerator" name="Behaviour">
                 </TaskContext>
+        </Activity>
 
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.04</value></simple>
+                </struct>
                 <TaskContext type="StateMachine" name="StateMachine"/>
                 <TaskContext type="ControllerGateway" name="ControllerGateway"/>
         </Activity>
@@ -126,6 +131,12 @@
         <Connection
                 sourceTask="Simulator"
                 sourcePort="ObstaclesOut"
+                targetTask="Behaviour"
+                targetPort="ObstaclesIn"/>
+
+        <Connection
+                sourceTask="Simulator"
+                sourcePort="ObstaclesOut"
                 targetTask="DisplayObstacles"
                 targetPort="ObstaclesIn"/>
 
@@ -147,6 +158,12 @@
                 sourceTask="EgoStateSnapshotGenerator"
                 sourcePort="EgoState"
                 targetTask="ControllerGateway"
+                targetPort="EgoStateIn"/>
+
+        <Connection
+                sourceTask="EgoStateSnapshotGenerator"
+                sourcePort="EgoState"
+                targetTask="Behaviour"
                 targetPort="EgoStateIn"/>
 
         <Connection
@@ -274,6 +291,7 @@
 		<Task>DisplaySimulator</Task>
                 <Task>DisplaySimulatorCtrl</Task>
                 <Task>DisplayAStarWaypoints</Task>
+                <Task>DisplayObstacles</Task>
         </CallMethod>
 
 

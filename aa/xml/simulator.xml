@@ -23,12 +23,17 @@
 <!-- behaviour and controller -->
         <Activity type="PeriodicActivity">
                 <struct name="" type="type_less">
-                        <simple type="double" name="Period"><value>0.04</value></simple>
+                        <simple type="double" name="Period"><value>1</value></simple>
                 </struct>
 
                 <TaskContext type="AStarPlanGenerator" name="Behaviour">
                 </TaskContext>
+        </Activity>
 
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.04</value></simple>
+                </struct>
                 <TaskContext type="StateMachine" name="StateMachine"/>
                 <TaskContext type="ControllerGateway" name="ControllerGateway"/>
         </Activity>
@@ -105,11 +110,17 @@
                 targetPort="PassatCarStateIn"/>
 
 
-	<Connection
-		sourceTask="Simulator"
-		sourcePort="CarStateOut"
-		targetTask="CarView"
-		targetPort="CarState"/>
+        <Connection
+                sourceTask="Simulator"
+                sourcePort="CarStateOut"
+                targetTask="CarView"
+                targetPort="CarState"/>
+
+        <Connection
+                sourceTask="Simulator"
+                sourcePort="ObstaclesOut"
+                targetTask="Behaviour"
+                targetPort="ObstaclesIn"/>
 
 
 <!-- Outgoing EgoStateSnapshotGenerator connections -->
@@ -129,6 +140,12 @@
                 sourceTask="EgoStateSnapshotGenerator"
 		sourcePort="EgoState"
 		targetTask="ControllerGateway"
+                targetPort="EgoStateIn"/>
+
+        <Connection
+                sourceTask="EgoStateSnapshotGenerator"
+                sourcePort="EgoState"
+                targetTask="Behaviour"
                 targetPort="EgoStateIn"/>
 
 
