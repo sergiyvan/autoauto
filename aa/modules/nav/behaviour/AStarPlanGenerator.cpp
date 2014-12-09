@@ -13,6 +13,9 @@
 
 #include <aa/modules/nav/statemachine/StateMachine.h>
 
+#include <gui/View3D.h>
+
+
 
 namespace aa
 {
@@ -49,6 +52,7 @@ AStarPlanGenerator::AStarPlanGenerator(string const & name)
     , mMaxDiffPos(2.5)
     , mMaxDiffAngle(M_PI/180)
     , mEpsilon(2.5)
+    , mCapture(new osgViewer::ScreenCaptureHandler)
 {
     ports()->addPort(mEgoStateIn);
     ports()->addPort(mObstaclesIn);
@@ -85,6 +89,13 @@ bool AStarPlanGenerator::startHook()
     OPTIONAL_PORT(mEgoStateIn);
     OPTIONAL_PORT(mPlanOut);
 
+    gui::View3D * view = gui::View3D::getView3D(0);
+    view->addEventHandler(mCapture);
+
+    mCapture->setCaptureOperation(new osgViewer::ScreenCaptureHandler::WriteToFile("screenshot", "png", osgViewer::ScreenCaptureHandler::WriteToFile::SEQUENTIAL_NUMBER));
+    mCapture->setFramesToCapture(1);
+
+
     ReplanNow();
 
     return true;
@@ -104,11 +115,12 @@ void AStarPlanGenerator::updateHook()
     mPlanOut.write(mPlan);
     mWaypointsOut.write(mOpenList);
 
-
 }
 
 void AStarPlanGenerator::stopHook()
 {
+    gui::View3D * view = gui::View3D::getView3D(0);
+    view->removeEventHandler(mCapture);
 }
 
 void AStarPlanGenerator::errorHook()
@@ -315,6 +327,12 @@ bool AStarPlanGenerator::ReplanNow()
     return true;
 }
 
+
+void AStarPlanGenerator::screenshot()
+{
+    mCapture->setFramesToCapture(1);
+    mCapture->startCapture();
+}
 
 
 }

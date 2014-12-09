@@ -8,6 +8,9 @@
 #include <QMutex>
 #include <core/TimeStamp.h>
 
+#include <osgViewer/ViewerEventHandlers>
+
+
 
 namespace aa
 {
@@ -77,6 +80,8 @@ private:
     void calculateCostToTarget(AStarWaypointPtr waypoint);
     bool ReplanNow();
     bool collisionWithObstacle(AStarWaypointPtr wp, TimedBaseObstacleBundle_ptr obstacles);
+    void screenshot();
+
 
     /** Properties */
     math::Vec3 mTargetPosition;
@@ -94,6 +99,8 @@ private:
     TimedBaseObstacleBundle_ptr mObstacles;
     QMutex mMutex;
     TimeStamp mTimeStamp;
+    osgViewer::ScreenCaptureHandler * mCapture;
+
 
 };
 
