@@ -24,6 +24,7 @@ add_module(AStarPlanGenerator
 LINK_LIBRARIES
         AAData
         Controller
+        DataObstacle
 )
 
 add_module(DisplayAStarWaypoints
