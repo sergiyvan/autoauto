@@ -37,6 +37,7 @@ struct AStarWaypoint {
     math::Vec3 position;
     math::Vec3 orientation;
     math::flt costTotal;
+    math::flt prevCurvature;
     math::flt costFromStart;
     math::flt costWithCurvature;
     math::flt costToTarget;

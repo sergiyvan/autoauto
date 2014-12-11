@@ -51,7 +51,7 @@ AStarPlanGenerator::AStarPlanGenerator(string const & name)
     , mMaxTurnRadius(5.0)
     , mMaxDiffPos(2.5)
     , mMaxDiffAngle(M_PI/180)
-    , mEpsilon(2.5)
+    , mEpsilon(1.)
     , mCapture(new osgViewer::ScreenCaptureHandler)
 {
     ports()->addPort(mEgoStateIn);
@@ -156,7 +156,7 @@ void AStarPlanGenerator::generatePlanFromWaypoint(AStarWaypointPtr waypoint)
 std::vector<AStarWaypointPtr> AStarPlanGenerator::generateChildren(AStarWaypointPtr waypoint)
 {
     std::vector<AStarWaypointPtr> children;
-
+    flt curvatureCost = 3.0;
     flt distToDrive = mDistToDrive;
     flt radius = mMaxTurnRadius; //Wendekreis des Autos
 
@@ -168,23 +168,35 @@ std::vector<AStarWaypointPtr> AStarPlanGenerator::generateChildren(AStarWaypoint
     Eigen::AngleAxis<double> rotateLeft(angle, Vec3(0,0,1));
     Vec3 relativePosChangeLeft(sin(angle)*radius, (-cos(angle)+1.0)*radius, 0);
     Vec3 posChangeLeft = rotateToWaypointOrientation*relativePosChangeLeft;
-
+    flt leftCostWithCurvature;
     ///change this calculation for assignment 8 excercise 1
-    flt leftCostWithCurvature = waypoint->costWithCurvature+distToDrive;
+    if(waypoint->prevCurvature == -1.0){
+        leftCostWithCurvature = waypoint->costWithCurvature+distToDrive;
+    }else{
+        leftCostWithCurvature = waypoint->costWithCurvature+distToDrive+ curvatureCost;
+    }
+
     ///
 
     AStarWaypointPtr left(new AStarWaypoint(waypoint->position+posChangeLeft, rotateLeft*waypoint->orientation, waypoint->costFromStart+distToDrive, leftCostWithCurvature));
     calculateCostToTarget(left);
     left->prevWaypoint = waypoint;
+    left->prevCurvature = -1.0;
     children.push_back(left);
 
     ///change this calculation for assignment 8 excercise 1
-    flt centerCostWithCurvature = waypoint->costWithCurvature+distToDrive;
+    flt centerCostWithCurvature;
+    if(waypoint->prevCurvature == 0.0){
+    	centerCostWithCurvature = waypoint->costWithCurvature+distToDrive;
+    }else{
+    	centerCostWithCurvature = waypoint->costWithCurvature+distToDrive+curvatureCost;
+    }
     ///
 
     AStarWaypointPtr center(new AStarWaypoint(waypoint->position+waypoint->orientation*distToDrive, waypoint->orientation, waypoint->costFromStart+distToDrive,centerCostWithCurvature));
     calculateCostToTarget(center);
     center->prevWaypoint = waypoint;
+    center->prevCurvature = 0.0;
     children.push_back(center);
 
     Eigen::AngleAxis<double> rotateRight(-angle, Vec3(0,0,1));
@@ -192,12 +204,18 @@ std::vector<AStarWaypointPtr> AStarPlanGenerator::generateChildren(AStarWaypoint
     Vec3 posChangeRight = rotateToWaypointOrientation*relativePosChangeRight;
 
     ///change this calculation for assignment 8 excercise 1
-    flt rightCostWithCurvature = waypoint->costWithCurvature+distToDrive;
+    flt rightCostWithCurvature;
+    if(waypoint->prevCurvature == 1.0){
+        rightCostWithCurvature = waypoint->costWithCurvature+distToDrive;
+    }else{
+        rightCostWithCurvature = waypoint->costWithCurvature+distToDrive+curvatureCost;
+    }
     ///
 
     AStarWaypointPtr right(new AStarWaypoint(waypoint->position+posChangeRight, rotateRight*waypoint->orientation, waypoint->costFromStart+distToDrive, rightCostWithCurvature));
     calculateCostToTarget(right);
     right->prevWaypoint = waypoint;
+    right->prevCurvature = 1.0;
     children.push_back(right);
 
     return children;
@@ -253,7 +271,19 @@ bool AStarPlanGenerator::collisionWithObstacle(AStarWaypointPtr wp, TimedBaseObs
 
 void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
 {
-    waypoint->costToTarget = (mTargetPosition-waypoint->position).norm()*mEpsilon;
+    flt waypointAngle = atan2(waypoint->orientation[1],waypoint->orientation[0]);
+    flt targetAngle = atan2(mTargetOrientation[1],mTargetOrientation[0]);
+
+	  flt orientationDiffAngle = waypointAngle-targetAngle;
+
+	    //normalize angle
+	    if (orientationDiffAngle >= M_PI) {
+	        orientationDiffAngle -= 2*M_PI;
+	    }
+	    if (orientationDiffAngle < -M_PI) {
+	        orientationDiffAngle += 2*M_PI;
+	    }
+    waypoint->costToTarget = (mTargetPosition-waypoint->position).norm()*mEpsilon+ abs(orientationDiffAngle);
     waypoint->costTotal = waypoint->costWithCurvature+waypoint->costToTarget;
 }
 
@@ -270,6 +300,7 @@ bool AStarPlanGenerator::ReplanNow()
     //insert start waypoint
     AStarWaypointPtr start(new AStarWaypoint(Vec3(0,0,0), Vec3(1,0,0), 0.0,0.0));
     calculateCostToTarget(start);
+    start->costWithCurvature = 0.0;
     mOpenList.push_back(start);
 
 
@@ -279,10 +310,10 @@ bool AStarPlanGenerator::ReplanNow()
         //check for time limit
         TimeStamp now;
         now.stamp();
-        if (1E-9f * RTT::os::TimeService::ticks2nsecs(now - mTimeStamp) > 0.9) {
+       // if (1E-9f * RTT::os::TimeService::ticks2nsecs(now - mTimeStamp) > 4.0) {
             //break if we took longer than 0.03 s
-            break;
-        }
+         //   break;
+       // }
 
         //search for waypoint with minimum total cost in open list
         min = mOpenList[0];
