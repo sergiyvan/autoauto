@@ -45,7 +45,7 @@ AStarPlanGenerator::AStarPlanGenerator(string const & name)
     , mObstaclesIn("ObstaclesIn")
     , mPlanOut("PlanOut")
     , mWaypointsOut("WaypointsOut")
-    , mTargetPosition(30,15,0)
+    , mTargetPosition(15,15,0)
     , mTargetOrientation(-1,0,0)
     , mDistToDrive(5.0*M_PI/4.0)
     , mMaxTurnRadius(5.0)
@@ -109,7 +109,7 @@ void AStarPlanGenerator::updateHook()
     mEgoStateIn.read(mEgoState);
     mObstaclesIn.read(mObstacles);
 
-    ReplanNow();
+    //ReplanNow();
 
     // write out plan and open list for display module
     mPlanOut.write(mPlan);
@@ -228,7 +228,7 @@ bool AStarPlanGenerator::collisionWithObstacle(AStarWaypointPtr wp, TimedBaseObs
     ///This is dummy code! Insert your code here!
 
     //2d position of the waypoint
-    Vec2 pos2d = head(wp->position);
+//    Vec2 pos2d = head(wp->position);
 
     //iterate through obstacles
     for (TimedBaseObstacleBundle_ptr::element_type::const_iterator ito=obstacles->begin(); ito != obstacles->end(); ++ito) {
@@ -237,7 +237,7 @@ bool AStarPlanGenerator::collisionWithObstacle(AStarWaypointPtr wp, TimedBaseObs
         //iterate through contour points
         for (int i = 1; i < contour.size(); i++){
 
-            Vec2 c = contour[i]; //2d point on the obstacle contour
+//            Vec2 c = contour[i]; //2d point on the obstacle contour
 
             if (false) {
                 //found collision
@@ -260,7 +260,8 @@ void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
 bool AStarPlanGenerator::ReplanNow()
 {
     //stamp mTimeStamp for time limit check
-    mTimeStamp.stamp();    
+    mTimeStamp.stamp();
+    std::vector<AStarWaypointPtr> solutions;
 
     //init open list, reachedTarget and min
     mOpenList.clear();
@@ -271,16 +272,20 @@ bool AStarPlanGenerator::ReplanNow()
     AStarWaypointPtr start(new AStarWaypoint(Vec3(0,0,0), Vec3(1,0,0), 0.0,0.0));
     calculateCostToTarget(start);
     mOpenList.push_back(start);
-
+    string filename = "controller.csv";
+    std::ofstream mOutputStream;
+    mOutputStream.open(filename.c_str());
+    flt duration;
 
 
     //expand path while target not reached or no more options (or time limit reached)
-    while (!reachedTarget && !mOpenList.empty()) {
+    while (!mOpenList.empty() || solutions.size() < 2) {
         //check for time limit
         TimeStamp now;
         now.stamp();
-        if (1E-9f * RTT::os::TimeService::ticks2nsecs(now - mTimeStamp) > 0.9) {
-            //break if we took longer than 0.03 s
+        duration = 1E-9f * RTT::os::TimeService::ticks2nsecs(now - mTimeStamp);
+        if (duration > 0.9) {
+            //break if we took longer than 0.09 s
             break;
         }
 
@@ -293,10 +298,16 @@ bool AStarPlanGenerator::ReplanNow()
                 minIndex=i;
             }
         }
+        mOutputStream << "(" << min->position.transpose() << ")," << min->costTotal << "," << min->costFromStart << "," << mEpsilon << "," << duration << std::endl;
 
         //check if we reached the target
         if (checkTargetReached(min)) {
             reachedTarget=true;
+            solutions.push_back(min);
+            mEpsilon = mEpsilon - 0.5;
+            mOpenList.clear();
+            mOpenList.push_back(start);
+            continue;
         }
 
         //generate children of min
@@ -317,8 +328,12 @@ bool AStarPlanGenerator::ReplanNow()
     }
 
     //generate a plan from min (which has reached the target or is the closest if time limit was reached)
-    generatePlanFromWaypoint(min);
-
+    if(!solutions.empty()){
+    	generatePlanFromWaypoint(solutions.back());
+    }else{
+    	generatePlanFromWaypoint(min);
+    }
+    mOutputStream.close();
     if (!reachedTarget) {
         //at the moment it does not matter what ReplanNow returns but could be used to check if the plan reaches the target
         return false;
