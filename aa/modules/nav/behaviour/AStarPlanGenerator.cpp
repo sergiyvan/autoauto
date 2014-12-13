@@ -186,6 +186,14 @@ void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
 
     flt orientationDiffAngle = waypointAngle-targetAngle;
 
+    //normalize angle
+    if (orientationDiffAngle >= M_PI) {
+        orientationDiffAngle -= 2*M_PI;
+    }
+    if (orientationDiffAngle < -M_PI) {
+        orientationDiffAngle += 2*M_PI;
+    }
+
     //insert your code/heuristic here
 //	Vec3 diff = mTargetPosition - waypoint->position;
     waypoint->costToTarget = (waypoint->position - mTargetPosition).norm()+orientationDiffAngle;
@@ -195,7 +203,9 @@ void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
 bool AStarPlanGenerator::ReplanNow()
 {
     //implement AStar here. The following code is just here to give you some examples how to use the data structures.
-
+    std::ofstream mOutputStream;
+    string filename = "controller.csv";
+	mOutputStream.open(filename.c_str());
     mOpenList.clear();
     AStarWaypointPtr start(new AStarWaypoint(Vec3(0,0,0), Vec3(1,0,0), 0.0));
     calculateCostToTarget(start);
@@ -223,6 +233,11 @@ bool AStarPlanGenerator::ReplanNow()
         Logger::log() << Logger::Debug << "=====================" << std::endl;
         if (checkTargetReached(point)) {
             generatePlanFromWaypoint(point);
+
+            mOutputStream << "Target: " << mTargetPosition.transpose() << " Orientation: " << mTargetOrientation.transpose() << std::endl;
+            mOutputStream << "Groesse der Liste: " << mOpenList.size() << " Knoten." << std::endl;
+            mOutputStream << "=========================" << std::endl;
+            mOutputStream.close();
             return true;
         }
         //generate children of waypoint
