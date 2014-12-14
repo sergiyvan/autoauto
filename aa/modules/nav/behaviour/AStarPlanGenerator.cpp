@@ -298,7 +298,7 @@ bool AStarPlanGenerator::ReplanNow()
                 minIndex=i;
             }
         }
-        mOutputStream << "(" << min->position.transpose() << ")," << min->costTotal << "," << min->costFromStart << "," << mEpsilon << "," << duration << std::endl;
+        mOutputStream << "(" << min->position.transpose() << "),(" << min->orientation.transpose() << ")," << min->costTotal << "," << min->costFromStart << "," << mEpsilon << "," << duration << std::endl;
 
         //check if we reached the target
         if (checkTargetReached(min)) {
