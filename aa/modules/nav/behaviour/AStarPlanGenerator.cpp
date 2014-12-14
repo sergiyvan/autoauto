@@ -45,8 +45,8 @@ AStarPlanGenerator::AStarPlanGenerator(string const & name)
     , mObstaclesIn("ObstaclesIn")
     , mPlanOut("PlanOut")
     , mWaypointsOut("WaypointsOut")
-    , mTargetPosition(15,15,0)
-    , mTargetOrientation(-1,0,0)
+    , mTargetPosition(30,15,0)
+    , mTargetOrientation(1,0,0)
     , mDistToDrive(5.0*M_PI/4.0)
     , mMaxTurnRadius(5.0)
     , mMaxDiffPos(2.5)
@@ -109,7 +109,7 @@ void AStarPlanGenerator::updateHook()
     mEgoStateIn.read(mEgoState);
     mObstaclesIn.read(mObstacles);
 
-    //ReplanNow();
+    ReplanNow();
 
     // write out plan and open list for display module
     mPlanOut.write(mPlan);
@@ -229,24 +229,65 @@ bool AStarPlanGenerator::collisionWithObstacle(AStarWaypointPtr wp, TimedBaseObs
 
     //2d position of the waypoint
 //    Vec2 pos2d = head(wp->position);
+//    string filename = "conturen.csv";
+//    std::ofstream mOutputStream;
+//    mOutputStream.open(filename.c_str());
 
     //iterate through obstacles
     for (TimedBaseObstacleBundle_ptr::element_type::const_iterator ito=obstacles->begin(); ito != obstacles->end(); ++ito) {
         const aa::data::obstacle::BaseObstacle & obstacle = *ito;
         aa::data::obstacle::util::Contour contour = obstacle.contour();
         //iterate through contour points
-        for (int i = 1; i < contour.size(); i++){
-
-//            Vec2 c = contour[i]; //2d point on the obstacle contour
-
-            if (false) {
-                //found collision
-                return true;
-            }
-
-
+        flt contour_x1;
+        flt contour_x2;
+        flt contour_y1;
+        flt contour_y2;
+        if (contour[1][0] < contour[3][0]){
+        	contour_x1 = contour[1][0];
+        	contour_x2 = contour[3][0];
+        }else{
+        	contour_x2 = contour[1][0];
+        	contour_x1 = contour[3][0];
         }
+        if (contour[1][1] < contour[3][1]){
+            contour_y1 = contour[1][1];
+            contour_y2 = contour[3][1];
+        }else{
+        	contour_y2 = contour[1][1];
+        	contour_y1 = contour[3][1];
+        }
+        flt x1 = wp->prevWaypoint->position[0];
+        flt y1 = wp->prevWaypoint->position[1];
+        flt x2 = wp->position[0];
+        flt y2 = wp->position[1];
+//		mOutputStream << contour_x1 << "," << contour_y1 << "," << contour_x2 << "," << contour_y2 << std::endl;
+		flt anstieg = (y2 - y1) / (x2 - x1);
+		flt b = y2 - anstieg*x2;
+		flt y_der_gerade_an_x1_vom_rechteck;
+		flt x_der_gerade_an_y2_vom_rechteck;
+		flt y_der_gerade_an_x2_vom_rechteck;
+		flt x_der_gerade_an_y1_vom_rechteck;
+		y_der_gerade_an_x1_vom_rechteck = anstieg*x1+b;
+		y_der_gerade_an_x2_vom_rechteck = anstieg*x2+b;
+		x_der_gerade_an_y2_vom_rechteck = (y2 - b) / anstieg;
+		x_der_gerade_an_y1_vom_rechteck = (y1 - b) / anstieg;
+		if(x2 <= contour_x2 && x2 >= contour_x1 && y2 <= contour_y2 && y2 >= contour_y1)
+			return true;
+		if(y_der_gerade_an_x1_vom_rechteck <= contour_y2 && y_der_gerade_an_x1_vom_rechteck >= contour_y1){
+			if(y_der_gerade_an_x1_vom_rechteck >= y1 && y_der_gerade_an_x1_vom_rechteck <= y2)
+				return true;
+		} else if (x_der_gerade_an_y2_vom_rechteck <= contour_x2 && x_der_gerade_an_y2_vom_rechteck >= contour_x1){
+			if(x_der_gerade_an_y2_vom_rechteck >= x1 && x_der_gerade_an_y2_vom_rechteck <= x2)
+				return true;
+		}else if (y_der_gerade_an_x2_vom_rechteck <= contour_y2 && y_der_gerade_an_x2_vom_rechteck >= contour_y1) {
+			if(y_der_gerade_an_x2_vom_rechteck >= y1 && y_der_gerade_an_x2_vom_rechteck <= y2)
+				return true;
+		}else if (x_der_gerade_an_y1_vom_rechteck <= contour_x2 && x_der_gerade_an_y1_vom_rechteck >= contour_x1){
+			if(x_der_gerade_an_y1_vom_rechteck >= x1 && x_der_gerade_an_y1_vom_rechteck <= x2)
+				return true;
+		}
     }
+//    mOutputStream.close();
     return false;
 }
 
@@ -260,6 +301,7 @@ void AStarPlanGenerator::calculateCostToTarget(AStarWaypointPtr waypoint)
 bool AStarPlanGenerator::ReplanNow()
 {
     //stamp mTimeStamp for time limit check
+	mEpsilon = 2.5;
     mTimeStamp.stamp();
     std::vector<AStarWaypointPtr> solutions;
 
@@ -272,9 +314,9 @@ bool AStarPlanGenerator::ReplanNow()
     AStarWaypointPtr start(new AStarWaypoint(Vec3(0,0,0), Vec3(1,0,0), 0.0,0.0));
     calculateCostToTarget(start);
     mOpenList.push_back(start);
-    string filename = "controller.csv";
-    std::ofstream mOutputStream;
-    mOutputStream.open(filename.c_str());
+//    string filename = "controller.csv";
+//    std::ofstream mOutputStream;
+//    mOutputStream.open(filename.c_str());
     flt duration;
 
 
@@ -298,7 +340,7 @@ bool AStarPlanGenerator::ReplanNow()
                 minIndex=i;
             }
         }
-        mOutputStream << "(" << min->position.transpose() << "),(" << min->orientation.transpose() << ")," << min->costTotal << "," << min->costFromStart << "," << mEpsilon << "," << duration << std::endl;
+        //mOutputStream << "(" << min->position.transpose() << "),(" << min->orientation.transpose() << ")," << min->costTotal << "," << min->costFromStart << "," << mEpsilon << "," << duration << std::endl;
 
         //check if we reached the target
         if (checkTargetReached(min)) {
@@ -324,7 +366,9 @@ bool AStarPlanGenerator::ReplanNow()
         //erase min from open list and insert (collision free) children
         mOpenList.erase(mOpenList.begin()+minIndex);
         mOpenList.insert(mOpenList.end(), collisionFreeChildren.begin(), collisionFreeChildren.end());
-
+        if(mOpenList.empty()){
+        	break;
+        }
     }
 
     //generate a plan from min (which has reached the target or is the closest if time limit was reached)
@@ -333,7 +377,7 @@ bool AStarPlanGenerator::ReplanNow()
     }else{
     	generatePlanFromWaypoint(min);
     }
-    mOutputStream.close();
+//    mOutputStream.close();
     if (!reachedTarget) {
         //at the moment it does not matter what ReplanNow returns but could be used to check if the plan reaches the target
         return false;
