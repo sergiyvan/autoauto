@@ -32,3 +32,31 @@ add_module(DisplayAStarWaypoints
 LINK_LIBRARIES
         Gui
 )
+
+add_module(RRTPlanGenerator
+        RRTPlanGenerator.cpp
+LINK_LIBRARIES
+        AAData
+        Controller
+        DataObstacle
+)
+
+add_module(DisplayRRTWaypoints
+        DisplayRRTWaypoints.cpp
+LINK_LIBRARIES
+        Gui
+)
+
+#add_module(DubinsRRTPlanGenerator
+#        DubinsRRTPlanGenerator.cpp
+#LINK_LIBRARIES
+#        AAData
+#        Controller
+#        DataObstacle
+#)
+
+#add_module(DisplayDubinsRRTWaypoints
+#        DisplayDubinsRRTWaypoints.cpp
+#LINK_LIBRARIES
+#        Gui
+#)
