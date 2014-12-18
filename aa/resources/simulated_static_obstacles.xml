@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation>
+        <simobject instances="1">
+		<orientation>0,0,1,0</orientation>
+                <size>15,1,2.0</size>
+                <path>
+                        <waypoint>15,-15,0</waypoint>
+                </path>
+	</simobject>
+        <simobject instances="1">
+                <orientation>0,0,1,0</orientation>
+                <size>15,1,2.0</size>
+                <path>
+                        <waypoint>15,15,0</waypoint>
+                </path>
+        </simobject>
+        <simobject instances="1">
+                <orientation>0,0,1,0</orientation>
+                <size>1,10,2.0</size>
+                <path>
+                        <waypoint>10,-5,0</waypoint>
+                </path>
+        </simobject>
+        <simobject instances="1">
+                <orientation>0,0,1,0</orientation>
+                <size>1,10,2.0</size>
+                <path>
+                        <waypoint>20,5,0</waypoint>
+                </path>
+        </simobject>
+        <simobject instances="1">
+                <orientation>0,0,1,0</orientation>
+                <size>1,15,2.0</size>
+                <path>
+                        <waypoint>30,0,0</waypoint>
+                </path>
+        </simobject>
+
+</simulation>
+
