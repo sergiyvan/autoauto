@@ -195,26 +195,51 @@ bool RRTPlanGenerator::ReplanNow()
     //init open list, reachedTarget and q_new
     mNodes.clear();
     bool reachedTarget= false;
-    RRTWaypointPtr q_new;
+    RRTWaypointPtr near;
 
     //insert start waypoint
     RRTWaypointPtr start(new RRTWaypoint(Vec3(0,0,0)));
+    Vec3 near_random;
     mNodes.push_back(start);
 
     //expand tree while target not reached
     while (!reachedTarget) {
         //generate new random position in search region
         Vec3 q_rand_pos = generateRandomPosition(0,30,-15,15);
+        near = mNodes.front();
+        flt dist = (q_rand_pos - near->position).norm();
 
-        //TODO insert your code here
+        for (unsigned i=0; i<mNodes.size()-1; i++){
+        	flt temp_dist = (mNodes.at(i)->position - q_rand_pos).norm();
+    	    if ( temp_dist < dist){
+    	    	near = mNodes.at(i);
+    	    	dist = temp_dist;
+    	    }
+        }
+        if(mDistToDrive >= dist){
+        	RRTWaypointPtr q_new(new RRTWaypoint(q_rand_pos));
+        	q_new->prevWaypoint = near;
+        	if(!collisionWithObstacle(q_new, mObstacles)){
+				mNodes.push_back(q_new);
+        	}
+        }else{
+        	near_random = (q_rand_pos - near->position) ;
+        	flt disttodrivetimes = sqrt(near_random[0]*near_random[0] + near_random[1] * near_random[1]) / mDistToDrive;
+        	RRTWaypointPtr q_new(new RRTWaypoint(Vec3(near->position[0] + near_random[0]/disttodrivetimes,near->position[1] + near_random[1]/disttodrivetimes,0)));
+			q_new->prevWaypoint = near;
+        	if(!collisionWithObstacle(q_new, mObstacles)){
+				mNodes.push_back(q_new);
+        	}
+        }
+        if (checkTargetReached(mNodes.back())){
+        	reachedTarget = true;
+        	generatePlanFromWaypoint(mNodes.back());
+        }
 
-        //dummy code
-        q_new = start;
-        reachedTarget = true;
 
     }
 
-    generatePlanFromWaypoint(q_new);
+
 
     if (!reachedTarget) {
         //at the moment it does not matter what ReplanNow returns
