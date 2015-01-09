@@ -50,6 +50,7 @@ public:
     virtual bool startHook();
     virtual void updateHook();
     virtual void stopHook();
+    virtual void errorHook();
 
 private:
 

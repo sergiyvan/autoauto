@@ -5,6 +5,8 @@
 
 #include <util/TaskContextFactory.h>
 #include <math/AutoMath.h>
+#include <math/Geodetic.h>
+#include <math/Rotate.h>
 
 #include <math/PathSpline.h>
 #include <util/OrocosHelperFunctions.h>
@@ -21,6 +23,7 @@ namespace modules
 {
 namespace nav
 {
+
 namespace behaviour
 {
 
@@ -29,6 +32,7 @@ using namespace RTT;
 using namespace boost;
 using namespace ::math;
 using namespace util;
+using namespace aa::modules::models::rndf;
 using RTT::Logger;
 using aa::modules::nav::controller::Plan;
 using aa::modules::nav::controller::Plan_ptr;
@@ -104,6 +108,11 @@ void RRTPlanGenerator::stopHook()
     gui::View3D * view = gui::View3D::getView3D(0);
     view->removeEventHandler(mCapture);
 }
+
+void RRTPlanGenerator::errorHook()
+{
+}
+
 
 
 void RRTPlanGenerator::generatePlanFromWaypoint(RRTWaypointPtr waypoint)
@@ -192,7 +201,7 @@ Vec3 RRTPlanGenerator::generateRandomPosition(flt xmin, flt xmax, flt ymin, flt 
 
 bool RRTPlanGenerator::ReplanNow()
 {
-    //init open list, reachedTarget and q_new
+    //init open list, reachedTarget and min
     mNodes.clear();
     bool reachedTarget= false;
     RRTWaypointPtr q_new;
@@ -201,16 +210,43 @@ bool RRTPlanGenerator::ReplanNow()
     RRTWaypointPtr start(new RRTWaypoint(Vec3(0,0,0)));
     mNodes.push_back(start);
 
-    //expand tree while target not reached
+    //expand path while target not reached or no more options (or time limit reached)
     while (!reachedTarget) {
         //generate new random position in search region
         Vec3 q_rand_pos = generateRandomPosition(0,30,-15,15);
 
-        //TODO insert your code here
+        //search for closest waypoint
+        RRTWaypointPtr closestWP = mNodes[0];
+        flt closestDist = (q_rand_pos - mNodes[0]->position).norm();
 
-        //dummy code
-        q_new = start;
-        reachedTarget = true;
+        for (int i=1; i < mNodes.size(); i++) {
+            flt dist = (q_rand_pos - mNodes[i]->position).norm();
+            if (dist < closestDist) {
+                closestWP = mNodes[i];
+                closestDist = dist;
+            }
+        }
+
+        //generate new waypoint
+        if (closestDist <= mDistToDrive) {
+            q_new = RRTWaypointPtr(new RRTWaypoint(q_rand_pos));
+
+        } else {
+            Vec3 q_new_pos = closestWP->position + ((q_rand_pos-closestWP->position).normalized()*mDistToDrive);
+            q_new = RRTWaypointPtr(new RRTWaypoint(q_new_pos));
+        }
+        q_new->prevWaypoint = closestWP;
+
+        if (!collisionWithObstacle(q_new, mObstacles)) {
+
+            //check if we reached the target
+            if (checkTargetReached(q_new)) {
+                reachedTarget=true;
+            }
+
+            mNodes.push_back(q_new);
+
+        }
 
     }
 

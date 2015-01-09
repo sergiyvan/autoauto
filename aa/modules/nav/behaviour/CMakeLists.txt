@@ -47,16 +47,17 @@ LINK_LIBRARIES
         Gui
 )
 
-#add_module(DubinsRRTPlanGenerator
-#        DubinsRRTPlanGenerator.cpp
-#LINK_LIBRARIES
-#        AAData
-#        Controller
-#        DataObstacle
-#)
+add_data(DubinsRRTPlanGenerator
+        DubinsRRTPlanGenerator.cpp
+LINK_LIBRARIES
+        AAData
+        Controller
+        DataObstacle
+)
 
-#add_module(DisplayDubinsRRTWaypoints
-#        DisplayDubinsRRTWaypoints.cpp
-#LINK_LIBRARIES
-#        Gui
-#)
+add_module(DisplayDubinsRRTWaypoints
+        DisplayDubinsRRTWaypoints.cpp
+LINK_LIBRARIES
+        DubinsRRTPlanGenerator
+        Gui
+)
