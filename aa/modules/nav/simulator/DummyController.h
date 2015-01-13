@@ -43,6 +43,8 @@ public:
 
 	virtual void resetMovableObstacles();
 
+    math::flt mUpdateVelocityStdDev;
+
 private:
 	class impl;
 	std::auto_ptr<impl> pimpl;

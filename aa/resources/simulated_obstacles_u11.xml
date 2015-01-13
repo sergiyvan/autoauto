@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation>
+        <simobject instances="1">
+                <name>Auto1</name>
+                <model>redcar.ac</model>
+		<modelscale>1.0,1.0,1.0</modelscale>
+		<orientation>0,0,1,0</orientation>
+                <size>4.5,3.25,2.0</size>
+                <path>
+                        <waypoint speed="0">0,5,0</waypoint>
+                </path>
+	</simobject>
+        <simobject instances="1">
+                <name>Auto2</name>
+                <model>yellowcar.ac</model>
+		<modelscale>1.0,1.0,1.0</modelscale>
+		<orientation>0,0,1,0</orientation>
+                <size>4.5,3.25,2.0</size>
+                <path option="jump">
+                        <waypoint speed="1">0,10,0</waypoint>
+                        <waypoint speed="1">1000,10,0</waypoint>
+                </path>
+	</simobject>
+        <simobject instances="1">
+                <name>Auto3</name>
+                <model>greencar.ac</model>
+                <modelscale>1.0,1.0,1.0</modelscale>
+                <orientation>0,0,1,0</orientation>
+                <size>4.5,3.25,2.0</size>
+                <path option="jump">
+                        <waypoint speed="5">0,15,0</waypoint>
+                        <waypoint speed="5">100,15,0</waypoint>
+                </path>
+        </simobject>
+
+	
+</simulation>
+

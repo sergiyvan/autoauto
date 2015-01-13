@@ -118,6 +118,8 @@ SimulatorEngine::SimulatorEngine()
 #else
     :  backend(new SimpleBackend())
     , mGenerateHiddenObstaclePoints(false)
+    , mObstaclePosStdDev(0)
+    , mObstacleVelStdDev(0)
 #endif
 {
 }
@@ -281,7 +283,7 @@ void SimulatorEngine::update()
 	}
 
 	if (lastTimeStamp == TimeStamp()) {
-		currentFrameTime = 0.001f;
+        currentFrameTime = 0.02f;
 	}
 	else {
 		// TODO Hack by Daniel - until we can use getperiod here!
@@ -361,6 +363,15 @@ void SimulatorEngine::generateObstacles(unsigned int id)
 
 		Vec2 pos = head(objects[i]->pos());
 
+        //add gaussian noise to the obstacle position (fake sensor noise)
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::normal_distribution<flt> xd(pos[0],mObstaclePosStdDev);
+        pos[0] = xd(gen);
+        std::normal_distribution<flt> yd(pos[1],mObstaclePosStdDev);
+        pos[1] = yd(gen);
+
+
 		const Vec3  & obstacleSize = objects[i]->size;
 		Vec2 size = head(obstacleSize);
 
@@ -393,7 +404,17 @@ void SimulatorEngine::generateObstacles(unsigned int id)
         obstacle.setLocation(aa::data::obstacle::util::LARGELY_ON_LANE);
 		obstacle.setBoundingCircleCentre(pos);
         obstacle.setBoundingCircleRadius(sqrt(size(0) * size(0) + size(1) * size(1)));
-        obstacle.setVelocity(objects[i]->velocity());
+
+        //add gaussian noise to the obstacle velocity (fake sensor noise)
+        Vec3 velocity;
+        std::normal_distribution<flt> vxd(objects[i]->velocity()[0],mObstacleVelStdDev);
+        velocity[0] = vxd(gen);
+        std::normal_distribution<flt> vyd(objects[i]->velocity()[1],mObstacleVelStdDev);
+        velocity[1] = vyd(gen);
+        std::normal_distribution<flt> vzd(objects[i]->velocity()[2],mObstacleVelStdDev);
+        velocity[2] = vzd(gen);
+
+        obstacle.setVelocity(velocity);
 
 // 		obstacle.setAcceleration( Vecto_flt(objects[j]->acceleration()) );
 		if (objects[i]->velocity().norm() == 0.f && objects[i]->acceleration().norm() == 0.f) {

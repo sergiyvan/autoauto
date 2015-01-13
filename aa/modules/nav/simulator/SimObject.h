@@ -59,6 +59,7 @@ public:
 	std::list<SimWaypoint> path;
 	std::list<SimWaypoint> jumpPath;
 	std::string option;
+    flt stddev;
 private:
 	static uint idsequence;
 };

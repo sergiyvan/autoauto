@@ -98,7 +98,10 @@ public:
 DummyController::DummyController(std::string const & name)
 	: util::RtTaskContext(name)
 	, pimpl(new impl())
+    , mUpdateVelocityStdDev(0)
 {
+    addProperty("UpdateVelocityStdDev", mUpdateVelocityStdDev).doc("standard deviation used for velocity-based update of the position of the objects");
+
 	addOperation("loadSimulation", &DummyController::loadSimulation, this, RTT::ClientThread).doc("load a simulation xml file").arg("fileName", "fileName");
 	addOperation("resetMovableObstacles", &DummyController::resetMovableObstacles, this, RTT::ClientThread).doc("reset obstacles to their start position");
 }
@@ -122,11 +125,22 @@ void DummyController::updateHook()
 
 	for (std::vector<SimObject *>::iterator it = pimpl->objects.begin(); it != pimpl->objects.end(); ++it) {
 		SimObject * simObj = *it;
+        simObj->stddev = mUpdateVelocityStdDev;
 		simObj->position = theSimulator::instance().getPosition(simObj->id);
+        bool objectJumps = 	simObj->path.size() == 0 && (simObj->option.compare("jump") == 0);
+
 		simObj->update(this);
-		theSimulator::instance().setPosition(simObj->id, simObj->position);
+
+        if (theSimulator::instance().getCurrentFrameTime() != 0 && !objectJumps){
+            //calculate velocity from posOffset, because it pos may have gaussian noise
+            Vec3 posOffset = simObj->position-theSimulator::instance().getPosition(simObj->id);
+            Vec3 velocityWithNoise = posOffset/theSimulator::instance().getCurrentFrameTime();
+            theSimulator::instance().setVelocity(simObj->id, velocityWithNoise);
+        } else {
+            theSimulator::instance().setVelocity(simObj->id, simObj->getVelocity());
+        }
+        theSimulator::instance().setPosition(simObj->id, simObj->position);
 		theSimulator::instance().setOrientation(simObj->id, simObj->orientation);
-		theSimulator::instance().setVelocity(simObj->id, simObj->getVelocity());
 		theSimulator::instance().setAcceleration(simObj->id, simObj->getAcceleration());
 	}
 }

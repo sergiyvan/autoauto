@@ -25,6 +25,7 @@ SimObject::SimObject(std::string const & m, flt x, flt y, Vec3 const & size)
 	, name(m)
 	, started(false)
 	, option("") //("jump")
+    , stddev(0)
 {
 	id = idsequence;
 	idsequence++;
@@ -142,7 +143,12 @@ void SimObject::update(DummyController * sim)
 
 	if (dist > 0) {
 		direction = direction / dist;
-		position += direction * path.begin()->speed * theSimulator::instance().getCurrentFrameTime();
+        //add gaussian noise to the pos update (if stddev != 0)
+        std::normal_distribution<math::flt> d(path.begin()->speed,stddev);
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        flt speed_with_noise = d(gen);
+        position += direction * speed_with_noise * theSimulator::instance().getCurrentFrameTime();
 	}
 
 	if (dist < 0.2) {

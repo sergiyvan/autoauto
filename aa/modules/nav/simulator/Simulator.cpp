@@ -64,6 +64,8 @@ Simulator::Simulator(string const & name)
 
     , mPause("Pause", "Pause the simulator", false)
     , mGenerateHiddenObstaclePoints("GenerateHiddenObstaclePoints", "if true the simulator generates full obstacles contours", false)
+    , mObstaclePosStdDev("ObstaclePosStdDev", "standard deviation of outgoing obstacle positions (fake sensor noise)", 0.0)
+    , mObstacleVelStdDev("ObstacleVelStdDev", "standard deviation of outgoing obstacle velocities (fake sensor noise)", 0.0)
 
 	, mSimulationObjectId(theSimulator::instance().registerAuto(Vec3(0, 0, 0),
 #if defined(USE_EIGEN)
@@ -95,6 +97,8 @@ Simulator::Simulator(string const & name)
 
     addProperty(mPause);
     addProperty(mGenerateHiddenObstaclePoints);
+    addProperty(mObstaclePosStdDev);
+    addProperty(mObstacleVelStdDev);
 
 	// Method Factory Interface.
 	addOperation("initTrafficLights", &Simulator::initTrafficLights, this, RTT::ClientThread).doc("Search for all Trafficlights on the RNDF");
@@ -346,7 +350,7 @@ void Simulator::reset()
 bool Simulator::startHook()
 {
 	Logger::In in("Simulator");
-	REQUIRED_PORTS((mSpeedIn)(mSteerIn)(mGearIn));
+    REQUIRED_PORTS((mSpeedIn)(mSteerIn)(mGearIn));
 
 	return true;
 }
@@ -421,7 +425,9 @@ void Simulator::updateHook()
 		theSimulator::instance().setAuxDevicesData(mSimulationObjectId, aux);
 	}
 
-	theSimulator::instance().update();
+    theSimulator::instance().mObstaclePosStdDev=mObstaclePosStdDev.get();
+    theSimulator::instance().mObstacleVelStdDev=mObstaclePosStdDev.get();
+    theSimulator::instance().update();
 
 	Vec3 const carPos3D = theSimulator::instance().getPosition(mSimulationObjectId);
 	Vec3 const carMove3D = theSimulator::instance().getMovementDirection(mSimulationObjectId);

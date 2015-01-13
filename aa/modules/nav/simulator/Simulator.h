@@ -71,6 +71,8 @@ protected:
 
     RTT::Property<bool> mPause;
     RTT::Property<bool> mGenerateHiddenObstaclePoints;
+    RTT::Property<math::flt> mObstaclePosStdDev;
+    RTT::Property<math::flt> mObstacleVelStdDev;
 
 	void tokenize(const std::string & str, std::vector<std::string>& tokens, const std::string & delimiters);
 	void setPosAndDirAtWaypoint(std::string const & wp);
