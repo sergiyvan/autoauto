@@ -5,8 +5,9 @@
 #include <aa/data/obstacle/BaseObstacleBundle.h>
 #include <core/TimeStamp.h>
 #include <fstream>
+#include <Eigen/Dense>
 
-
+using Eigen::MatrixXd;
 
 namespace aa
 {
@@ -58,7 +59,14 @@ private:
     // The process error covariance matrix
     math::Mat2x2 mQ;
     // The process error covariance matrix
-    math::Mat2x2 mR;
+    math::Mat2x2d mR;
+
+    //temporary matrix to calculate r
+    MatrixXd tempR;
+
+    int counter;
+
+    int maxSize;
 
     // The error covariance matrix
     math::Mat2x2 mP_prior;
@@ -71,6 +79,7 @@ private:
 
     // The measurement vector
     math::Vec2 mZ;
+
 
     TimeStamp mStartTime;
     TimeStamp mNow;
