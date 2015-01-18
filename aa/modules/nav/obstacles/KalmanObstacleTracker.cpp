@@ -52,13 +52,21 @@ bool KalmanObstacleTracker::startHook()
     mQ << 0.01*0.01*0.02, 0,
           0, 0.01*0.01;
 
-    mR << 1.0, 0,
-          0, 1.0;
+    mR << 1.0, 0.,
+          0., 1.0;
 
     mP_posterior << 1000.0, 0,
           0, 1000.0;
 
     mX_posterior = math::Vec2(0,0);
+
+    maxSize = 25;
+
+    //max size rows , 2 columns
+    tempQ.resize(maxSize,2);
+
+    counter = 0;
+
 
     mStartTime.stamp();
 
@@ -80,7 +88,7 @@ void KalmanObstacleTracker::updateHook()
     predictionStep();
 
     //get obstacle with specific id
-    int id = 3;
+    int id = 2;
     aa::data::obstacle::BaseObstacle obstacle;
     TimedBaseObstacleBundle_ptr::element_type::const_iterator ito;
     for (ito=mObstacles->begin(); ito != mObstacles->end(); ++ito) {
@@ -103,10 +111,33 @@ void KalmanObstacleTracker::updateHook()
     math::Vec3 vel3d = obstacle.velocity();
     mZ[1]=vel3d[0];
 
+    if(counter < maxSize){
+        if(counter == 0){
+            tempQ(counter,0) = mZ[0];
+            tempQ(counter,1) = mZ[1];
+        }
+        else{ // speicher die differenz
+            tempQ(counter,0) = mZ[0]-tempQ(counter-1,0);
+            tempQ(counter,1) = mZ[1]-tempQ(counter-1,1);
+        }
+        counter++;
+    }else{ //Berechne mQ covarianz
+        std::cout << " "<< std::endl;
+        std::cout << "================"<< std::endl;
+        Eigen::Matrix2d k = tempQ.transpose() *tempQ;
+        Eigen::MatrixXd x_mean = tempQ.colwise().mean();
+        mQ = (1./(maxSize-1))*(k-(maxSize*(x_mean.transpose()*x_mean)));
+        std::cout<< "mQ: " << mQ << std::endl;
+        std::cout << "================"<< std::endl;
+        std::cout << "================"<< std::endl;
+        counter = 0;
+
+    }
+
     //do the update step
     updateStep();
 
-    std::cout << mZ.transpose() << std::endl;
+    //std::cout << mZ.transpose() << std::endl;
 
     if (mValues.empty()) {
         mValues2.push_back(mZ);
@@ -119,9 +150,9 @@ void KalmanObstacleTracker::updateHook()
     Eigen::MatrixXd centered = mat.rowwise() - mat.colwise().mean();
     Eigen::MatrixXd cov = (centered.transpose() * centered) / double(mat.rows() - 1);
 
-    std::cout << "!!!!!!!!!!!!!!!!!!!" << std::endl;
-    std::cout << cov << std::endl;
-    std::cout << "!!!!!!!!!!!!!!!!!!!" << std::endl;
+    //std::cout << "!!!!!!!!!!!!!!!!!!!" << std::endl;
+    //std::cout << cov << std::endl;
+    //std::cout << "!!!!!!!!!!!!!!!!!!!" << std::endl;
 
 
     ///write to file
