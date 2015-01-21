@@ -8,6 +8,7 @@
 #include <modules/models/carstate/CarState.h>
 #include <aa/modules/models/carstate/PassatCarState.h>
 #include <modules/models/carstate/AuxDevicesData.h>
+#include <aa/data/OdometricData.h>
 
 #include <aa/modules/models/rndf/RndfGraph.h>
 
@@ -56,7 +57,8 @@ protected:
 
 	RTT::OutputPort<std::vector<std::pair<Vec3, Vec3> > > mVectorsOut;
 	RTT::OutputPort<std::vector<boost::tuple<Mat4x4, std::string, Vec4> > > mObjectsOut;
-	RTT::OutputPort<TimedBaseObstacleBundle_ptr> mObstaclesOut;
+    RTT::OutputPort<TimedBaseObstacleBundle_ptr> mObstaclesOut;
+    RTT::OutputPort<data::TimedOdometricData> mOdometricDataOut;
 
     RTT::InputPort< ::modules::models::egostate::EgoStateSetter > mEgoStateSetterIn;
 
@@ -73,6 +75,8 @@ protected:
     RTT::Property<bool> mGenerateHiddenObstaclePoints;
     RTT::Property<math::flt> mObstaclePosStdDev;
     RTT::Property<math::flt> mObstacleVelStdDev;
+    RTT::Property<math::flt> mOdometryDistStdDev;
+    RTT::Property<math::flt> mOdometryAngleStdDev;
 
 	void tokenize(const std::string & str, std::vector<std::string>& tokens, const std::string & delimiters);
 	void setPosAndDirAtWaypoint(std::string const & wp);
@@ -86,6 +90,8 @@ protected:
 
 private:
 	int mSimulationObjectId;
+    Vec3 mLastEgoPos;
+    flt mLastEgoAngle;
 
     std::vector< aa::modules::models::rndf::vertex_descr> trafficlights;
     boost::property_map< aa::modules::models::rndf::aGraph, aa::modules::models::rndf::vertex_data_t>::type vertexDataMap;

@@ -75,10 +75,15 @@ void SimplePlanGenerator::updateHook()
     Plan_ptr curPlanPtr = aa::modules::nav::controller::AutoPlan();
     curPlanPtr->clear();
 
-    curPlanPtr->push_back(0, Vec3(0,10,0), Vec3(1,0,0));
-    curPlanPtr->push_back(1000, Vec3(1000,10,0), Vec3(1,0,0));
-//    curPlanPtr->push_back(1000, Vec3(500,10,0), Vec3(0,-10,0));
-//    curPlanPtr->push_back(2000, Vec3(1000,10,0), Vec3(0,10,0));
+    curPlanPtr->push_back(0, Vec3(0,0,0), Vec3(1,0,0));
+    curPlanPtr->push_back(75, Vec3(50,10,0), Vec3(1,0,0));
+    curPlanPtr->push_back(150, Vec3(100,-10,0), Vec3(1,0,0));
+    curPlanPtr->push_back(225, Vec3(150,10,0), Vec3(1,0,0));
+    curPlanPtr->push_back(300, Vec3(200,-10,0), Vec3(1,0,0));
+    curPlanPtr->push_back(375, Vec3(250,10,0), Vec3(1,0,0));
+    curPlanPtr->push_back(450, Vec3(300,-10,0), Vec3(1,0,0));
+    curPlanPtr->push_back(525, Vec3(350,10,0), Vec3(1,0,0));
+    curPlanPtr->push_back(600, Vec3(400,-10,0), Vec3(1,0,0));
 
     mPlan = curPlanPtr;
 

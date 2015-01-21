@@ -51,7 +51,8 @@ Simulator::Simulator(string const & name)
 
 	, mVectorsOut("VectorsOut")
 	, mObjectsOut("ObjectsOut")
-	, mObstaclesOut("ObstaclesOut")
+    , mObstaclesOut("ObstaclesOut")
+    , mOdometricDataOut("OdometricDataOut")
 
 	, mEgoStateSetterIn("EgoStateSetter")
 	, mSpeedIn("SpeedIn")
@@ -66,6 +67,8 @@ Simulator::Simulator(string const & name)
     , mGenerateHiddenObstaclePoints("GenerateHiddenObstaclePoints", "if true the simulator generates full obstacles contours", false)
     , mObstaclePosStdDev("ObstaclePosStdDev", "standard deviation of outgoing obstacle positions (fake sensor noise)", 0.0)
     , mObstacleVelStdDev("ObstacleVelStdDev", "standard deviation of outgoing obstacle velocities (fake sensor noise)", 0.0)
+    , mOdometryDistStdDev("OdometryDistStdDev", "standard deviation of outgoing odometry distance (fake sensor noise)", 0.0)
+    , mOdometryAngleStdDev("OdometryAngleStdDev", "standard deviation of outgoing odometry distance (fake sensor noise)", 0.0)
 
 	, mSimulationObjectId(theSimulator::instance().registerAuto(Vec3(0, 0, 0),
 #if defined(USE_EIGEN)
@@ -74,6 +77,8 @@ Simulator::Simulator(string const & name)
 						  Quaternion(0, 0, 1, 0)
 #endif
 															   ))
+    , mLastEgoPos(0,0,0)
+    , mLastEgoAngle(0)
 {
 	setDirection(0.0, 0.0, 0.0);
 
@@ -82,7 +87,8 @@ Simulator::Simulator(string const & name)
 
 	addPort(mVectorsOut);
 	addPort(mObjectsOut);
-	addPort(mObstaclesOut);
+    addPort(mObstaclesOut);
+    addPort(mOdometricDataOut);
 
 	addPort(mEgoStateSetterIn);
 
@@ -99,8 +105,10 @@ Simulator::Simulator(string const & name)
     addProperty(mGenerateHiddenObstaclePoints);
     addProperty(mObstaclePosStdDev);
     addProperty(mObstacleVelStdDev);
+    addProperty(mOdometryDistStdDev);
+    addProperty(mOdometryAngleStdDev);
 
-	// Method Factory Interface.
+    // Method Factory Interface.
 	addOperation("initTrafficLights", &Simulator::initTrafficLights, this, RTT::ClientThread).doc("Search for all Trafficlights on the RNDF");
 	addOperation("setTrafficLightState", &Simulator::setTrafficLightState, this, RTT::ClientThread).doc("Set state of one certain trafficlight").arg("trafficLightID", "").arg("state", "");
 	addOperation("setTrafficLights", &Simulator::setTrafficLights, this, RTT::ClientThread).doc("Sets a group of Trafficlights (e.g. useful at crossings)").arg("ids", "IDs").arg("states", "states of trafficlights");
@@ -341,6 +349,8 @@ void Simulator::reset()
 	setDirection(0.0, 0.0, 0.0);
 	setVelocity(0.0, 0.0, 0.0);
 	setSteer(0.0);
+    mLastEgoPos = Vec3(0,0,0);
+    mLastEgoAngle = 0.0;
 }
 
 
@@ -527,6 +537,28 @@ void Simulator::updateHook()
 	//write out car states
 	mCarStateOut.write(carstate);
 	mPassatCarStateOut.write(passatcarstate);
+
+
+    //calc and write out (fake) odometric data (with gaussian noise)
+    Vec3 egoPos = theSimulator::instance().getPosition(mSimulationObjectId);
+    flt distanceTravelled = (egoPos-mLastEgoPos).norm();
+    mLastEgoPos = egoPos;
+
+    Quaternion q = theSimulator::instance().getOrientation(mSimulationObjectId);
+    Vec3 egoOrientation = toEulerXyz(q);
+    flt egoAngle = egoOrientation[2];
+    flt angleDiff = egoAngle - mLastEgoAngle;
+    mLastEgoAngle = egoAngle;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::normal_distribution<flt> posd(distanceTravelled,mOdometryDistStdDev);
+    distanceTravelled = posd(gen);
+    std::normal_distribution<flt> angled(angleDiff,mOdometryAngleStdDev);
+    angleDiff = angled(gen);
+
+    data::TimedOdometricData od(now, data::OdometricData(distanceTravelled,angleDiff));
+    mOdometricDataOut.write(od);
 }
 
 void Simulator::stopHook()
