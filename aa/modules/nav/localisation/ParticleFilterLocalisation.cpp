@@ -138,6 +138,7 @@ void ParticleFilterLocalisation::stopHook()
 
 void ParticleFilterLocalisation::predictionStep()
 {    
+	mOdometricDataIn.read(mOdometricData);
     std::default_random_engine generator;
     std::normal_distribution<double> distribution(0.0,0.1);
     double x_norm = 0.0;
@@ -163,7 +164,16 @@ void ParticleFilterLocalisation::predictionStep()
          x_norm = distribution(generator);
          y_norm = distribution(generator);
          theta_norm = distribution(generator);
-         mParticles[j] = mParticles[j] +mOdometryOnly + (math::Vec3(x_norm,y_norm,theta_norm));
+//         std::cout << "-----------------------------" << std::endl;
+//         std::cout << "x_norm: "<< x_norm << std::endl;
+//         std::cout << "y_norm: "<< y_norm << std::endl;
+//         std::cout << "theta_norm: "<< theta_norm << std::endl;
+//         std::cout << "-----------------------------" << std::endl;
+         mParticles[j] = mParticles[j] + (math::Vec3(x_norm,y_norm,theta_norm));
+         math::flt odometryOnlyAngle = mOdometryOnly[2]+mOdometricData.mAngularDisplacement;
+         mParticles[j][0] += mOdometricData.mTravelledDistance*cos(odometryOnlyAngle);
+         mParticles[j][1] += mOdometricData.mTravelledDistance*sin(odometryOnlyAngle);
+         mParticles[j][2] += mOdometricData.mAngularDisplacement;
      }
 }
 
@@ -188,11 +198,10 @@ void ParticleFilterLocalisation::updateStep()
     //loop over all weights
     for (int i=0;i<mParticleWeights.size(); i++) {
         //distanz = sqrt(x²+y²)
-        //mParticleWeights[i]= 1.; //vllt falsch
-
+        mParticleWeights[i]= 1.; //vllt falsch
         //loop over all obstacles
         for(int j =0; j<mMap.size(); j++){
-            std::cout << "!!!!!!!!!!!!!!!!!!!" << std::endl;
+//            std::cout << "!!!!!!!!!!!!!!!!!!!" << std::endl;
             //std::cout << "mMeasurements: "<< mMeasurements[j][0]<< ";" << mMeasurements[j][1] << std::endl;
             //std::cout << "mMap: "<< mMap[j][0]<< ";" << mMap[j][1] << std::endl;
             //std::cout << "mParticles: "<< mParticles[i][0]<< ";" << mParticles[i][1] << std::endl;
@@ -203,18 +212,19 @@ void ParticleFilterLocalisation::updateStep()
             theta_l_x = atan2((abs(mParticles[i][0]-mMap[j][0])),(abs(mParticles[i][1]-mMap[j][1])));
 
 
-            //std::cout << "dist_l_z: "<< dist_l_z << std::endl;
-            //std::cout << "dist_l_x: "<< dist_l_x << std::endl;
-            std::cout << "theta_l_z: "<< theta_l_z << std::endl;
-            std::cout << "theta_l_x: "<< theta_l_x << std::endl;
+//            std::cout << "dist_l_z: "<< dist_l_z << std::endl;
+//            std::cout << "dist_l_x: "<< dist_l_x << std::endl;
+//            std::cout << "theta_l_z: "<< theta_l_z << std::endl;
+//            std::cout << "theta_l_x: "<< theta_l_x << std::endl;
+
+            float myvar = exp(-pow((dist_l_z-dist_l_x),2.))*exp(-pow(((theta_l_z-theta_l_x)/(PI/4.)),2.));
+            mParticleWeights[i] +=  myvar;
 
 
-            mParticleWeights[i] *=  exp(-pow((dist_l_z-dist_l_x),2.))*exp(-pow(((theta_l_z-theta_l_x)/(PI/4.)),2.));
-
-
+//            std::cout << "myvar: "<< myvar << " | i: " << i << std::endl;
             std::cout << "mParticleWeights[i]: "<< mParticleWeights[i] << std::endl;
-            std::cout << "!!!!!!!!!!!!!!!!!!!" << std::endl;
-            std::cout << "" << std::endl;
+//            std::cout << "================" << std::endl;
+//            std::cout << "" << std::endl;
 
 
         }
@@ -227,9 +237,9 @@ void ParticleFilterLocalisation::updateStep()
     //TODO ...
     for(int k=0; k<mParticleWeights.size();k++){
         mParticleWeights[k] = mParticleWeights[k]/sum_weights;
-        std::cout << "mParticleWeights[i]: "<< mParticleWeights[k] << std::endl;
+//        std::cout << "mParticleWeights[i]: "<< mParticleWeights[k] << std::endl;
     }
-    std::cout << "!!!!!!!!!!!!!!!!!!!" << std::endl;
+//    std::cout << "!!!!!!!!!!!!!!!!!!!" << std::endl;
 
 
 }
