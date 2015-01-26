@@ -73,6 +73,8 @@ private:
     TimeStamp mNow;
     std::ofstream mOutputStream;
 
+    int mNumParticles;
+
 
 };
 
