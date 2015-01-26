@@ -122,10 +122,19 @@ void ParticleFilterLocalisation::updateHook()
     //write out particles for display module
     mParticlesOut.write(mParticles);
 
+    float mean_x=  0.;
+    float mean_y = 0.;
+    for(int i=0; i<mParticles.size(); i++){
+        mean_x += mParticles[i][0];
+        mean_y += mParticles[i][1];
+    }
+
+    mean_x = mean_x/mParticles.size();
+    mean_y = mean_y/mParticles.size();
     ///write to file
     mNow.stamp();
     math::flt timeSinceStart = 1E-9f * RTT::os::TimeService::ticks2nsecs(mNow - mStartTime);
-    mOutputStream << timeSinceStart << "," << mGroundTruth[0] << "," << mGroundTruth[1] << "," << mOdometryOnly[0] << "," << mOdometryOnly[1] << std::endl;
+    mOutputStream << timeSinceStart << ","<< mean_x << "," << mean_y << "," << mGroundTruth[0] << "," << mGroundTruth[1] << "," << mOdometryOnly[0] << "," << mOdometryOnly[1] << std::endl;
 
 
 }
