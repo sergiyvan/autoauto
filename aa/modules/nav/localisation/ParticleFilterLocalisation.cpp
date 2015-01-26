@@ -218,7 +218,7 @@ void ParticleFilterLocalisation::updateStep()
 //            std::cout << "theta_l_x: "<< theta_l_x << std::endl;
 
             float myvar = exp(-pow((dist_l_z-dist_l_x),2.))*exp(-pow(((theta_l_z-theta_l_x)/(PI/4.)),2.));
-            mParticleWeights[i] +=  myvar;
+            mParticleWeights[i] *=  myvar;
 
 
 //            std::cout << "myvar: "<< myvar << " | i: " << i << std::endl;
