@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskGraph>
+<!-- 	<Simulation /> -->
+
+	<Include file="../../build/PluginPath.xml"/>
+	<CreateTaskStatusMonitor/>
+
+        <CreateView id="0"/>
+
+        <Activity type="PeriodicActivity">
+                <struct name="" type="type_less">
+                        <simple type="double" name="Period"><value>0.1</value></simple>
+                </struct>
+                <TaskContext type="ImageMatching" name="ImageMatching">
+                </TaskContext>
+        </Activity>
+
+        <Activity type="SequentialActivity">
+                <TaskContext	type="DisplayImage"	name="DisplayImage1">
+                        <struct name="" type="type_less">
+                                <struct type="vec3" name="Position">
+                                        <simple type="double" name="0"><value>-160</value></simple>
+                                        <simple type="double" name="1"><value>160</value></simple>
+                                        <simple type="double" name="2"><value>0</value></simple>
+                                </struct>
+                        </struct>
+                </TaskContext>
+                <TaskContext	type="DisplayImage"	name="DisplayImage2">
+                        <struct name="" type="type_less">
+                                <struct type="vec3" name="Position">
+                                        <simple type="double" name="0"><value>160</value></simple>
+                                        <simple type="double" name="1"><value>160</value></simple>
+                                        <simple type="double" name="2"><value>0</value></simple>
+                                </struct>
+                        </struct>
+                </TaskContext>
+                <TaskContext	type="DisplayImage"	name="DisplayMatchedImage">
+                        <struct name="" type="type_less">
+                                <struct type="vec3" name="Position">
+                                        <simple type="double" name="0"><value>0</value></simple>
+                                        <simple type="double" name="1"><value>-160</value></simple>
+                                        <simple type="double" name="2"><value>0</value></simple>
+                                </struct>
+                        </struct>
+                </TaskContext>
+        </Activity>
+
+        <Connection
+                sourceTask="ImageMatching"
+                sourcePort="Image1Out"
+                targetTask="DisplayImage1"
+                targetPort="TypedImageIn"/>
+
+        <Connection
+                sourceTask="ImageMatching"
+                sourcePort="Image2Out"
+                targetTask="DisplayImage2"
+                targetPort="TypedImageIn"/>
+
+        <Connection
+                sourceTask="ImageMatching"
+                sourcePort="MatchedImageOut"
+                targetTask="DisplayMatchedImage"
+                targetPort="TypedImageIn"/>
+
+
+<!-- register views -->
+        <CallMethod name="registerView">
+                <Task>DisplayImage1</Task>
+                <Task>DisplayImage2</Task>
+                <Task>DisplayMatchedImage</Task>
+        </CallMethod>
+
+
+        <TaskBrowser task="ImageMatching"/>
+
+</TaskGraph>
