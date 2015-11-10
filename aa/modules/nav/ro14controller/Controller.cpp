@@ -132,7 +132,6 @@ void Controller::updateHook()
     Vec3 curOrientation = mCurEgoState.forwardDirection();
     Logger::log() << Logger::Debug << "car orientation:" << curOrientation.transpose() << Logger::endl;
 
-
     flt closestSqrDistToPlan;
     flt closestParamOnPlan;
     std::pair<flt, flt> const dom((*mCurPlan).domain());
@@ -192,19 +191,40 @@ void Controller::stopHook()
 flt Controller::getThrottleBrakePosition(flt curSpeed, flt wantedSpeed)
 {
 	Logger::In in("Controller");
-
+    float result =0.0;
     //insert your code here
+    if(curSpeed < wantedSpeed){
+        result = 0.5;
+    }else{
+        result = -0.2;
+	}
 
-    return mConstantThrottle;
+    return result;
 }
 
 
 
 flt Controller::getSteeringPosition(aa::modules::nav::controller::Plan_ptr plan)
 {
-	Logger::In in("Controller");
-
+    Logger::In in("Controller");
+    flt closestParamOnPlan;
+    flt closestSqrDistToPlan;
+    std::pair<flt, flt> const dom((*mCurPlan).domain());
+    tie(closestSqrDistToPlan, closestParamOnPlan) = findClosestPoint(*mCurPlan, dom.first, dom.second, (dom.first + dom.second) / 2.0, mCurEgoState.position());
+    Vec3 closestPointOnPlan = (*plan)(closestParamOnPlan);
+    Vec3 curPosition = mCurEgoState.position();
     //insert your code here
+    float own_y = curPosition[1];
+    float plan_y = closestPointOnPlan[1];
+    float diff_y = plan_y-own_y;
+
+    if(diff_y >1){
+        mConstantSteer = -0.05;
+    }else if (diff_y <-1){
+        mConstantSteer = 0.05;
+    }else{
+        mConstantSteer =0.0;
+    }
 
     return mConstantSteer;
 }
