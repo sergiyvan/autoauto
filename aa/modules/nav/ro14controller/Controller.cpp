@@ -218,10 +218,10 @@ flt Controller::getSteeringPosition(aa::modules::nav::controller::Plan_ptr plan)
     float plan_y = closestPointOnPlan[1];
     float diff_y = plan_y-own_y;
 
-    if(diff_y >1){
-        mConstantSteer = -0.05;
-    }else if (diff_y <-1){
-        mConstantSteer = 0.05;
+    if(diff_y >0){
+        mConstantSteer = -0.05 * diff_y;
+    }else if (diff_y <0){
+        mConstantSteer = 0.05* -diff_y;
     }else{
         mConstantSteer =0.0;
     }
